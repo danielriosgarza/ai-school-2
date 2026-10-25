@@ -1,0 +1,165 @@
+/* The front page's hero (docs/plan.md, section 5): the name, the edition line, the two actions
+   and the state of registration on the petrol ground, with the scene beside them on wide screens
+   and beneath them up to 1040 px. */
+.hero {
+  /* The scene's colours. `.ground` below is the theme's `.inverse`, which gives the roles their
+     values on petrol (paper becomes petrol), so the scene would be read inside it as petrol on
+     petrol. These properties are declared here, outside it, and a custom property holds the value
+     its `var()` resolves to on the element that declares it: the scene (given the names, which it
+     resolves on its own element) keeps the page's paper, ink, petrol and amber, and follows the
+     scheme with them. The bands use `primary-ink`, the petrol in the light scheme and the light
+     petrol in the dark one, so they stay readable on the dark paper; the target line is the amber
+     fill. The Pause button's focus outline uses `accent-ink`, which keeps 3:1 on the light paper
+     where the amber fill has 1.9:1. In the light scheme the lowest band is the hero's own petrol,
+     so the scene has a frame of its paper, which keeps its lower edge visible on the petrol
+     ground. */
+  --hero-scene-paper: var(--school-paper);
+  --hero-scene-ink: var(--school-ink);
+  --hero-scene-primary: var(--school-primary-ink);
+  --hero-scene-accent: var(--school-accent);
+  --hero-scene-focus: var(--school-accent-ink);
+}
+.ground {
+  padding-block: var(--school-space-64);
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: var(--school-space-48);
+}
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+}
+.name {
+  max-width: 18ch;
+  margin: 0;
+  font: var(--school-text-hero);
+  letter-spacing: var(--school-tracking-display);
+  text-wrap: balance;
+}
+/* "Second edition · dates · venue": the edition's name in amber, the facts in the text face. */
+.edition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--school-space-4) var(--school-space-8);
+  margin: var(--school-space-24) 0 0;
+  font: var(--school-text-lead);
+  font-variant-numeric: tabular-nums;
+}
+.label {
+  font-weight: 600;
+  color: var(--school-accent);
+}
+.item::before {
+  content: '·';
+  content: '·' / '';
+  margin-right: var(--school-space-8);
+  color: var(--school-ink-muted);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--school-space-16);
+  margin-top: var(--school-space-32);
+}
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 9rem;
+  min-height: 48px;
+  padding: 0 var(--school-space-24);
+  border: 2px solid transparent;
+  border-radius: 4px;
+  font: 600 var(--school-size-body) / 1 var(--school-font-text);
+  text-decoration: none;
+}
+/* Register: the filled amber primary, its label in ink. */
+.primary {
+  border-color: var(--school-accent);
+  background: var(--school-accent);
+  color: var(--school-on-accent);
+}
+.primary:hover {
+  border-color: var(--school-on-primary);
+}
+/* Programme: the outline, in the petrol register's ink. */
+.secondary {
+  border-color: var(--school-ink);
+  color: var(--school-ink);
+}
+.secondary:hover {
+  background: var(--school-tint);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .primary,
+  .secondary {
+    transition:
+      background-color 120ms ease-out,
+      border-color 120ms ease-out;
+  }
+}
+.registration {
+  margin: var(--school-space-16) 0 0;
+  font: var(--school-text-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--school-ink-muted);
+}
+.term {
+  font-weight: 600;
+  color: var(--school-ink);
+}
+/* The scene fills its grid cell: as tall as the text beside it, at least 26 rem, inside a frame
+   of its own paper. Two classes, so that it wins over the scene's own 16:9 box whatever the order
+   of the stylesheets. */
+.layout .scene {
+  aspect-ratio: auto;
+  min-height: 26rem;
+  border: var(--school-space-8) solid var(--hero-scene-paper);
+}
+.layout .scene button:focus-visible {
+  outline-color: var(--hero-scene-focus);
+}
+@media (max-width: 1040px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--school-space-40);
+  }
+  .layout .scene {
+    aspect-ratio: 16 / 9;
+    min-height: 180px;
+  }
+}
+@media (max-width: 540px) {
+  .ground {
+    padding-block: var(--school-space-40) var(--school-space-48);
+  }
+  /* Greedy wrapping: balanced, the name breaks into four uneven lines at 360 px. */
+  .name {
+    text-wrap: wrap;
+  }
+  /* One fact a line, without the separators. */
+  .edition {
+    flex-direction: column;
+    gap: 0;
+    margin-top: var(--school-space-16);
+    font: var(--school-text-body);
+    font-variant-numeric: tabular-nums;
+  }
+  .item::before {
+    content: none;
+  }
+  .actions {
+    margin-top: var(--school-space-24);
+  }
+  .layout .scene {
+    aspect-ratio: 4 / 3;
+    border-width: 6px;
+  }
+}
