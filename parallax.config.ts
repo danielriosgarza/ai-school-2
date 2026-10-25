@@ -44,7 +44,7 @@ export default defineConfig({
   //     {
   //       id: 'institution',
   //       name: '<name on the button>',
-  //       issuer: 'https://<issuer>',
+  //       issuer: 'https://login.example.org',
   //       clientId: '<client id>',
   //     },
   //   ],
