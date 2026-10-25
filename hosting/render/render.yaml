@@ -1,0 +1,39 @@
+# Two Render static sites for the level 0 site, one for each tree (docs/publishing.md, Render
+# static sites). Render builds both from this repository: create them from the dashboard with New >
+# Blueprint and this file's path as the Blueprint Path, or type the same values into two static
+# sites by hand. The build command is that of every publishing workflow: parallax check and
+# build, refusing the placeholder origins. Automatic deploys are off: the workflow
+# publish-render.yml starts each deploy through the site's deploy hook. Custom domains are added
+# in the dashboard, so no host name is written here.
+services:
+  - type: web
+    runtime: static
+    name: school-site
+    branch: main
+    buildCommand: npm install && node scripts/publish-build.mjs
+    staticPublishPath: ./dist/site
+    autoDeployTrigger: "off"
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+  - type: web
+    runtime: static
+    name: school-content
+    branch: main
+    buildCommand: npm install && node scripts/publish-build.mjs
+    staticPublishPath: ./dist/content
+    autoDeployTrigger: "off"
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    # The content host's answers for PDFs read by range.
+    headers:
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"
+      - path: /*
+        name: Access-Control-Allow-Headers
+        value: range
+      - path: /*
+        name: Access-Control-Expose-Headers
+        value: Content-Range, Accept-Ranges, Content-Length

@@ -1,0 +1,28 @@
+# The level 0 site on a host of your own, served by Caddy (docs/publishing.md, Your own host).
+# Caddy obtains and renews a certificate for each host name. SITE_HOST and CONTENT_HOST are the
+# host names of origins.app and origins.content in parallax.config.ts, without https://; the two
+# folders are those the workflow publish-own-host.yml mirrors dist/site and dist/content into.
+#
+# SITE_HOST=school.example.org CONTENT_HOST=content.school.example.org caddy run --config Caddyfile
+#
+# This is not the Caddyfile at the top of the repository: that one belongs to levels 1 and 2 and
+# sends both host names to Parallax's server.
+
+{$SITE_HOST} {
+	root * {$SITE_ROOT:/srv/school/site}
+	encode zstd gzip
+	file_server
+}
+
+# No encode here: pdf.js reads a PDF by ranges only from an answer without Content-Encoding.
+{$CONTENT_HOST} {
+	root * {$CONTENT_ROOT:/srv/school/content}
+	header Access-Control-Allow-Origin "*"
+	header Access-Control-Expose-Headers "Content-Range, Accept-Ranges, Content-Length"
+	@preflight method OPTIONS
+	handle @preflight {
+		header Access-Control-Allow-Headers "range"
+		respond 204
+	}
+	file_server
+}
