@@ -30,11 +30,11 @@ The terminal starts in your home folder.
 
 ## 2. Install Python
 
-The school's notebooks are pinned for **Python 3.11, 3.12 or 3.13**. Python 3.14 and 3.15 are newer, but not every package the notebooks use installs on them yet, so do not take the newest Python that python.org offers first. This reading uses 3.13.
+The school's notebooks are pinned for **Python 3.11, 3.12 or 3.13**. Python 3.14 and 3.15 are newer, but not every package the notebooks use installs on them yet, so do not take the newest Python that python.org offers first. This reading uses **Python 3.13.17**, the last 3.13 release with installers for Windows and macOS: the 3.13 releases after it, such as 3.13.18, are security fixes published as source code only.
 
 **Windows**
 
-1. Open <https://www.python.org/downloads/windows/>, find the newest **Python 3.13** release (3.13.17 in October 2026) and download its **Windows installer (64-bit)**.
+1. Open <https://www.python.org/downloads/windows/>, find **Python 3.13.17** and download its **Windows installer (64-bit)**.
 2. Run the file. On its first screen, tick **Add python.exe to PATH**, then choose **Install Now**.
 3. Close PowerShell, open it again and check the version:
 
@@ -42,11 +42,11 @@ The school's notebooks are pinned for **Python 3.11, 3.12 or 3.13**. Python 3.14
    py -3.13 --version
    ```
 
-   It prints `Python 3.13.17`, or the release you installed.
+   It prints `Python 3.13.17`.
 
 **macOS**
 
-1. Open <https://www.python.org/downloads/macos/>, find the newest **Python 3.13** release (3.13.17 in October 2026) and download its **macOS installer**.
+1. Open <https://www.python.org/downloads/macos/>, find **Python 3.13.17** and download its **macOS installer**.
 2. Open the file and follow the installer.
 3. In a new terminal, check the version:
 

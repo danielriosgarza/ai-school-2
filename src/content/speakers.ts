@@ -1,8 +1,9 @@
 // The speakers of each edition. The 2025 speakers are those of the first edition's speakers page
 // (name, affiliation, country, personal link and portrait as published there), with each talk
 // title as its programme page gives it, in sentence case. The portraits are the published ones,
-// cropped square to one framing; their reuse awaits the owner's confirmation (docs/plan.md,
-// section 9), so no page shows them before W4 and W6, which read that decision.
+// cropped square to one framing. The pages show them since W6, whose issue says that the owner
+// has been told and can object (docs/plan.md, section 9; docs/decisions.md, W6): removing a
+// `portrait` field shows the speaker's initials.
 import bajic from '../assets/portraits/bajic.webp';
 import bottcher from '../assets/portraits/bottcher.webp';
 import dutilh from '../assets/portraits/dutilh.webp';

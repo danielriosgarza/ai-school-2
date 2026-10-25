@@ -62,6 +62,7 @@ resources:
 
 - `position` is the session's place in the programme; the organisers give it. Before the school is 0, and the site numbers topics from 01 in this order.
 - A title is the talk's title followed by the speaker's name in brackets, as in the first edition's course.
+- A resource's title is short, about 40 characters at most, such as "Part 2: design by ABC rejection". A tab with several files lists them in a picker as wide as its longest title, and a longer title makes the page wider than a phone's screen.
 - `npx parallax check --write-ids` adds an `id` line to the topic and to each resource. Commit them and never change one: the site's addresses and links are made from them.
 - A file that `topic.yaml` does not list, or a kind of file its folder does not take, stops the check. The folders take: `slides/` a `.pdf`, `reading/` a `.md`, `.html` or `.pdf`, `notebooks/` an `.ipynb` with its folder.
 

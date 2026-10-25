@@ -78,7 +78,7 @@ The form asks for no email address of its own: the organisers know it from the r
    ```
 
    `consent` is the date of the form. Without a picture, leave `picture` out; without links, write `links: []`.
-6. **Check on a computer**: `npx parallax check` and `npx parallax build` pass, and `npm run preview` shows `/participants` with every card, and Participants in the row of the school's links on every page.
+6. **Check on a computer**: `npx parallax check` and `npx parallax build` pass, and `npm run preview` shows `/participants` with every card, and Participants in the row of the school's links on every page. `node scripts/publish-build.mjs` refuses to build while any file under `src/` imports the review sample, `participants.sample.ts`.
 7. **One pull request** with all the entries and pictures, for example "Publish the participants of the second edition". CI runs `npx parallax check` and `npx parallax build`. The pull request's description and the commit messages name no participant and quote nothing from the answers beyond what the files hold. After the merge, publish the site as [publishing.md](publishing.md) says.
 8. **Late answers** follow the same steps, in one pull request per batch.
 

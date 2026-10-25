@@ -1,9 +1,9 @@
 // The supporters and partners of each edition. For 2025: the five supporters of the first
 // edition's organisation page, and the two institutions whose logos its top bar showed (PROSE with
 // INRAE, and Université Paris-Saclay). Only three logos were published there (Graduate School
-// Biosphera, PROSE with INRAE, Université Paris-Saclay); the others are shown by name. The logos'
-// reuse awaits the owner's confirmation (docs/plan.md, section 9), so no page shows them before
-// W4 and W6, which read that decision.
+// Biosphera, PROSE with INRAE, Université Paris-Saclay); the others are shown by name. The pages
+// show the logos since W6, whose issue says that the owner has been told and can object
+// (docs/plan.md, section 9; docs/decisions.md, W6): removing a `logo` field shows the name.
 import biosphera from '../assets/logos/gs-biosphera.png';
 import prose from '../assets/logos/prose-inrae.png';
 import parisSaclay from '../assets/logos/universite-paris-saclay.svg';

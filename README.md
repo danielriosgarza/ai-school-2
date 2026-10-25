@@ -2,7 +2,7 @@
 
 The website of the second edition of the school: programme, speakers, venue, registration, and the course material (slides, readings and notebooks) that participants study and run.
 
-The site is a [Parallax](https://github.com/danielriosgarza/PlatosCave) open site. Course material lives in plain folders under `courses/` and is served as static files; the school's own pages are under `src/pages/`. Notebooks run from the site on each participant's own computer through the Parallax connector; running them on an SSH server is the intended next step. [docs/level-1.md](docs/level-1.md) prepares that step: Parallax's level 1, where participants sign in, join a class and run the notebooks on an SSH server under an account of their own.
+The site is a [Parallax](https://github.com/danielriosgarza/PlatosCave) open site. Course material lives in plain folders under `courses/` and is served as static files; the school's own pages are under `src/pages/`. Notebooks run from the site on each participant's own computer through the Parallax connector. The next step is Parallax's level 1, where participants sign in, join a class and run the notebooks on an SSH server under an account of their own; [docs/level-1.md](docs/level-1.md) prepares it.
 
 ## Commands
 
@@ -22,7 +22,7 @@ You need Node.js 22.12 or newer with npm. The site's one dependency is `parallax
 | One browser test | after `npm run build:preview`: `npx playwright test e2e/programme.spec.ts`, or by its id, `npx playwright test -g PR1` |
 | Run on this computer, tested | `CONNECTOR_BIN=<connector> CONNECTOR_PYTHON=<python> npx playwright test run-on-this-computer`, with the released connector and a Python that has `jupyter-server`, `ipykernel` and the notebook's requirements |
 
-A build writes its content host into every link to a material file. `npm run preview` therefore builds for the two local hosts, and that build is for this computer only: `npx parallax build` makes the build to publish. The browser tests need the preview build (`npm run build:preview` writes it without serving) and refuse any other; `CHROMIUM_PATH` points them at a Chromium other than Playwright's own. Known failures of the pages are listed in `e2e/known-issues.ts`, each with the issue that owns it.
+A build writes its content host into every link to a material file. `npm run preview` therefore builds for the two local hosts, and that build is for this computer only: `npx parallax build` makes the build to publish. The browser tests need the preview build (`npm run build:preview` writes it without serving) and refuse any other; `CHROMIUM_PATH` points them at a Chromium other than Playwright's own. Known failures of the pages are listed in `e2e/known-issues.ts`, each with the issue that owns it; none is listed today.
 
 The workflow `.github/workflows/check.yml` runs on every push and pull request, in three jobs side by side: `check` runs `npx parallax check`, the unit tests and the contrast check, `npx parallax build` and the link check, and keeps `dist/` as the artifact `dist` of the run; `browser` builds for the preview hosts and runs the browser tests; `run-on-this-computer` runs a notebook of the archive and the setup check of Before the school through the released connector and Jupyter on the runner. A failing browser job keeps Playwright's report and traces as an artifact. Nothing is deployed yet.
 
@@ -39,20 +39,23 @@ src/pages/                the school's own pages, JSX with a CSS module beside e
                           inner pages
 src/styles/               theme.module.css: the school's palette (white, the first edition's electric blue,
                           its slate for the footer), faces (Inter Tight, Inter), type and spacing scales
-src/components/           Section, Schedule, SpeakerCard, PartnerLogos, Footer, PageHeader (the masthead with
-                          the mark, the school's links and the partners' logos, and the page head),
-                          DetailList and Shown, each with its CSS module where it has styles
+src/components/           Section, Schedule (a day's timetable; ScheduleDays for consecutive days, stacked or
+                          in columns), SpeakerCard (SpeakerGrid: the cards in a grid or a strip),
+                          PartnerLogos, Footer, PageHeader (the masthead with the mark, the school's links
+                          and the partners' logos, and the page head), DetailList and Shown, each with its
+                          CSS module where it has styles
 src/content/              edition, programme, speakers, partners, participants, venue and organisation as
-                          typed modules, with topics, dates, placeholder and catalogue helpers;
+                          typed modules, with topics, dates, placeholder, catalogue and pages helpers;
                           participants.sample.ts, fictional entries for reviewing the participants page
 src/assets/               the two faces, Inter Tight and Inter, with their licences; logo/, the school's
                           mark from the first edition in black and in white; the 2025 speakers' portraits,
                           partners' logos and campus photo; participants/ for the participants' pictures,
                           with the sample's drawings in participants/sample/
 scripts/                  preview.mjs serves the build on two local hosts; publish-build.mjs checks and builds
-                          for publishing, refusing the placeholder and local origins; contrast.mjs checks
-                          the palette; check-links.mjs checks the links of a build; *.test.mjs are the unit
-                          tests, which resolve-ts.mjs lets import src/content
+                          for publishing, refusing the placeholder and local origins and a source that
+                          imports the participants sample; contrast.mjs checks the palette; check-links.mjs
+                          checks the links of a build; *.test.mjs are the unit tests, which resolve-ts.mjs
+                          lets import src/content and its pictures
 e2e/                      the browser tests, one file per area, with known-issues.ts; playwright.config.ts
                           at the root
 docs/                     plan.md (the approved plan), decisions.md (the decisions log), publishing.md
@@ -79,7 +82,7 @@ Generated and ignored by git: `node_modules/`, `dist/`, `.parallax/` (the tool's
 
 ## Plan and decisions
 
-The approved plan is in [docs/plan.md](docs/plan.md). Work happens one GitHub issue per plan item (W1 to W12), one pull request per issue. [docs/decisions.md](docs/decisions.md) records the choices each issue made, newest last.
+The approved plan is in [docs/plan.md](docs/plan.md). Work happens one GitHub issue per plan item (W1 to W13), one pull request per issue. [docs/decisions.md](docs/decisions.md) records the choices each issue made, newest last.
 
 ## Publishing
 

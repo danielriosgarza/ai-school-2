@@ -77,7 +77,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
               each notebook's page on this site.
             </p>
             <p>
-              The setup instructions come with{' '}
+              The setup instructions {nextCourse ? 'are in' : 'will be in'}{' '}
               {setup ? <Link to={setup}>Before the school</Link> : <>Before the school</>}, the
               first topic of{' '}
               {nextCourse ? (
