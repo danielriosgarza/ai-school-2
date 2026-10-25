@@ -1,0 +1,18 @@
+id: c70b14e5-d9fc-4d15-a43b-aeebadd6ee12
+position: 5
+title: Bacterial reservoir computing (Jean-Loup Faulon)
+objective: >-
+  Jean-Loup Faulon (University of Paris Saclay, INRAE) asks whether the native metabolism of
+  E. coli can serve as a reservoir computer, from metabolic perceptrons built in vitro to
+  genome-scale models coupled with neural networks and a physical reservoir that classifies
+  patient samples from bacterial growth curves.
+estimatedMinutes: 45
+resources:
+  - id: 807339c4-c897-41a5-b055-0452fd3f620e
+    file: slides/faulon-2025.pdf
+    title: "Slides: reservoir computing with bacteria"
+    visibility: visible
+  - id: d49b9bb6-df68-47d0-9a3c-806431db60ad
+    file: reading/faulon-session.md
+    title: About this session and links
+    visibility: visible

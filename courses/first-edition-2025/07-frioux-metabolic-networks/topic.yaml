@@ -1,0 +1,17 @@
+id: ce89cc3a-910d-4d0b-8c57-ded90895eff1
+position: 7
+title: "Metabolic network reconstruction and modelling: from the individual to the community (Clémence Frioux)"
+objective: >-
+  Clémence Frioux (Inria, University of Bordeaux) goes from genomes to genome-scale metabolic
+  networks, their reconstruction, exploration and modelling for one species, and the screening of
+  metabolic potential in microbial communities. The hands-on part follows her public tutorial.
+estimatedMinutes: 120
+resources:
+  - id: 714af9c4-18ca-4674-8e4f-684f0558c66d
+    file: slides/frioux-2025.pdf
+    title: "Slides: exploration of metabolism in microbial ecosystems"
+    visibility: visible
+  - id: 4b18a908-7185-4182-8b72-242314113891
+    file: reading/frioux-session.md
+    title: About this session, tutorial notes and links
+    visibility: visible

@@ -1,0 +1,17 @@
+id: 5f516816-17a4-4953-b35d-d6d15a8cb3f2
+position: 4
+title: "Integrating human gut microbiome data at scale: from individuals to multi-layered features in clinical and nutritional studies (Julien Tap)"
+objective: >-
+  Julien Tap (INRAE) follows human gut microbiome studies from a hundred samples to more
+  than 35,000, through the pipelines, statistics and machine learning that turn sequencing reads
+  into features, and the branched structure of the gut microbiome that emerges at that scale.
+estimatedMinutes: 120
+resources:
+  - id: e2e74478-22e0-4a98-acde-afc68f4d2f1a
+    file: slides/tap-2025.pdf
+    title: Slides of the talk
+    visibility: visible
+  - id: 479b3cfd-b496-4a21-ab3f-ef05b22208e8
+    file: reading/tap-session.md
+    title: About this session and links
+    visibility: visible

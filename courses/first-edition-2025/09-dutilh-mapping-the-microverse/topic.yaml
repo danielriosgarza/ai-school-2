@@ -1,0 +1,17 @@
+id: 45ffc284-fa3b-480e-9b18-b94b94a9fa34
+position: 9
+title: Mapping the microverse and modelling its drivers (Bas Dutilh)
+objective: >-
+  Bas Dutilh (Friedrich Schiller University Jena) maps 22,518 metagenomes from 140 biomes into one
+  microverse, and shows what separates generalist from specialist microbes. The hands-on part
+  explores that map with the Microverse Mapper web application.
+estimatedMinutes: 180
+resources:
+  - id: bb14d909-cf19-4f7a-93b5-f4a5d39a0dba
+    file: slides/dutilh-2025.pdf
+    title: "Slides: mapping the microverse"
+    visibility: visible
+  - id: 7fd8cd7a-2db8-4637-bff3-855b287fe895
+    file: reading/dutilh-session.md
+    title: About this session and links
+    visibility: visible

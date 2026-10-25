@@ -1,0 +1,5 @@
+# What microbial_control.ipynb imports, pinned. Install in this folder with: pip install -r requirements.txt
+numpy==2.4.6
+torch==2.14.1
+torchdiffeq==0.2.5
+matplotlib==3.11.2

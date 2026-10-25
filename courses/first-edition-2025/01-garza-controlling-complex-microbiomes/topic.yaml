@@ -1,0 +1,31 @@
+id: 53e9ed4d-59c0-4144-b53c-14cd367c16d6
+position: 1
+title: "Controlling complex microbiomes with computational intelligence: physical and virtual prototypes (Daniel Garza)"
+objective: >-
+  Daniel Garza (University of Paris Saclay, INRAE) argues that steering a microbiome towards a wanted
+  function needs feedback control by an intelligent agent, and shows a kinetic model of a gut
+  consortium driven by a reinforcement learning controller. In the tutorial you simulate a
+  community with the kinetic_model package, then compare random control actions with a trained
+  controller.
+estimatedMinutes: 45
+resources:
+  - id: e2266849-26db-4d7f-9e5b-df41a27cbf9a
+    file: slides/garza-2025.pdf
+    title: "Slides: opening of the school, then the talk"
+    visibility: visible
+  - id: 6c5e119e-0441-4c5e-9a29-2acd0b443334
+    file: reading/garza-session.md
+    title: About this session, setup and links
+    visibility: visible
+  - id: cff88a5e-a475-4f24-bc1b-9fd2088507dd
+    file: notebooks/kinetic_model.ipynb
+    title: Kinetic model of a microbial community
+    visibility: visible
+  - id: 333370a3-28c0-4e7e-992d-d4407ce4b1bd
+    file: notebooks/controller_simulation_demo.ipynb
+    title: Controlling butyrate production with random actions
+    visibility: visible
+  - id: eda1235e-8143-40ca-b1b9-e0ffc667bb92
+    file: notebooks/compare_control_policies.ipynb
+    title: Controlling butyrate production with a trained controller
+    visibility: visible
