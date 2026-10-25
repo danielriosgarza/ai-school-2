@@ -1,0 +1,130 @@
+/* The participants page: a card per participant in the frame of SpeakerCard (a hairline rule on
+   paper, the name in the display face, affiliation and country in the label size, a petrol band on
+   hover and focus), with a smaller picture beside the name, since a school has more participants
+   than speakers. Three columns, then two, then one. */
+.more {
+  margin: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--school-space-32) var(--school-space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cell {
+  display: flex;
+  min-width: 0;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: var(--school-rule-width) solid var(--school-rule);
+  background: var(--school-paper);
+}
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--school-space-16);
+  padding: var(--school-space-24) var(--school-space-24) var(--school-space-16);
+}
+.picture,
+.initials {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  background: var(--school-tint);
+}
+.initials {
+  display: grid;
+  place-items: center;
+  background: var(--school-primary);
+  color: var(--school-on-primary);
+  font: 700 var(--school-size-h3) / 1 var(--school-font-display);
+  letter-spacing: var(--school-tracking-display);
+}
+.who {
+  min-width: 0;
+}
+.name {
+  margin: 0;
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.where {
+  margin: var(--school-space-4) 0 0;
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.country {
+  display: block;
+}
+/* The band under the head: petrol on hover and while a link of the card has focus. */
+.band {
+  height: 4px;
+  background: transparent;
+  transition: background-color 120ms ease-out;
+}
+.card:hover .band,
+.card:focus-within .band {
+  background: var(--school-primary-ink);
+}
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--school-space-16) var(--school-space-24) var(--school-space-16);
+}
+.text {
+  margin: 0;
+  line-height: 1.5;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--school-space-16);
+  margin: auto 0 0;
+  padding: var(--school-space-8) 0 0;
+  list-style: none;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font: 600 var(--school-size-label) / 1.45 var(--school-font-text);
+  overflow-wrap: anywhere;
+}
+.note {
+  max-width: var(--school-measure);
+  margin: var(--school-space-32) 0 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .head {
+    padding: var(--school-space-16) var(--school-space-16) var(--school-space-16);
+  }
+  .body {
+    padding: var(--school-space-16) var(--school-space-16) var(--school-space-8);
+  }
+  .picture,
+  .initials {
+    width: 80px;
+    height: 80px;
+  }
+}
