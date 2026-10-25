@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Footer } from '../components/Footer';
 import { SchoolNav } from '../components/PageHeader';
 import { PartnerLogos } from '../components/PartnerLogos';
-import { Schedule } from '../components/Schedule';
+import { Schedule, ScheduleDays } from '../components/Schedule';
 import { Section } from '../components/Section';
 import { SpeakerCard } from '../components/SpeakerCard';
 import { hasCourse } from '../content/catalogue';
@@ -100,13 +100,17 @@ export default function Front({ catalogue }: PageProps) {
           title={programmeSection.title}
           lead={firstDays ? <FirstEditionLead section={programmeSection} /> : undefined}
         >
-          <div className={styles.days}>
-            {shownProgramme.days.map((day) => (
-              <div key={day.date} className={styles.day}>
-                <Schedule day={day} speakers={sessionSpeakers} level={3} />
-              </div>
+          <ScheduleDays columns>
+            {shownProgramme.days.map((day, index) => (
+              <Schedule
+                key={day.date}
+                day={day}
+                number={index + 1}
+                speakers={sessionSpeakers}
+                level={3}
+              />
             ))}
-          </div>
+          </ScheduleDays>
           <More>
             <Link to={programmeSection.link.to}>{programmeSection.link.text}</Link>
             {firstDays && archive ? (

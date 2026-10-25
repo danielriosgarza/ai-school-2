@@ -1,7 +1,7 @@
 /* The front page (docs/plan.md, sections 4 and 5), below the hero (_hero.module.css): the
-   overview's two titled paragraphs and the scene beside them, the programme's day columns, the
-   speakers' strip, the label of a section that shows the first edition, and the link that closes
-   a section. */
+   overview's two titled paragraphs and the scene beside them, the speakers' strip, the label of a
+   section that shows the first edition, and the link that closes a section. The programme's day
+   columns are the Schedule component's (ScheduleDays). */
 
 /* "First edition, 2025": a label at the start of a section's lead. */
 .label {
@@ -47,20 +47,6 @@
   margin: var(--school-space-8) 0 0;
 }
 
-/* The programme at a glance: one column per day on wide screens, the days stacked below. The
-   Schedule of each day sits in a cell of its own, so its spacing between consecutive days does
-   not offset the columns. */
-.days {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  gap: var(--school-space-32);
-  align-items: start;
-}
-.day {
-  min-width: 0;
-}
-
 /* The speakers' strip: one row of cards that scrolls sideways inside the column, with the next
    card showing at the edge. */
 .strip {
@@ -92,13 +78,6 @@
   font: 600 var(--school-size-body) / 1.45 var(--school-font-text);
 }
 
-@media (max-width: 1120px) {
-  .days {
-    grid-auto-flow: row;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--school-space-48);
-  }
-}
 @media (max-width: 1040px) {
   .sceneBox .scene {
     aspect-ratio: 16 / 9;

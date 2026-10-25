@@ -2,18 +2,44 @@
 .day {
   position: relative;
 }
-.day + .day {
+/* Consecutive days (ScheduleDays): the space between them belongs to the container, so that a
+   day standing in a column is not lowered by it. */
+.days > * + * {
   margin-top: var(--school-space-48);
 }
-/* The day's heading stays at the top of the window while its sessions scroll. */
+/* Days in columns on wide screens: each day spans two rows of the container's grid, its heading
+   in the first and its table in the second (a subgrid), so that the headings share one height and
+   the tables start on one line even when a date wraps. */
+@media (min-width: 1121px) {
+  .columns {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    grid-template-rows: auto auto;
+    column-gap: var(--school-space-32);
+  }
+  .columns > * + * {
+    margin-top: 0;
+  }
+  .columns > .day {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+  /* A table stretched to the tallest day's height would spread the extra height over its rows. */
+  .columns > .day > .table {
+    align-self: start;
+  }
+}
+/* The day's heading stays at the top of the window while its sessions scroll: the day's number on
+   a line of its own, then the date, both resting on the heading's rule. */
 .heading {
   position: sticky;
   top: 0;
   z-index: 1;
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--school-space-4) var(--school-space-16);
+  flex-direction: column;
+  justify-content: flex-end;
   margin: 0;
   padding: var(--school-space-16) var(--school-space-16) var(--school-space-8);
   border-bottom: 2px solid var(--school-ink);
@@ -27,9 +53,15 @@
   color: var(--school-primary-ink);
   letter-spacing: 0;
 }
+/* A fixed layout, so that the time column has the same width on every day, with a break or
+   without: its width is the column group's, wide enough for a break's "09:00–09:30" on one line. */
 .table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
+}
+.timeColumn {
+  width: 7.5rem;
 }
 .row > *,
 .pause > * {
@@ -43,7 +75,6 @@
   background: var(--school-tint);
 }
 .time {
-  width: 6.5rem;
   font: 600 var(--school-size-lead) / 1.3 var(--school-font-text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -119,12 +150,13 @@
   .pause > * {
     padding-inline: var(--school-space-8);
   }
-  .time {
+  .timeColumn {
     width: 4.25rem;
+  }
+  .time {
     font-size: var(--school-size-body);
   }
-  /* A break's start and end wrap, so that they do not widen the narrow column: the column then
-     has the same width on every day, with a break or without. */
+  /* A break's start and end wrap in the narrow column ("09:00–" over "09:30"). */
   .pause .time {
     white-space: normal;
   }

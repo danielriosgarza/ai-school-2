@@ -1,7 +1,7 @@
 import { Link, type PageProps } from 'parallax-site/pages';
 import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
-import { Schedule } from '../components/Schedule';
+import { Schedule, ScheduleDays } from '../components/Schedule';
 import { Section } from '../components/Section';
 import { Shown } from '../components/Shown';
 import { courseAddress } from '../content/catalogue';
@@ -19,11 +19,11 @@ export const title = `Programme · ${SCHOOL_NAME}`;
 /** One timetable per day of a programme, each day numbered, under a heading of the page. */
 function Days({ data, people }: { data: ProgrammeData; people: readonly Speaker[] }) {
   return (
-    <div className={styles.days}>
+    <ScheduleDays className={styles.days}>
       {data.days.map((day, index) => (
         <Schedule key={day.date} day={day} number={index + 1} speakers={people} />
       ))}
-    </div>
+    </ScheduleDays>
   );
 }
 
