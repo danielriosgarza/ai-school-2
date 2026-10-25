@@ -5,8 +5,11 @@
 // the content host the cross-origin range answers that PDFs need (hosting requirement 2 of the
 // Parallax getting-started guide). No dependency, no build step; Node 22.
 //
-//   node scripts/preview.mjs           serve dist/ as it was built
-//   node scripts/preview.mjs --build   first build for these two hosts (SITE_PREVIEW=1), then serve
+//   node scripts/preview.mjs                      serve dist/ as it was built
+//   node scripts/preview.mjs --build              first build for these two hosts (SITE_PREVIEW=1),
+//                                                 then serve
+//   node scripts/preview.mjs --build --no-serve   only build for these two hosts, as
+//                                                 `npm run build:preview` does for the tests
 //
 // A build names its content origin in every link to a material file, so a production build
 // served here shows pages but loads PDFs, images and notebook files from the configured content
@@ -127,7 +130,7 @@ function serve(tree, port, content) {
 }
 
 /** The content origin that the first link to a material file in `tree` names, if any. */
-function builtFor(tree) {
+export function builtFor(tree) {
   for (const entry of readdirSync(tree, { recursive: true, withFileTypes: true })) {
     if (!entry.isFile() || !entry.name.endsWith('.json')) continue;
     const text = readFileSync(join(entry.parentPath, entry.name), 'utf8');
@@ -141,9 +144,10 @@ function builtFor(tree) {
 async function main(argv) {
   let values;
   try {
-    ({ values } = parseArgs({ args: argv, options: { build: { type: 'boolean' } } }));
+    const options = { build: { type: 'boolean' }, 'no-serve': { type: 'boolean' } };
+    ({ values } = parseArgs({ args: argv, options }));
   } catch {
-    console.error('usage: node scripts/preview.mjs [--build]');
+    console.error('usage: node scripts/preview.mjs [--build [--no-serve]]');
     return 2;
   }
   if (values.build) {
@@ -155,6 +159,7 @@ async function main(argv) {
     const env = { ...process.env, SITE_PREVIEW: '1' };
     const run = spawnSync(process.execPath, [bin, 'build'], { cwd: ROOT, env, stdio: 'inherit' });
     if (run.status !== 0) return run.status ?? 1;
+    if (values['no-serve']) return 0;
   }
   const [site, content] = [join(DIST, 'site'), join(DIST, 'content')];
   if (!existsSync(site) || !existsSync(content)) {
