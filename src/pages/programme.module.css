@@ -1,0 +1,66 @@
+/* The programme page: the timetables come from the Schedule component, the notes are running
+   text; the print rules below give a clean A4 copy. */
+.days {
+  max-width: 56rem;
+}
+.notes {
+  max-width: var(--school-measure);
+}
+.notes > p {
+  margin: 0;
+}
+.notes > p + p {
+  margin-top: var(--school-space-16);
+}
+.archive {
+  max-width: var(--school-measure);
+  margin: var(--school-space-32) 0 0;
+}
+
+/* Print, for A4: black on white at print sizes, no school links (PageHeader.module.css), no
+   sticky day headings, each day of a programme on a sheet of its own, and no session row split
+   across sheets. The roles are set with !important on every element so that the petrol register
+   of the header and the footer (.inverse) prints black on white too. Paper size and margins are
+   left to the browser: an @page rule would stay in the document after the visitor leaves this
+   page and apply to Parallax's screens. Parallax's bar prints above the page; a site stylesheet
+   cannot reach it. */
+@media print {
+  .page,
+  .page * {
+    --school-paper: #fff !important;
+    --school-ink: #000 !important;
+    --school-ink-muted: #333 !important;
+    --school-primary-ink: #000 !important;
+    --school-rule: #999 !important;
+    --school-tint: #fff !important;
+    --school-accent-ink: #000 !important;
+  }
+  .page {
+    --school-size-label: 9pt !important;
+    --school-size-body: 11pt !important;
+    --school-size-lead: 12pt !important;
+    --school-size-h3: 15pt !important;
+    --school-size-h2: 18pt !important;
+    --school-size-h1: 24pt !important;
+    --school-space-64: 16pt !important;
+    --school-space-48: 12pt !important;
+    --school-inset: 0px !important;
+    min-height: 0 !important;
+  }
+  .days {
+    max-width: none;
+  }
+  .days h2,
+  .days h3 {
+    position: static;
+  }
+  .days > * + * {
+    break-before: page;
+  }
+  .days tr {
+    break-inside: avoid;
+  }
+  .page a {
+    text-decoration: none;
+  }
+}
