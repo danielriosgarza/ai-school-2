@@ -28,20 +28,26 @@ instructor.yaml           the school as instructor: its name and its address
 courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived;
                           second-edition, with topic 0, Before the school (the participants' setup)
 src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /,
-                          programme, speakers, venue, organisation and register the inner pages
+                          programme, speakers, venue, organisation, register and participants the
+                          inner pages
 src/styles/               theme.module.css: the school's palette, faces, type and spacing scales
 src/components/           Section, Schedule, SpeakerCard, PartnerLogos, Footer, PageHeader (with the school's
                           links), DetailList and Shown, each with its CSS module where it has styles
 src/content/              edition, programme, speakers, partners, participants, venue and organisation as
-                          typed modules, with topics, dates, placeholder and catalogue helpers
+                          typed modules, with topics, dates, placeholder and catalogue helpers;
+                          participants.sample.ts, fictional entries for reviewing the participants page
 src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
-                          and campus photo
+                          and campus photo; participants/ for the participants' pictures, with the
+                          sample's drawings in participants/sample/
 scripts/preview.mjs       serves the build on two local hosts
 scripts/publish-build.mjs checks and builds for publishing, refusing the placeholder and local origins
 docs/                     plan.md (the approved plan), decisions.md (the decisions log), publishing.md
                           (how to publish the build to each candidate host), speaker-guide.md (what a
                           session delivers and how to send it), level-1.md (the move to sign-in,
-                          classes and notebooks on an SSH server)
+                          classes and notebooks on an SSH server), participants.md (the participants'
+                          consent form and the organisers' steps for the participants page),
+                          organisers.md (the mailing list, the selection and enrolment),
+                          parallax-requests.md (the features asked of Parallax, drafted as issues)
 docs/review/              screenshots for the review of a pull request, one folder per issue
 .github/workflows/        check.yml; publish-*.yml, one per candidate host, started by hand only
 .github/ISSUE_TEMPLATE/   add-my-session.yml, the form for speakers who do not use git, and config.yml
@@ -68,3 +74,7 @@ The approved plan is in [docs/plan.md](docs/plan.md). Work happens one GitHub is
 ## How material arrives
 
 Course material comes from the speakers. [docs/speaker-guide.md](docs/speaker-guide.md) gives the folder of a session and the rules that matter: PDF decks, notebooks saved with their outputs, data files and a pinned `requirements.txt` beside each notebook, a short reading with the install line, at most 25 MiB per file, and each notebook run through Run on this computer before it is sent. A speaker sends material as a pull request, which carries a short checklist, or through the issue form "Add my session", for speakers who do not use git; the organisers then open the pull request. Whichever way the files come, they land as a pull request that passes `npx parallax check` and `npx parallax build` in CI. Each session becomes a topic of `courses/second-edition`, after topic 0, Before the school, whose reading and setup notebook prepare the participants' laptops. The first edition's material is the archived course `courses/first-edition-2025`.
+
+## Participants and mail
+
+The participants page, `/participants`, shows the selected participants of the second edition who agreed to it: a picture, name, affiliation and country, a few lines and links. The organisers fill it after the selection from a consent form that says what is published, in the public site and its public repository, and how to withdraw; [docs/participants.md](docs/participants.md) holds the form and the steps. Until then the list in `src/content/participants.ts` is empty, the page says that the participants are published after the selection, and no link leads to it. Mail to participants and speakers goes through a list the organisers run from the school's address, and enrolment at level 1 through a join link sent to the selected participants ([docs/organisers.md](docs/organisers.md)); no participant's address is ever committed. Mail to a class's members and member profiles are Parallax features for level 1, drafted for PlatosCave in [docs/parallax-requests.md](docs/parallax-requests.md) and filed there when the owner approves them.
