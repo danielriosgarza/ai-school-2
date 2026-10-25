@@ -1,0 +1,7 @@
+# What compare_control_policies.ipynb imports, pinned. Install in this folder with: pip install -r requirements.txt
+# Daniel Garza's packages kinetic_model and rl, from the AiSchool repository at the commit of 2 October 2025 (needs git)
+daniel-garza-microbiome @ git+https://github.com/danielriosgarza/AiSchool.git@32e244d99335d12d930cf24ee005f97776f2655f#subdirectory=content/DanielGarza
+numpy==2.4.6
+pyyaml==6.0.3
+stable-baselines3==2.9.0
+matplotlib==3.11.2

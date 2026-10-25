@@ -1,0 +1,8 @@
+# What part2_glv_abc_rejection.ipynb imports, pinned. Install in this folder with: pip install -r requirements.txt
+numpy==2.4.6
+# scipy 1.16, not 1.17: with 1.17.1 the LSODA solver of solve_ivp hangs on the diverging simulations this notebook samples
+scipy==1.16.3
+pandas==3.1.0
+matplotlib==3.11.2
+seaborn==0.13.2
+ipython==9.17.1
