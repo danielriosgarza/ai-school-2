@@ -24,7 +24,7 @@ You need Node.js 22.12 or newer with npm. The site's one dependency is `parallax
 
 A build writes its content host into every link to a material file. `npm run preview` therefore builds for the two local hosts, and that build is for this computer only: `npx parallax build` makes the build to publish. The browser tests need the preview build (`npm run build:preview` writes it without serving) and refuse any other; `CHROMIUM_PATH` points them at a Chromium other than Playwright's own. Known failures of the pages are listed in `e2e/known-issues.ts`, each with the issue that owns it.
 
-The workflow `.github/workflows/check.yml` runs on every push and pull request, in three jobs side by side: `check` runs `npx parallax check`, the unit tests and the contrast check, `npx parallax build` and the link check, and keeps `dist/` as the artifact `dist` of the run; `browser` builds for the preview hosts and runs the browser tests; `run-on-this-computer` runs a notebook of the archive through the released connector and Jupyter on the runner. A failing browser job keeps Playwright's report and traces as an artifact. Nothing is deployed yet.
+The workflow `.github/workflows/check.yml` runs on every push and pull request, in three jobs side by side: `check` runs `npx parallax check`, the unit tests and the contrast check, `npx parallax build` and the link check, and keeps `dist/` as the artifact `dist` of the run; `browser` builds for the preview hosts and runs the browser tests; `run-on-this-computer` runs a notebook of the archive and the setup check of Before the school through the released connector and Jupyter on the runner. A failing browser job keeps Playwright's report and traces as an artifact. Nothing is deployed yet.
 
 ## Folder layout
 

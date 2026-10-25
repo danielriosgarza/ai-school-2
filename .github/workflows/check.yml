@@ -4,8 +4,8 @@
 # - check: the configuration and course folders, the unit tests and the palette's contrast, the
 #   build to publish (the artifact `dist`) and the link check over it;
 # - browser: a build for the two preview hosts, then the browser tests (e2e/) in Chromium;
-# - run-on-this-computer: a notebook of the archive run on the runner through the released
-#   connector and Jupyter, as Parallax's own level 0 suite does.
+# - run-on-this-computer: a notebook of the archive and the setup check of Before the school run
+#   on the runner through the released connector and Jupyter, as Parallax's own level 0 suite does.
 #
 # No deploy: the publishing decision is open (docs/plan.md, section 8). No secret is used.
 name: Check
@@ -84,8 +84,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # Alex Fedorec's part 1: plain requirements, 12 code cells, about 20 s of running.
+      # Alex Fedorec's part 1 (plain requirements, 12 code cells, about 20 s of running) and the
+      # setup check, whose requirements are a subset of part 1's.
       NOTEBOOK: courses/first-edition-2025/03-fedorec-synthetic-communities/notebooks/part1_community_models
+      SETUP: courses/second-edition/00-before-the-school/notebooks/setup_check
     steps:
       - uses: actions/checkout@v4
         with:
@@ -99,11 +101,14 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-          cache-dependency-path: ${{ env.NOTEBOOK }}/requirements.txt
+          cache-dependency-path: |
+            ${{ env.NOTEBOOK }}/requirements.txt
+            ${{ env.SETUP }}/requirements.txt
       - run: npm install
-      - name: Jupyter and the notebook's requirements, as a participant installs them
+      - name: Jupyter and the notebooks' requirements, as a participant installs them
         run: |
-          python -m pip install jupyter-server==2.21.1 ipykernel==7.4.0 -r "$NOTEBOOK/requirements.txt"
+          python -m pip install jupyter-server==2.21.1 ipykernel==7.4.0 \
+            -r "$NOTEBOOK/requirements.txt" -r "$SETUP/requirements.txt"
           echo "CONNECTOR_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
       - name: The released connector, checked against its SHA-256
         run: |
