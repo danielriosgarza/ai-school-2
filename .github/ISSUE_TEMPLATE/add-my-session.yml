@@ -1,0 +1,77 @@
+name: Add my session
+description: Send the material of your second edition session (slides, notebooks, data, reading) without using git.
+title: "Add my session: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form hands the material of one session to the organisers, who place it in the course and open the pull request. Please read the [speaker guide](https://github.com/danielriosgarza/ai-school-2/blob/main/docs/speaker-guide.md) first: it says what a session delivers and the limits of the site.
+
+        **Everything in this issue is public as soon as you send it, the attached files included.** Do not write an e-mail address or other personal data here or in the files. Attach each file to its field (each under 25 MiB; zip a notebook's folder), or give a link to it.
+  - type: input
+    id: name
+    attributes:
+      label: Your name
+      description: As it should appear on the site.
+    validations:
+      required: true
+  - type: input
+    id: affiliation
+    attributes:
+      label: Affiliation and country
+      placeholder: Institute, University, Country
+    validations:
+      required: true
+  - type: input
+    id: talk-title
+    attributes:
+      label: Title of the talk
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: A few lines on what the session shows and what participants do in it. It becomes the topic's objective on the site.
+    validations:
+      required: true
+  - type: textarea
+    id: slides
+    attributes:
+      label: Slides
+      description: The deck as a PDF, attached here or linked. A PowerPoint or Keynote file has to be exported to PDF.
+  - type: textarea
+    id: notebooks
+    attributes:
+      label: Notebooks
+      description: Each notebook (.ipynb) executed and saved with its outputs, attached here or linked. Leave empty if the session has none.
+  - type: textarea
+    id: data
+    attributes:
+      label: Data files and requirements
+      description: For each notebook, its data files and its requirements.txt (or environment.yml), at the paths the notebook opens them by. A zip of the notebook's folder is easiest. Larger data can stay on Zenodo or GitHub with a link.
+  - type: textarea
+    id: reading
+    attributes:
+      label: Reading
+      description: The text of the session's reading (a summary, what each notebook does, the install line, links), pasted here, or a Markdown or PDF file attached or linked.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you send
+      description: The speaker guide explains each point.
+      options:
+        - label: I ran each notebook from start to end in a new environment built from its requirements.txt alone, and saved it with its outputs (or my session has no notebook).
+          required: true
+        - label: I also ran each notebook through Run on this computer from a local preview of the site. If not, the organisers do it.
+        - label: Every file is under 25 MiB.
+          required: true
+        - label: The files contain no e-mail addresses or other personal data.
+          required: true
+        - label: I have the right to publish this material, and I agree that it is published on the school's site and in its public repository, where anyone can read and download it.
+          required: true
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else
+      description: A licence for your material, the order of the files, a note for the organisers.

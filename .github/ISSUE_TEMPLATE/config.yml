@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Speaker guide
+    url: https://github.com/danielriosgarza/ai-school-2/blob/main/docs/speaker-guide.md
+    about: What a session delivers, the limits of the site, and how to send material.
