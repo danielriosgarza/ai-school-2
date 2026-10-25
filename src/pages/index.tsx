@@ -1,10 +1,12 @@
 import { Link, type PageProps } from 'parallax-site/pages';
 import type { ReactNode } from 'react';
 import { Footer } from '../components/Footer';
+import { SchoolNav } from '../components/PageHeader';
 import { PartnerLogos } from '../components/PartnerLogos';
 import { Schedule } from '../components/Schedule';
 import { Section } from '../components/Section';
 import { SpeakerCard } from '../components/SpeakerCard';
+import { hasCourse } from '../content/catalogue';
 import { edition, firstEdition, SCHOOL_NAME } from '../content/edition';
 import {
   FIRST_EDITION_LABEL,
@@ -23,18 +25,11 @@ import styles from './index.module.css';
 
 export const title = SCHOOL_NAME;
 
-// The school's front page, at / (docs/plan.md, sections 4 and 5): the hero with the scene, the
-// overview, the programme at a glance, the speakers, the supporters and partners, and the footer.
+// The school's front page, at / (docs/plan.md, sections 4 and 5): the school's links, the hero with
+// the scene, the overview, the programme at a glance, the speakers, the supporters and partners, and the footer.
 // The second edition's programme, speakers and partners are shown once their lists have an entry;
 // while a list is empty, its section shows the first edition's, labelled "First edition, 2025",
 // with one line that says the second edition's will be announced (docs/decisions.md, W4).
-
-/** Whether the catalogue holds a course of this folder name. */
-function hasCourse(catalogue: PageProps['catalogue'], course: string): boolean {
-  return catalogue.instructors.some((instructor) =>
-    instructor.courses.some((each) => each.slug === course),
-  );
-}
 
 /** The lead of a section that shows the first edition's list: the label, then the line. */
 function FirstEditionLead({ section }: { section: FrontSection }) {
@@ -64,6 +59,7 @@ export default function Front({ catalogue }: PageProps) {
 
   return (
     <div className={theme.site}>
+      <SchoolNav />
       <main id="main">
         <Hero edition={edition} />
 
