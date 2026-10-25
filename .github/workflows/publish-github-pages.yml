@@ -1,0 +1,77 @@
+# Publishes dist/site as this repository's GitHub Pages site, and dist/content to the gh-pages
+# branch of a second repository, whose Pages site is the content host: a repository has at most
+# one Pages site. Manual only: it runs when started from the Actions tab (Run workflow), never on
+# a push, a pull request or a schedule. docs/publishing.md, GitHub Pages, which also says why
+# GitHub Pages does not fully meet the content host's requirement.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   PAGES_CONTENT_REPOSITORY   owner/name of the repository whose Pages site serves dist/content
+#   PAGES_CONTENT_DEPLOY_KEY   the private half of an SSH key pair; its public half is a deploy key
+#                              with write access in that repository
+# This repository: Settings > Pages > Source "GitHub Actions", and the site host as Custom domain.
+name: Publish to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # parallax check and build; stops on the placeholder origins of parallax.config.ts.
+      - id: build
+        run: node scripts/publish-build.mjs
+      # Branch publishing keeps a custom domain in a CNAME file (none for a <owner>.github.io
+      # host), and .nojekyll stops the Jekyll build. The site tree needs neither: it is published
+      # from a workflow.
+      - name: Add the host files
+        env:
+          CONTENT_HOST: ${{ steps.build.outputs.content_host }}
+        run: |
+          case "$CONTENT_HOST" in
+            *.github.io) ;;
+            *) printf '%s\n' "$CONTENT_HOST" > dist/content/CNAME ;;
+          esac
+          touch dist/content/.nojekyll
+      # force_orphan makes the branch hold exactly this tree in one commit, so a removed file is
+      # gone. Content first, so that no new page names an object that is not yet published.
+      - name: Deploy dist/content to the content repository
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        with:
+          deploy_key: ${{ secrets.PAGES_CONTENT_DEPLOY_KEY }}
+          external_repository: ${{ secrets.PAGES_CONTENT_REPOSITORY }}
+          publish_branch: gh-pages
+          publish_dir: dist/content
+          force_orphan: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+
+  # Replaces this repository's Pages site with dist/site.
+  site:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

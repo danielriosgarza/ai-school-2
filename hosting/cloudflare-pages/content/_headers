@@ -1,0 +1,6 @@
+# The content host's answers for PDFs read by range (docs/publishing.md, Cloudflare Pages). The
+# workflow publish-cloudflare-pages.yml copies this file to dist/content/_headers after every
+# build. Pages adds Access-Control-Allow-Origin: * to every answer itself, so it is not repeated.
+/*
+  Access-Control-Allow-Headers: range
+  Access-Control-Expose-Headers: Content-Range, Accept-Ranges, Content-Length

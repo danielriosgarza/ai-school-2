@@ -1,0 +1,45 @@
+# Starts a deploy of the two Render static sites, dist/content first, then dist/site. Render builds
+# each from this repository at this commit (hosting/render/render.yaml) and sets the content
+# host's headers itself, so no host file is copied. Manual only: it runs when started from the
+# Actions tab (Run workflow), never on a push, a pull request or a schedule. docs/publishing.md,
+# Render static sites.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   RENDER_DEPLOY_HOOK_SITE      the deploy hook URL of the static site that serves dist/site
+#   RENDER_DEPLOY_HOOK_CONTENT   the deploy hook URL of the static site that serves dist/content
+name: Publish to Render
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # The same check and build that Render runs, so a failing commit starts no deploy.
+      - run: node scripts/publish-build.mjs
+      # A deploy hook URL ends in ?key=…, and takes the commit to build as ref. The two hooks
+      # start two independent deploys: the site's may finish before the content's.
+      - name: Start the deploys of dist/content and dist/site
+        env:
+          HOOK_SITE: ${{ secrets.RENDER_DEPLOY_HOOK_SITE }}
+          HOOK_CONTENT: ${{ secrets.RENDER_DEPLOY_HOOK_CONTENT }}
+        run: |
+          hook() { curl --fail --silent --show-error -X POST -o /dev/null "$1&ref=$GITHUB_SHA"; }
+          hook "$HOOK_CONTENT"
+          hook "$HOOK_SITE"

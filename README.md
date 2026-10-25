@@ -32,7 +32,8 @@ The workflow `.github/workflows/check.yml` runs on every push and pull request, 
 package.json              parallax-site 0.2.0 (exact) and the npm scripts
 parallax.config.ts        mode 'instructor', level 0, the school's name, the two origins (placeholders)
 instructor.yaml           the school as instructor: its name and its address
-courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived
+courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived;
+                          second-edition, with topic 0, Before the school (the participants' setup)
 src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /,
                           programme, speakers, venue, organisation and register the inner pages
 src/styles/               theme.module.css: the school's palette, faces, type and spacing scales
@@ -42,14 +43,23 @@ src/content/              edition, programme, speakers, partners, participants, 
                           typed modules, with topics, dates, placeholder and catalogue helpers
 src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
                           and campus photo
-scripts/                  preview.mjs serves the build on two local hosts; contrast.mjs checks the palette;
-                          check-links.mjs checks the links of a build; *.test.mjs are the unit tests, which
-                          resolve-ts.mjs lets import src/content
+scripts/                  preview.mjs serves the build on two local hosts; publish-build.mjs checks and builds
+                          for publishing, refusing the placeholder and local origins; contrast.mjs checks
+                          the palette; check-links.mjs checks the links of a build; *.test.mjs are the unit
+                          tests, which resolve-ts.mjs lets import src/content
 e2e/                      the browser tests, one file per area, with known-issues.ts; playwright.config.ts
                           at the root
-docs/                     plan.md (the approved plan), decisions.md (the decisions log)
+docs/                     plan.md (the approved plan), decisions.md (the decisions log), publishing.md
+                          (how to publish the build to each candidate host), speaker-guide.md (what a
+                          session delivers and how to send it)
 docs/review/              screenshots for the review of a pull request, one folder per issue
-.github/workflows/        check.yml
+.github/workflows/        check.yml; publish-*.yml, one per candidate host, started by hand only
+.github/ISSUE_TEMPLATE/   add-my-session.yml, the form for speakers who do not use git, and config.yml
+.github/pull_request_template.md
+                          the checklist of a session's pull request
+hosting/                  what each host reads: _headers for Netlify and Cloudflare Pages (their workflows
+                          copy it into dist/content after the build), a Render Blueprint, S3 CORS rules
+                          and a CloudFront function, Caddy and nginx configurations
 compose.yml, Caddyfile, compose.level2.yml, compose.runner.yml
                           Parallax's installation for levels 1 and 2; unused at level 0
 .parallax-template.json   fingerprints of the files the template gave the site, for `npx parallax update`
@@ -61,6 +71,10 @@ Generated and ignored by git: `node_modules/`, `dist/`, `.parallax/` (the tool's
 
 The approved plan is in [docs/plan.md](docs/plan.md). Work happens one GitHub issue per plan item (W1 to W12), one pull request per issue. [docs/decisions.md](docs/decisions.md) records the choices each issue made, newest last.
 
+## Publishing
+
+[docs/publishing.md](docs/publishing.md) says what every host must give (two host names, and range and cross-origin answers on the content host), how each candidate host gives it, and the steps from the DNS records to checking the live site. Each candidate has a workflow under `.github/workflows/` that runs only when started by hand from the Actions tab, and reads its credentials from repository secrets. No host is chosen yet, so nothing is published.
+
 ## How material arrives
 
-Course material comes from the speakers, and a later issue (W7) adds a speaker kit for it: `docs/speaker-guide.md` with the folder of a session and the rules that matter (PDF decks, notebooks saved with their outputs, data files and a `requirements.txt` beside each notebook, at most 25 MiB per file), a GitHub issue form for speakers who do not use git, and a pull request checklist. Whichever way the files come, they land as a pull request that passes `npx parallax check` and `npx parallax build` in CI. The first edition's material arrives before that as an archived course (W2).
+Course material comes from the speakers. [docs/speaker-guide.md](docs/speaker-guide.md) gives the folder of a session and the rules that matter: PDF decks, notebooks saved with their outputs, data files and a pinned `requirements.txt` beside each notebook, a short reading with the install line, at most 25 MiB per file, and each notebook run through Run on this computer before it is sent. A speaker sends material as a pull request, which carries a short checklist, or through the issue form "Add my session", for speakers who do not use git; the organisers then open the pull request. Whichever way the files come, they land as a pull request that passes `npx parallax check` and `npx parallax build` in CI. Each session becomes a topic of `courses/second-edition`, after topic 0, Before the school, whose reading and setup notebook prepare the participants' laptops. The first edition's material is the archived course `courses/first-edition-2025`.
