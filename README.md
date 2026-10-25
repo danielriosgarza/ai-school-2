@@ -37,13 +37,18 @@ src/content/              edition, programme, speakers, partners, participants, 
 src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
                           and campus photo
 scripts/preview.mjs       serves the build on two local hosts
-docs/                     plan.md (the approved plan), decisions.md (the decisions log), speaker-guide.md
-                          (what a session delivers and how to send it)
+scripts/publish-build.mjs checks and builds for publishing, refusing the placeholder and local origins
+docs/                     plan.md (the approved plan), decisions.md (the decisions log), publishing.md
+                          (how to publish the build to each candidate host), speaker-guide.md (what a
+                          session delivers and how to send it)
 docs/review/              screenshots for the review of a pull request, one folder per issue
-.github/workflows/        check.yml
+.github/workflows/        check.yml; publish-*.yml, one per candidate host, started by hand only
 .github/ISSUE_TEMPLATE/   add-my-session.yml, the form for speakers who do not use git, and config.yml
 .github/pull_request_template.md
                           the checklist of a session's pull request
+hosting/                  what each host reads: _headers for Netlify and Cloudflare Pages (their workflows
+                          copy it into dist/content after the build), a Render Blueprint, S3 CORS rules
+                          and a CloudFront function, Caddy and nginx configurations
 compose.yml, Caddyfile, compose.level2.yml, compose.runner.yml
                           Parallax's installation for levels 1 and 2; unused at level 0
 .parallax-template.json   fingerprints of the files the template gave the site, for `npx parallax update`
@@ -54,6 +59,10 @@ Generated and ignored by git: `node_modules/`, `dist/`, `.parallax/` (the tool's
 ## Plan and decisions
 
 The approved plan is in [docs/plan.md](docs/plan.md). Work happens one GitHub issue per plan item (W1 to W12), one pull request per issue. [docs/decisions.md](docs/decisions.md) records the choices each issue made, newest last.
+
+## Publishing
+
+[docs/publishing.md](docs/publishing.md) says what every host must give (two host names, and range and cross-origin answers on the content host), how each candidate host gives it, and the steps from the DNS records to checking the live site. Each candidate has a workflow under `.github/workflows/` that runs only when started by hand from the Actions tab, and reads its credentials from repository secrets. No host is chosen yet, so nothing is published.
 
 ## How material arrives
 
