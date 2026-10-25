@@ -11,16 +11,40 @@ export const SITE_PAGES = ['/', '/programme', '/speakers', '/venue', '/organisat
 export const COURSE = '/courses/first-edition-2025';
 export const FIRST_TOPIC = `${COURSE}/53e9ed4d-59c0-4144-b53c-14cd367c16d6`;
 
+/** Alex Fedorec's and Lucas Böttcher's sessions, topics 3 and 6 of the archive course. */
+export const THIRD_TOPIC = `${COURSE}/55361372-1c29-4abd-8523-e4b46e29a800`;
+export const SIXTH_TOPIC = `${COURSE}/f72e196f-7c2a-4eac-a9db-6fdc96dc3bdd`;
+
 /** The Parallax screens the tests open: the syllabus, a deck and a notebook. */
 export const COURSE_PAGES = [COURSE, `${FIRST_TOPIC}/slides`, `${FIRST_TOPIC}/notebooks`];
+
+/**
+ * Tabs that only the 360 px check opens: the Reading and Notebooks tabs whose picker of Parallax's
+ * topic toolbar, as wide as its longest title, made the page scroll sideways until W10 shortened
+ * the titles (docs/decisions.md, W8 and W10).
+ */
+export const PICKER_PAGES = [
+  `${FIRST_TOPIC}/reading`,
+  `${THIRD_TOPIC}/reading`,
+  `${THIRD_TOPIC}/notebooks`,
+  `${SIXTH_TOPIC}/reading`,
+  `${SIXTH_TOPIC}/notebooks`,
+];
 
 /** Every page the tests open by name in their titles. */
 export const PAGES = [...SITE_PAGES, ...COURSE_PAGES];
 
+const TOPIC_NAMES: Record<string, string> = {
+  [FIRST_TOPIC]: 'the first topic',
+  [THIRD_TOPIC]: 'the third topic',
+  [SIXTH_TOPIC]: 'the sixth topic',
+};
+
 /** A page's name in a test's title: its address, or what a Parallax screen shows. */
 export function named(path: string) {
   if (path === COURSE) return 'the syllabus';
-  if (path.startsWith(`${FIRST_TOPIC}/`)) return `the first topic's ${path.split('/').pop()} tab`;
+  const topic = path.slice(0, path.lastIndexOf('/'));
+  if (TOPIC_NAMES[topic]) return `${TOPIC_NAMES[topic]}'s ${path.split('/').pop()} tab`;
   return path;
 }
 

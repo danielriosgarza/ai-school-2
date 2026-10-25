@@ -13,8 +13,8 @@ Microbiome engineering is the rational control of a microbial ecosystem so that 
 ## Notebooks
 
 - **Kinetic model of a microbial community** (`kinetic_model.ipynb`): builds a model piece by piece (metabolites, feeding terms, subpopulations, bacteria, environment, a control pulse and a reactor), simulates it, then loads the three-species gut community from `modelTemplates/`. Its network views are ipycytoscape widgets, which appear in JupyterLab or Jupyter Notebook but not on the course page.
-- **Controlling butyrate production with random actions** (`controller_simulation_demo.ipynb`): runs one episode of the butyrate control environment with random actions and plots the target, the actions and the kinetics.
-- **Controlling butyrate production with a trained controller** (`compare_control_policies.ipynb`): the same episode driven by the trained controller (a PPO policy from the repository's `trained_models/`), to compare with the random one.
+- **Butyrate control: random actions** (`controller_simulation_demo.ipynb`): runs one episode of the butyrate control environment with random actions and plots the target, the actions and the kinetics.
+- **Butyrate control: a trained controller** (`compare_control_policies.ipynb`): the same episode driven by the trained controller (a PPO policy from the repository's `trained_models/`), to compare with the random one.
 
 ## Setup
 

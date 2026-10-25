@@ -23,9 +23,9 @@ resources:
     visibility: visible
   - id: 333370a3-28c0-4e7e-992d-d4407ce4b1bd
     file: notebooks/controller_simulation_demo.ipynb
-    title: Controlling butyrate production with random actions
+    title: "Butyrate control: random actions"
     visibility: visible
   - id: eda1235e-8143-40ca-b1b9-e0ffc667bb92
     file: notebooks/compare_control_policies.ipynb
-    title: Controlling butyrate production with a trained controller
+    title: "Butyrate control: a trained controller"
     visibility: visible
