@@ -1,6 +1,10 @@
 {
   "private": true,
   "type": "module",
+  "scripts": {
+    "check": "parallax check",
+    "build": "parallax build"
+  },
   "dependencies": {
     "parallax-site": "0.2.0"
   }
