@@ -19,8 +19,8 @@
 
 /* Print, for A4: black on white at print sizes, no school links (PageHeader.module.css), no
    sticky day headings, each day of a programme on a sheet of its own, and no session row split
-   across sheets. The roles are set with !important on every element so that the petrol register
-   of the header and the footer (.inverse) prints black on white too. Paper size and margins are
+   across sheets. The roles are set with !important on every element so that the blue register of
+   the header (.inverse) and the slate of the footer (.slate) print black on white too. Paper size and margins are
    left to the browser: an @page rule would stay in the document after the visitor leaves this
    page and apply to Parallax's screens. Parallax's bar prints above the page; a site stylesheet
    cannot reach it. */
@@ -33,7 +33,6 @@
     --school-primary-ink: #000 !important;
     --school-rule: #999 !important;
     --school-tint: #fff !important;
-    --school-accent-ink: #000 !important;
   }
   .page {
     --school-size-label: 9pt !important;

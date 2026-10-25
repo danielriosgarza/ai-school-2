@@ -2,7 +2,7 @@
 // (the `.site` rule for the light scheme, the `.site` rule inside `@media (prefers-color-scheme:
 // dark)` for the dark one), computes the contrast ratio of every text and ground pair in PAIRS in
 // both schemes and prints the table. Text needs 4.5:1, non-text marks (focus outline, the material
-// square, outlines) 3:1 (success criteria 1.4.3 and 1.4.11); hairlines and tints are decorative and
+// square, outlines, the filled action's edge) 3:1 (success criteria 1.4.3 and 1.4.11); hairlines and tints are decorative and
 // shown without a minimum. No dependency; Node 22.
 //
 //   node scripts/contrast.mjs                 the table as Markdown; exit code 1 if a pair fails
@@ -24,46 +24,65 @@ export const MINIMUM = { text: 4.5, ui: 3, decorative: 0 };
 
 /**
  * The pairs that the pages use, by role (the property's name without `--school-`). Inside
- * `.inverse` the roles take their values on petrol, which the `primary` rows cover.
+ * `.inverse` the roles take their values on blue and inside `.slate` on the footer's slate, which
+ * the `primary` and `footer` rows cover: there the filled action is `on-primary` with a `primary`
+ * label, hovered `on-primary-muted`.
  */
 export const PAIRS = [
   { fg: 'ink', bg: 'paper', kind: 'text', use: 'text and headings on the page' },
   { fg: 'ink-muted', bg: 'paper', kind: 'text', use: 'metadata on the page' },
-  { fg: 'primary-ink', bg: 'paper', kind: 'text', use: 'links and petrol text on the page' },
+  { fg: 'primary-ink', bg: 'paper', kind: 'text', use: 'links and blue text on the page' },
   { fg: 'ink', bg: 'tint', kind: 'text', use: 'text in break rows and tinted bands' },
   { fg: 'ink-muted', bg: 'tint', kind: 'text', use: 'metadata in tinted rows' },
   { fg: 'primary-ink', bg: 'tint', kind: 'text', use: 'links in tinted bands' },
-  { fg: 'on-primary', bg: 'primary', kind: 'text', use: 'text and links on petrol (hero, footer)' },
-  { fg: 'on-primary-muted', bg: 'primary', kind: 'text', use: 'metadata on petrol' },
-  { fg: 'on-primary', bg: 'primary-tint', kind: 'text', use: 'text in tinted rows on petrol' },
+  {
+    fg: 'on-primary',
+    bg: 'primary',
+    kind: 'text',
+    use: 'text and links on blue (hero, page heads, bands)',
+  },
+  { fg: 'on-primary-muted', bg: 'primary', kind: 'text', use: 'metadata on blue' },
+  {
+    fg: 'on-primary',
+    bg: 'primary-tint',
+    kind: 'text',
+    use: 'text in tinted rows on blue, the hovered outline on blue',
+  },
   {
     fg: 'on-primary-muted',
     bg: 'primary-tint',
     kind: 'text',
-    use: 'metadata in tinted rows on petrol',
+    use: 'metadata in tinted rows on blue',
   },
-  { fg: 'accent', bg: 'primary', kind: 'text', use: 'amber text on petrol' },
-  { fg: 'on-accent', bg: 'accent', kind: 'text', use: 'label of the amber primary action' },
+  { fg: 'on-action', bg: 'action', kind: 'text', use: 'label of the filled action on the page' },
+  { fg: 'on-action', bg: 'action-hover', kind: 'text', use: 'the same, hovered' },
+  { fg: 'primary', bg: 'on-primary', kind: 'text', use: 'label of the white action on blue' },
+  { fg: 'primary', bg: 'on-primary-muted', kind: 'text', use: 'the same, hovered' },
+  { fg: 'on-selection', bg: 'selection', kind: 'text', use: 'selected text on the page' },
   { fg: 'strip-ink', bg: 'strip', kind: 'text', use: 'partner names on the logo strip' },
+  { fg: 'footer-ink', bg: 'footer', kind: 'text', use: 'text and links in the footer' },
+  { fg: 'footer-ink-muted', bg: 'footer', kind: 'text', use: 'metadata in the footer' },
   {
-    fg: 'accent-ink',
+    fg: 'primary-ink',
     bg: 'paper',
     kind: 'ui',
-    use: 'focus outline and material square on the page',
+    use: 'focus outline, outlined action, material square, current page, portrait band',
   },
+  { fg: 'primary-ink', bg: 'tint', kind: 'ui', use: 'the same in tinted bands' },
+  { fg: 'action', bg: 'paper', kind: 'ui', use: 'the filled action against the page' },
   {
-    fg: 'accent-ink',
-    bg: 'tint',
+    fg: 'on-primary',
+    bg: 'primary',
     kind: 'ui',
-    use: 'focus outline and material square in tinted rows',
+    use: 'focus outline, white action and outline, marks on blue',
   },
-  { fg: 'accent', bg: 'primary', kind: 'ui', use: 'focus outline and marks on petrol' },
-  { fg: 'accent', bg: 'primary-tint', kind: 'ui', use: 'focus outline in tinted rows on petrol' },
-  { fg: 'primary-ink', bg: 'paper', kind: 'ui', use: 'outlined action, band under a portrait' },
+  { fg: 'on-primary', bg: 'primary-tint', kind: 'ui', use: 'focus outline in tinted rows on blue' },
   { fg: 'strip-focus', bg: 'strip', kind: 'ui', use: 'focus outline on the logo strip' },
+  { fg: 'footer-ink', bg: 'footer', kind: 'ui', use: 'focus outline in the footer' },
   { fg: 'rule', bg: 'paper', kind: 'decorative', use: 'hairlines between rows, card borders' },
   { fg: 'tint', bg: 'paper', kind: 'decorative', use: 'tinted rows against the page' },
-  { fg: 'primary-rule', bg: 'primary', kind: 'decorative', use: 'hairlines on petrol' },
+  { fg: 'primary-rule', bg: 'primary', kind: 'decorative', use: 'hairlines on blue' },
+  { fg: 'footer-rule', bg: 'footer', kind: 'decorative', use: 'hairlines in the footer' },
 ];
 
 /** `#rgb` or `#rrggbb` as [r, g, b] in 0…255. */

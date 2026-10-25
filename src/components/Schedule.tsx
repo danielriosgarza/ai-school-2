@@ -65,9 +65,9 @@ function Row({
 
 /**
  * One day of a programme as a timetable (docs/plan.md, section 5): a narrow column of start and
- * end times in tabular figures, the session's title in the display face with its speaker and kind
+ * end times in tabular figures, the session's title in the title face with its speaker and kind
  * beneath, thin rules between sessions and tinted rows for breaks. The day's heading stays in view
- * while the day scrolls. A session whose topic is known links to it, with the amber square that
+ * while the day scrolls. A session whose topic is known links to it, with the blue square that
  * says material is available.
  */
 export function Schedule({ day, number, speakers = [], level = 3, year = false }: ScheduleProps) {

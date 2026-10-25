@@ -24,16 +24,16 @@ function shown(address: string): string {
 }
 
 /**
- * The footer of every page (docs/plan.md, section 5): the school's name and edition, the contact
- * address, the first edition (its site, and its course once the site has it) and, when given, the
- * row of partners' logos. No copyright line.
+ * The footer of every page (docs/plan.md, section 5), on the first edition's slate: the school's
+ * name and edition, the contact address, the first edition (its site, and its course once the site
+ * has it) and, when given, the row of partners' logos. No copyright line.
  */
 export function Footer({ catalogue, edition = currentEdition, partners }: FooterProps) {
   const contact = valueOf(edition.contact);
   const dates = shownOf(edition.dates, (range) => formatDayRange(range.start, range.end));
   const archive = hasCourse(catalogue, firstEdition.course);
   return (
-    <footer className={`${theme.inverse} ${styles.footer}`}>
+    <footer className={`${theme.slate} ${styles.footer}`}>
       <Container>
         <div className={styles.columns}>
           <div className={styles.school}>
