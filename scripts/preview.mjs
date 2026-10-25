@@ -70,7 +70,7 @@ export function rangeOf(header, size) {
   if (match[1] === '') {
     // A suffix range: the last n bytes.
     const length = Number(match[2]);
-    if (length === 0) return 'unsatisfiable';
+    if (length === 0 || size === 0) return 'unsatisfiable';
     return { start: Math.max(size - length, 0), end: size - 1 };
   }
   const start = Number(match[1]);
