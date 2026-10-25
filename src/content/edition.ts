@@ -61,6 +61,18 @@ export interface Edition {
 /** The school's name, as `parallax.config.ts` and `instructor.yaml` give it. */
 export const SCHOOL_NAME = 'School of Artificial Intelligence Applied to Microbiomes';
 
+/**
+ * The name in short, for the browser tabs of the inner pages, where the full name leaves no room
+ * for the page's own (docs/plan.md, section 5). The front page's tab, the masthead and the hero
+ * keep the full name.
+ */
+export const SHORT_NAME = 'School of AI Applied to Microbiomes';
+
+/** An inner page's `title`: "Programme · School of AI Applied to Microbiomes". */
+export function pageTitle(page: string): string {
+  return `${page} · ${SHORT_NAME}`;
+}
+
 /** The school's address on the first edition's site, already public. */
 const FIRST_CONTACT = 'schoolaisaclay@gmail.com';
 

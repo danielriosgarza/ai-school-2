@@ -6,7 +6,7 @@ import { Section } from '../components/Section';
 import { Shown } from '../components/Shown';
 import { courseAddress } from '../content/catalogue';
 import { formatDayRange } from '../content/dates';
-import { edition, firstEdition, SCHOOL_NAME } from '../content/edition';
+import { edition, firstEdition, pageTitle } from '../content/edition';
 import { valueOf } from '../content/placeholder';
 import { type Programme as ProgrammeData, programme, programme2025 } from '../content/programme';
 import { type Speaker, speakers, speakers2025 } from '../content/speakers';
@@ -14,7 +14,7 @@ import { editionTopics, topicAddress } from '../content/topics';
 import theme from '../styles/theme.module.css';
 import styles from './programme.module.css';
 
-export const title = `Programme · ${SCHOOL_NAME}`;
+export const title = pageTitle('Programme');
 
 /** One timetable per day of a programme, each day numbered, under a heading of the page. */
 function Days({ data, people }: { data: ProgrammeData; people: readonly Speaker[] }) {

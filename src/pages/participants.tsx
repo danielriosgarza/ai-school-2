@@ -2,13 +2,13 @@ import { Link, type PageProps } from 'parallax-site/pages';
 import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
 import { Section } from '../components/Section';
-import { edition, SCHOOL_NAME } from '../content/edition';
+import { edition, pageTitle } from '../content/edition';
 import { type Participant, type ParticipantLink, participants } from '../content/participants';
 import { isPlaceholder, valueOf } from '../content/placeholder';
 import theme from '../styles/theme.module.css';
 import styles from './participants.module.css';
 
-export const title = `Participants · ${SCHOOL_NAME}`;
+export const title = pageTitle('Participants');
 
 /** The side of a participant's picture file in pixels (docs/participants.md). */
 const PICTURE_SIZE = 480;

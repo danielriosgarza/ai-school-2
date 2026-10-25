@@ -9,16 +9,16 @@ import { formatDay, type IsoDay, today } from '../content/dates';
 import {
   edition,
   firstEdition,
+  pageTitle,
   type Participation,
   type RegistrationState,
   registrationState,
-  SCHOOL_NAME,
 } from '../content/edition';
 import { type Fact, isPlaceholder, valueOf } from '../content/placeholder';
 import theme from '../styles/theme.module.css';
 import styles from './register.module.css';
 
-export const title = `Registration · ${SCHOOL_NAME}`;
+export const title = pageTitle('Registration');
 
 const day = (iso: IsoDay) => formatDay(iso);
 

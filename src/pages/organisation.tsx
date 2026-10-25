@@ -4,14 +4,14 @@ import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
 import { PartnerLogos } from '../components/PartnerLogos';
 import { Section } from '../components/Section';
-import { edition, SCHOOL_NAME } from '../content/edition';
+import { edition, pageTitle } from '../content/edition';
 import { type Organisation, organisation, organisation2025 } from '../content/organisation';
 import { type Partner, partners, partners2025 } from '../content/partners';
 import { isPlaceholder, valueOf } from '../content/placeholder';
 import theme from '../styles/theme.module.css';
 import styles from './organisation.module.css';
 
-export const title = `Organisation · ${SCHOOL_NAME}`;
+export const title = pageTitle('Organisation');
 
 /** The committee and the assistants as a two-column definition list. */
 function People({ data }: { data: Organisation }) {
@@ -73,7 +73,7 @@ export default function OrganisationPage({ catalogue }: PageProps) {
           lead={
             announced
               ? 'Who organises the second edition, who supports it, and how to reach the organisers.'
-              : "The second edition's organising committee, student assistants and supporters are not announced yet. Below are the school's contact address and the first edition's organisers and supporters."
+              : "The second edition's organisers and supporters are not announced yet. Below are the school's contact address and the first edition's organisers and supporters."
           }
         />
         <Section id="contact" title="Contact" tone="tint">
