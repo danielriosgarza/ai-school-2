@@ -1,26 +1,101 @@
-/* The placeholder front page: one column in the school's palette and faces, from the custom
-   properties of src/styles/theme.module.css. The front page itself is W4 (docs/plan.md, section 7). */
-.front {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: calc(var(--school-width) + 2 * var(--school-inset));
-  margin: 0 auto;
-  padding: var(--school-space-64) var(--school-inset);
+/* The front page (docs/plan.md, sections 4 and 5), below the hero (_hero.module.css): the
+   overview's two titled paragraphs, the programme's day columns, the speakers' strip, the label of
+   a section that shows the first edition, and the link that closes a section. */
+
+/* "First edition, 2025": a label at the start of a section's lead. */
+.label {
+  display: inline-block;
+  margin-right: var(--school-space-8);
+  padding: 0 var(--school-space-8);
+  border: var(--school-rule-width) solid var(--school-primary-ink);
+  border-radius: 2px;
+  font: 600 var(--school-size-label) / 1.6 var(--school-font-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--school-primary-ink);
+  vertical-align: 0.2em;
+  white-space: nowrap;
 }
-.name {
-  max-width: 20ch;
+
+/* The overview: the lead above, then who the school is for and what participants do. */
+.overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--school-space-24) var(--school-space-48);
+  max-width: 64rem;
+}
+.subheading {
   margin: 0;
-  font: var(--school-text-hero);
-  letter-spacing: var(--school-tracking-display);
-  text-wrap: balance;
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
 }
-.state {
+.paragraph {
   max-width: var(--school-measure);
-  margin: var(--school-space-16) 0 0;
-  font: var(--school-text-lead);
+  margin: var(--school-space-8) 0 0;
+}
+
+/* The programme at a glance: one column per day on wide screens, the days stacked below. The
+   Schedule of each day sits in a cell of its own, so its spacing between consecutive days does
+   not offset the columns. */
+.days {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--school-space-32);
+  align-items: start;
+}
+.day {
+  min-width: 0;
+}
+
+/* The speakers' strip: one row of cards that scrolls sideways inside the column, with the next
+   card showing at the edge. */
+.strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 15rem;
+  gap: var(--school-space-24);
+  margin: 0;
+  padding: 0 0 var(--school-space-16);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-color: var(--school-primary-ink) transparent;
+  scrollbar-width: thin;
+}
+.speaker {
+  display: flex;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* The link that closes a section, to its inner page. */
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--school-space-8) var(--school-space-32);
+  margin: var(--school-space-32) 0 0;
+  font: 600 var(--school-size-body) / 1.45 var(--school-font-text);
+}
+
+@media (max-width: 1120px) {
+  .days {
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--school-space-48);
+  }
+}
+@media (max-width: 800px) {
+  .overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 @media (max-width: 540px) {
-  .front {
-    padding-block: var(--school-space-40);
+  .strip {
+    grid-auto-columns: 14rem;
+    gap: var(--school-space-16);
+  }
+  .more {
+    margin-top: var(--school-space-24);
   }
 }
