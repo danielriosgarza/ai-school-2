@@ -21,12 +21,14 @@ import { programme, programme2025 } from '../content/programme';
 import { speakers, speakers2025 } from '../content/speakers';
 import theme from '../styles/theme.module.css';
 import { Hero } from './_hero';
+import Scene from './_scene';
 import styles from './index.module.css';
 
 export const title = SCHOOL_NAME;
 
-// The school's front page, at / (docs/plan.md, sections 4 and 5): the school's links, the hero with
-// the scene, the overview, the programme at a glance, the speakers, the supporters and partners, and the footer.
+// The school's front page, at / (docs/plan.md, sections 4 and 5): the school's masthead, the hero,
+// the overview with the scene beside it, the programme at a glance, the speakers, the supporters
+// and partners, and the footer.
 // The second edition's programme, speakers and partners are shown once their lists have an entry;
 // while a list is empty, its section shows the first edition's, labelled "First edition, 2025",
 // with one line that says the second edition's will be announced (docs/decisions.md, W4).
@@ -63,7 +65,26 @@ export default function Front({ catalogue }: PageProps) {
       <main id="main">
         <Hero edition={edition} />
 
-        <Section id="overview" title={overview.title} lead={overview.what} tone="tint">
+        <Section
+          id="overview"
+          title={overview.title}
+          lead={overview.what}
+          tone="tint"
+          aside={
+            // The scene on its own paper inside the tinted band, in the page's colours: bands in
+            // tints of the blue, the target line in the ink, the Pause button's focus in blue.
+            <div className={styles.sceneBox}>
+              <Scene
+                className={styles.scene}
+                paper="var(--school-paper)"
+                ink="var(--school-ink)"
+                primary="var(--school-primary-ink)"
+                accent="var(--school-ink)"
+                focus="var(--school-focus)"
+              />
+            </div>
+          }
+        >
           <div className={styles.overview}>
             {[overview.who, overview.does].map((paragraph) => (
               <div key={paragraph.title}>

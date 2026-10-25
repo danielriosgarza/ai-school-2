@@ -1,6 +1,7 @@
 /* The front page (docs/plan.md, sections 4 and 5), below the hero (_hero.module.css): the
-   overview's two titled paragraphs, the programme's day columns, the speakers' strip, the label of
-   a section that shows the first edition, and the link that closes a section. */
+   overview's two titled paragraphs and the scene beside them, the programme's day columns, the
+   speakers' strip, the label of a section that shows the first edition, and the link that closes
+   a section. */
 
 /* "First edition, 2025": a label at the start of a section's lead. */
 .label {
@@ -16,17 +17,30 @@
   white-space: nowrap;
 }
 
-/* The overview: the lead above, then who the school is for and what participants do. */
+/* The overview: the lead above, then who the school is for and what participants do, one above
+   the other in the column beside the scene. */
 .overview {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--school-space-24) var(--school-space-48);
-  max-width: 64rem;
+  gap: var(--school-space-24);
 }
 .subheading {
   margin: 0;
   font: var(--school-text-card);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--school-tracking-title);
+}
+
+/* The scene beside the overview's text: as tall as the text, at least 22 rem, on its own paper
+   with a hairline; 16:9 beneath the text up to 1040 px. Two classes, so that the size wins over
+   the scene's own 16:9 box whatever the order of the stylesheets. */
+.sceneBox {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+.sceneBox .scene {
+  aspect-ratio: auto;
+  min-height: 22rem;
+  border: var(--school-rule-width) solid var(--school-rule);
 }
 .paragraph {
   max-width: var(--school-measure);
@@ -85,9 +99,10 @@
     gap: var(--school-space-48);
   }
 }
-@media (max-width: 800px) {
-  .overview {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 1040px) {
+  .sceneBox .scene {
+    aspect-ratio: 16 / 9;
+    min-height: 180px;
   }
 }
 @media (max-width: 540px) {

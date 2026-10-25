@@ -1,5 +1,6 @@
-/* A titled band of a page (docs/plan.md, section 5): the heading in the display face, a lead in
-   22 px, the content below, all in the 1200 px column between the theme's insets. */
+/* A titled band of a page (docs/plan.md, section 5): the heading in capitals in the display face, a
+   lead in 22 px, the content below, all in the 1200 px column between the theme's insets; with an
+   aside, the aside stands beside them on wide screens and beneath them below 1040 px. */
 .container {
   box-sizing: border-box;
   width: 100%;
@@ -16,7 +17,7 @@
 .tint {
   background: var(--school-tint);
 }
-/* The petrol ground and its colours come from the theme's .inverse. */
+/* The blue ground and its colours come from the theme's .inverse. */
 .primary {
   background: var(--school-paper);
 }
@@ -25,12 +26,13 @@
   margin: 0;
   font: var(--school-text-h2);
   letter-spacing: var(--school-tracking-display);
+  text-transform: uppercase;
 }
 .subtitle {
   max-width: 36ch;
   margin: 0;
   font: var(--school-text-h3);
-  letter-spacing: var(--school-tracking-display);
+  letter-spacing: var(--school-tracking-title);
 }
 .lead {
   max-width: var(--school-measure);
@@ -40,11 +42,33 @@
 .body {
   margin-top: var(--school-space-32);
 }
+/* The text and the aside side by side (6 : 5), the aside as tall as the text. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: var(--school-space-48);
+}
+.main {
+  min-width: 0;
+}
+.aside {
+  display: flex;
+  min-width: 0;
+}
+@media (max-width: 1040px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--school-space-40);
+  }
+}
 @media (max-width: 540px) {
   .section {
     padding-block: var(--school-space-48);
   }
   .body {
     margin-top: var(--school-space-24);
+  }
+  .split {
+    gap: var(--school-space-32);
   }
 }
