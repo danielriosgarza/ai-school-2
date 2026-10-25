@@ -1,0 +1,71 @@
+# Publishes the site to a server of your own over SSH: rsync mirrors dist/site and dist/content
+# into the two folders that Caddy or nginx serves (hosting/caddy, hosting/nginx). Manual only: it
+# runs when started from the Actions tab (Run workflow), never on a push, a pull request or a
+# schedule. docs/publishing.md, Your own host.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   DEPLOY_SSH_KEY        the private half of an SSH key pair whose public half is in the deploy
+#                         account's ~/.ssh/authorized_keys on the server
+#   DEPLOY_KNOWN_HOSTS    the server's host key line, as `ssh-keyscan -t ed25519 <host>` prints it
+#                         and checked against the server's own key; ssh refuses any other key
+#   DEPLOY_HOST           the server's host name or address
+#   DEPLOY_USER           the deploy account on the server
+#   DEPLOY_SITE_PATH      the folder the site host serves, such as /srv/school/site
+#   DEPLOY_CONTENT_PATH   the folder the content host serves, such as /srv/school/content
+name: Publish to your own host
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SITE_PATH: ${{ secrets.DEPLOY_SITE_PATH }}
+      DEPLOY_CONTENT_PATH: ${{ secrets.DEPLOY_CONTENT_PATH }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # parallax check and build; stops on the placeholder origins of parallax.config.ts.
+      - run: node scripts/publish-build.mjs
+      # The headers are in the server's Caddy or nginx configuration, so no host file is copied.
+      - name: Prepare the SSH key and the server's host key
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      # An object's name is its digest, so the new ones can be added before the site changes, an
+      # object already on the server is the same file (--ignore-existing skips it), and those the
+      # build no longer holds are removed last. --delay-updates puts a tree's changed files in
+      # place together at the end of each transfer.
+      - name: Mirror dist/content and dist/site
+        run: |
+          ssh="ssh -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes"
+          ssh="$ssh -o UserKnownHostsFile=$HOME/.ssh/known_hosts"
+          sync() { rsync -rlt --chmod=D755,F644 --delay-updates -e "$ssh" "$@"; }
+          content="$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_CONTENT_PATH/"
+          sync --ignore-existing dist/content/ "$content"
+          sync --delete dist/site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_SITE_PATH/"
+          sync --ignore-existing --delete dist/content/ "$content"
+      - name: Remove the SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

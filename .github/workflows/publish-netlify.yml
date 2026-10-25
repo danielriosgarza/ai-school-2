@@ -1,0 +1,47 @@
+# Publishes the site to two Netlify sites: dist/site to one, dist/content to the other.
+# Manual only: it runs when started from the Actions tab (Run workflow), never on a push, a pull
+# request or a schedule. Nothing in the repository names an account; docs/publishing.md, Netlify.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   NETLIFY_AUTH_TOKEN        a Netlify personal access token (User settings > Applications)
+#   NETLIFY_SITE_ID_SITE      the Project ID of the Netlify site that serves dist/site
+#   NETLIFY_SITE_ID_CONTENT   the Project ID of the Netlify site that serves dist/content
+name: Publish to Netlify
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # parallax check and build; stops on the placeholder origins of parallax.config.ts.
+      - run: node scripts/publish-build.mjs
+      - name: Add the host files
+        run: cp hosting/netlify/content/_headers dist/content/_headers
+      # Each Netlify deploy replaces the site, so a removed file is gone. Content first, so that
+      # no new page names an object that is not yet published.
+      - name: Deploy dist/content, then dist/site
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          SITE_ID_SITE: ${{ secrets.NETLIFY_SITE_ID_SITE }}
+          SITE_ID_CONTENT: ${{ secrets.NETLIFY_SITE_ID_CONTENT }}
+        run: |
+          netlify() { npx --yes --package netlify-cli@27.11.2 -- netlify "$@"; }
+          netlify deploy --prod --no-build --dir dist/content --site "$SITE_ID_CONTENT"
+          netlify deploy --prod --no-build --dir dist/site --site "$SITE_ID_SITE"

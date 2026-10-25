@@ -1,0 +1,69 @@
+# Publishes the site to two S3 buckets, each behind a CloudFront distribution: dist/site to one,
+# dist/content to the other. Manual only: it runs when started from the Actions tab (Run
+# workflow), never on a push, a pull request or a schedule. docs/publishing.md, S3 and CloudFront,
+# has the bucket, distribution and role settings.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   AWS_ROLE_ARN                      the IAM role this workflow assumes through GitHub's OIDC
+#                                     provider; no access key is stored
+#   AWS_REGION                        the region of the two buckets
+#   S3_BUCKET_SITE                    the bucket that holds dist/site
+#   S3_BUCKET_CONTENT                 the bucket that holds dist/content
+#   CLOUDFRONT_DISTRIBUTION_SITE      the ID of the distribution in front of the site bucket
+#   CLOUDFRONT_DISTRIBUTION_CONTENT   the ID of the distribution in front of the content bucket
+name: Publish to S3 and CloudFront
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      BUCKET_SITE: ${{ secrets.S3_BUCKET_SITE }}
+      BUCKET_CONTENT: ${{ secrets.S3_BUCKET_CONTENT }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # parallax check and build; stops on the placeholder origins of parallax.config.ts.
+      - run: node scripts/publish-build.mjs
+      # The headers are set on the bucket and the distributions, so no host file is copied.
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      # An object's name is its digest, so the new ones can be added before the site changes, an
+      # object already in the bucket is the same file (--size-only skips it), and those the build
+      # no longer holds are removed last. aws s3 sync guesses a content type from the extension,
+      # so the two types it would get wrong are given as Parallax names them.
+      - name: Add the new objects to the content bucket
+        run: |
+          sync() { aws s3 sync dist/content "s3://$BUCKET_CONTENT" --size-only --no-progress "$@"; }
+          sync --exclude '*.html' --exclude '*.ipynb'
+          sync --exclude '*' --include '*.html' --content-type 'text/html; charset=utf-8'
+          sync --exclude '*' --include '*.ipynb' --content-type 'application/x-ipynb+json'
+      - name: Mirror dist/site to the site bucket
+        run: aws s3 sync dist/site "s3://$BUCKET_SITE" --no-progress --delete
+      - name: Remove the objects the build no longer holds
+        run: aws s3 sync dist/content "s3://$BUCKET_CONTENT" --no-progress --size-only --delete
+      - name: Clear the two distributions' caches
+        env:
+          DISTRIBUTION_SITE: ${{ secrets.CLOUDFRONT_DISTRIBUTION_SITE }}
+          DISTRIBUTION_CONTENT: ${{ secrets.CLOUDFRONT_DISTRIBUTION_CONTENT }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_SITE" --paths '/*'
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_CONTENT" --paths '/*'
