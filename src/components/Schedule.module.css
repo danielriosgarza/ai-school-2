@@ -1,0 +1,125 @@
+/* A day's timetable (docs/plan.md, section 5). */
+.day {
+  position: relative;
+}
+.day + .day {
+  margin-top: var(--school-space-48);
+}
+/* The day's heading stays at the top of the window while its sessions scroll. */
+.heading {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--school-space-4) var(--school-space-16);
+  margin: 0;
+  padding: var(--school-space-16) var(--school-space-16) var(--school-space-8);
+  border-bottom: 2px solid var(--school-ink);
+  background: var(--school-paper);
+  font: var(--school-text-h3);
+  letter-spacing: var(--school-tracking-display);
+}
+.number {
+  font: 600 var(--school-size-label) / 1.45 var(--school-font-text);
+  color: var(--school-primary-ink);
+  letter-spacing: 0;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.row > *,
+.pause > * {
+  padding: var(--school-space-16);
+  border-bottom: var(--school-rule-width) solid var(--school-rule);
+  vertical-align: top;
+  text-align: left;
+}
+.pause > * {
+  padding-block: var(--school-space-8);
+  background: var(--school-tint);
+}
+.time {
+  width: 6.5rem;
+  font: 500 var(--school-size-lead) / 1.25 var(--school-font-display);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.end {
+  display: block;
+  font: var(--school-text-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--school-ink-muted);
+}
+.pause .time {
+  font: var(--school-text-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--school-ink-muted);
+}
+.pause .end {
+  display: inline;
+}
+.pause .end::before {
+  content: '–';
+  content: '–' / '';
+}
+.session {
+  min-width: 0;
+}
+.title {
+  margin: 0;
+  max-width: 48ch;
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+.title a {
+  color: inherit;
+  text-decoration: none;
+}
+.title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.pause .title {
+  font: var(--school-text-label);
+  letter-spacing: 0;
+  color: var(--school-ink-muted);
+}
+/* The amber square after a title: the session's topic has material. */
+.material {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: var(--school-space-8);
+  vertical-align: 0.15em;
+  background: var(--school-accent-ink);
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--school-space-8);
+  margin: var(--school-space-4) 0 0;
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.meta > * + *::before {
+  content: '·';
+  content: '·' / '';
+  margin-right: var(--school-space-8);
+}
+@media (max-width: 540px) {
+  .heading {
+    padding-inline: var(--school-space-8);
+  }
+  .row > *,
+  .pause > * {
+    padding-inline: var(--school-space-8);
+  }
+  .time {
+    width: 4.25rem;
+    font-size: var(--school-size-body);
+  }
+}

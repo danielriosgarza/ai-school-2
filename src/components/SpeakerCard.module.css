@@ -1,0 +1,94 @@
+/* A speaker's card (docs/plan.md, section 5): on paper with a hairline rule. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--school-space-32) var(--school-space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cell {
+  display: flex;
+  min-width: 0;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: var(--school-rule-width) solid var(--school-rule);
+  background: var(--school-paper);
+}
+.portrait,
+.initials {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--school-tint);
+}
+.initials {
+  display: grid;
+  place-items: center;
+  background: var(--school-primary);
+  color: var(--school-on-primary);
+  font: 700 var(--school-size-h1) / 1 var(--school-font-display);
+  letter-spacing: var(--school-tracking-display);
+}
+/* The band under the portrait: petrol on hover and while a link of the card has focus. */
+.band {
+  height: 4px;
+  background: transparent;
+  transition: background-color 120ms ease-out;
+}
+.card:hover .band,
+.card:focus-within .band {
+  background: var(--school-primary-ink);
+}
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--school-space-8);
+  padding: var(--school-space-16) var(--school-space-24) var(--school-space-24);
+}
+.name {
+  margin: 0;
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
+}
+.where {
+  margin: 0;
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.country {
+  display: block;
+}
+.talk {
+  margin: var(--school-space-8) 0 0;
+  font: var(--school-text-body);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.talk a {
+  color: inherit;
+}
+.links {
+  margin: auto 0 0;
+  padding-top: var(--school-space-16);
+}
+.website {
+  font: 600 var(--school-size-label) / 1.45 var(--school-font-text);
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
