@@ -1,0 +1,67 @@
+/* The partners' strip (docs/plan.md, section 5): light in both schemes, so that each logo keeps
+   its own colours, with its own ink and focus colour. */
+.strip {
+  --logo-height: 48px;
+  padding: var(--school-space-24) var(--school-space-32);
+  border: var(--school-rule-width) solid var(--school-rule);
+  background: var(--school-strip);
+  color: var(--school-strip-ink);
+  --school-focus: var(--school-strip-focus);
+}
+.small {
+  --logo-height: 32px;
+  padding: var(--school-space-16) var(--school-space-24);
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--school-space-24) var(--school-space-48);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.small .list {
+  gap: var(--school-space-16) var(--school-space-32);
+}
+.item {
+  display: flex;
+  min-width: 0;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--logo-height);
+  color: inherit;
+  text-decoration: none;
+}
+.link:hover .name {
+  text-decoration: underline;
+}
+.logo {
+  display: block;
+  width: auto;
+  height: var(--logo-height);
+  max-width: min(100%, 16rem);
+  object-fit: contain;
+}
+.name {
+  max-width: 18ch;
+  font: 500 var(--school-size-body) / 1.2 var(--school-font-display);
+  letter-spacing: -0.01em;
+}
+.small .name {
+  font-size: var(--school-size-label);
+}
+@media (max-width: 540px) {
+  .strip {
+    --logo-height: 40px;
+    padding: var(--school-space-16);
+  }
+  .small {
+    --logo-height: 28px;
+  }
+  .list {
+    gap: var(--school-space-16) var(--school-space-32);
+  }
+}

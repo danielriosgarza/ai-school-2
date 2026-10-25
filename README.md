@@ -26,10 +26,18 @@ package.json              parallax-site 0.2.0 (exact) and the npm scripts
 parallax.config.ts        mode 'instructor', level 0, the school's name, the two origins (placeholders)
 instructor.yaml           the school as instructor: its name and its address
 courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived
-src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /
-src/content/              planned: edition, programme, speakers, partners and participants as typed modules
+src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /,
+                          programme, speakers, venue, organisation and register the inner pages
+src/styles/               theme.module.css: the school's palette, faces, type and spacing scales
+src/components/           Section, Schedule, SpeakerCard, PartnerLogos, Footer, PageHeader (with the school's
+                          links), DetailList and Shown, each with its CSS module where it has styles
+src/content/              edition, programme, speakers, partners, participants, venue and organisation as
+                          typed modules, with topics, dates, placeholder and catalogue helpers
+src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
+                          and campus photo
 scripts/preview.mjs       serves the build on two local hosts
 docs/                     plan.md (the approved plan), decisions.md (the decisions log)
+docs/review/              screenshots for the review of a pull request, one folder per issue
 .github/workflows/        check.yml
 compose.yml, Caddyfile, compose.level2.yml, compose.runner.yml
                           Parallax's installation for levels 1 and 2; unused at level 0
