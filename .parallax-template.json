@@ -1,0 +1,29 @@
+{
+  "files": {
+    ".gitattributes": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+    ".gitignore": "c0961c5293a862ca8a42710873d66612e71229d822aeac89f927fc64e7a9e6d2",
+    ".npmrc": "f3fc23758ab91be5f94a8c5eaff433d1ccd6a206cf1d381d332eb63716009337",
+    "Caddyfile": "b1b81cf80513be8a86f13ed4c839de07fce1839fa460d4f0db398ba21ef5fd1f",
+    "compose.level2.yml": "4b83ca203b1fdc51eae31866f532753668658fd7b1f89830ba6c619ea47ce29c",
+    "compose.runner.yml": "2495f8e46f55b2c58d620ace93c221452efc51cd7cbc2da47b52e8d5ef904922",
+    "compose.yml": "058f555078e022c4c72650bcc983ea034e3d777ba651c30a4e1f8a3f055c155b",
+    "courses/welcome/course.yaml": "8b6d4430707cf011a4e656d32c5cc7aa8a9c2454e2debbc74fbfc0ff497303be",
+    "courses/welcome/from-folder-to-class/reading/levels.md": "175ede9d7b2f9da10393a01cfe1f555625310ea6960d2a288042fde7af1b7a8f",
+    "courses/welcome/from-folder-to-class/topic.yaml": "58f20f640d63cb3921d985b0e7881291a472e09790898296f12719110ea7ea5c",
+    "courses/welcome/start-here/notebooks/demo.ipynb": "7f03349c3d1a91c32741eec89dffd1a871d1d673ed6739aeeac8629b1d9f1281",
+    "courses/welcome/start-here/notebooks/demo/data/heights.csv": "ce78bd39a1bf3c64f18fa0b75371f48c4326cb72e287b7e28b8a937ca5f7cfa7",
+    "courses/welcome/start-here/reading/guide.md": "65c3f19d1bb8249d93d1f55ec731800295a9b24d59cc3dbe4c0ef81661241f55",
+    "courses/welcome/start-here/slides/welcome.md": "56884fb5c5e75dd30904347ded3e9397e4f4f3222fdef1ec2c283da072f14bd3",
+    "courses/welcome/start-here/topic.yaml": "9fa49d026d8a7e6338b0dcde358ba730acdeef2a06dd35afbc39adfa8339b912",
+    "instructor.yaml": "1e7ba4d67cde00e53830917d87c8e84f1f60ef48c04e52f55534ad91c3b8981e",
+    "parallax.config.ts": "ff6439c99d2d526f6c97cbc6ba612bfb2e15a70db09d7f61c6d9e6232658a1e6",
+    "private/courses/welcome/start-here/exercises/first-exercise.yaml": "df02711a04de6bb68d0a191cdb2980ce5ed4a41d9cee9731e6129b39812c2738",
+    "private/courses/welcome/start-here/exercises/interactive-tour.yaml": "0e6269e5df8a6df3f2ef77daab901f9ce2aa4d2b32431542036250351bd4d73f",
+    "private/courses/welcome/start-here/tests/sample-test.yaml": "cd9a200abe95efd7aa6d8777b6e350467f9da1c894437cb5def8cc128e61b47a",
+    "src/pages/_visualization.module.css": "701d08b6848ae20ae1a47a1d2a43e94981865e2494325748fed871dbcada89cf",
+    "src/pages/_visualization.tsx": "100c0be8d0253821c8397a136cc4a54be766436e9a9db643cfa775fbfd5adf29",
+    "src/pages/index.module.css": "96c05c40b829d6f57a09c012922513ffcd05ceca32cfe3693f0289ac707343a5",
+    "src/pages/index.tsx": "96bf38089d7cbe67d3222cd7d6268a3f81a83812738310d43a43ae326b835399",
+    "tsconfig.json": "9ed624aa35b322ce3acde729fada9fc156607f313b9a8bf8f0f52e55ff472e0c"
+  }
+}
