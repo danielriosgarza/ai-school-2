@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.parallax/
+.env
+.env.*
+*.env
+backups/
+# Answer keys stay out of git: the private overlay is never committed.
+private/

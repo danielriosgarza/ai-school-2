@@ -1,0 +1,31 @@
+# Checks and builds the site on every push and pull request, and keeps the build as an artifact.
+# No deploy: the publishing decision is open (docs/plan.md, section 8).
+name: Check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # The site keeps no lock file (.npmrc: package-lock=false); package.json names the exact
+      # version of parallax-site.
+      - run: npm install
+      - run: npx parallax check
+      - run: npx parallax build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error

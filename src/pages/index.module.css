@@ -1,0 +1,25 @@
+/* The placeholder front page: one column in the type of the shell. The school's own palette,
+   faces and layout come with the identity work (docs/plan.md, section 7, W3). */
+.front {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--pc-space-48) var(--pc-stage-inset);
+  color: var(--pc-ink);
+  font: var(--pc-text-body);
+}
+.name {
+  max-width: 24ch;
+  margin: 0;
+  font: 600 clamp(2rem, 1.4rem + 2vw, 3rem) / 1.15 var(--pc-font-sans);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.state {
+  margin: var(--pc-space-16) 0 0;
+}
+@media (max-width: 540px) {
+  .front {
+    padding: var(--pc-space-32) var(--pc-space-16);
+  }
+}

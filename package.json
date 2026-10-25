@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "parallax check",
+    "build": "parallax build",
+    "preview": "node scripts/preview.mjs --build"
+  },
+  "dependencies": {
+    "parallax-site": "0.2.0"
+  }
+}
