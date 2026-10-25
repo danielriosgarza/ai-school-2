@@ -124,8 +124,7 @@
   --school-size-h2: 2.25rem; /* 36 px */
   --school-size-h1: 3rem; /* 48 px */
   --school-size-hero: clamp(2rem, 1.25rem + 3vw, 3.5rem);
-  --school-tracking-display: 0.04em; /* capitals: the name, h1, h2 */
-  --school-tracking-hero: 0.02em; /* capitals at the hero's size */
+  --school-tracking-display: 0.04em; /* capitals: the name, h1, h2, the hero's size included */
   --school-tracking-title: -0.01em; /* sentence case at 22 to 28 px */
   --school-text-label: 400 var(--school-size-label) / 1.45 var(--school-font-text);
   --school-text-body: 400 var(--school-size-body) / 1.6 var(--school-font-text);
