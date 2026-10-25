@@ -41,3 +41,30 @@ export function PartnerLogos({ partners, label, size = 'regular' }: PartnerLogos
     </div>
   );
 }
+
+/**
+ * The partners' logos in the header (the first edition's navbar had them): logos only, each a
+ * link, 26 px high; partners without a logo are left out. On the strip's ground, so that
+ * the logos keep the light ground they are drawn for in the dark scheme too.
+ */
+export function PartnerMarks({ partners, label }: Omit<PartnerLogosProps, 'size'>) {
+  const shown = partners.filter((partner) => partner.logo);
+  return (
+    <ul className={styles.marks} aria-label={label}>
+      {shown.map((partner) => (
+        <li key={partner.name} className={styles.item}>
+          <a className={styles.link} href={partner.link}>
+            <img
+              className={styles.logo}
+              src={partner.logo?.src}
+              width={partner.logo?.width}
+              height={partner.logo?.height}
+              alt={partner.name}
+              decoding="async"
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}

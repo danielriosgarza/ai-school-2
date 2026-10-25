@@ -1,9 +1,14 @@
 import { Link } from 'parallax-site/pages';
 import type { ReactNode } from 'react';
-import { type Edition, edition as currentEdition } from '../content/edition';
+import markInk from '../assets/logo/mark-ink.png';
+import markWhite from '../assets/logo/mark-white.png';
+import { type Edition, edition as currentEdition, SCHOOL_NAME } from '../content/edition';
+import { FIRST_EDITION_LABEL } from '../content/front';
+import { partners, partners2025 } from '../content/partners';
 import { participants } from '../content/participants';
 import theme from '../styles/theme.module.css';
 import styles from './PageHeader.module.css';
+import { PartnerMarks } from './PartnerLogos';
 import { Container } from './Section';
 
 /**
@@ -22,25 +27,57 @@ export const SCHOOL_PAGES: readonly { readonly to: string; readonly label: strin
 ];
 
 /**
- * The school's pages as a row of links on petrol, above a page's `<main>`, so that the bar's skip
- * link passes it. The link of the page being shown is marked: Parallax's `Link` gives it
- * `aria-current="page"`, which the stylesheet underlines in amber. It is left out of print.
+ * The school's masthead, the first edition's navbar sharpened, above a page's `<main>` so that the
+ * bar's skip link passes it: on the paper, the school's mark (black line art, white in the dark
+ * scheme) and its name, linking to the front page; the school's pages as a row of links; and on
+ * wide screens the partners' logos. The link of the page being shown is marked: Parallax's `Link`
+ * gives it `aria-current="page"`, which the stylesheet marks with a blue bar. The links are the
+ * only content of the `School pages` navigation. It is left out of print.
  */
 export function SchoolNav() {
+  // The second edition's partners once announced, the first edition's until then (as on /).
+  const firstPartners = partners.length === 0;
+  // Partner institutions first, then supporters, as the first edition's navbar showed them.
+  const shown = [...(firstPartners ? partners2025 : partners)].sort(
+    (a, b) => Number(a.kind === 'Supporter') - Number(b.kind === 'Supporter'),
+  );
+  // With a seventh page (Participants, after the selection) the row has no room for the name
+  // beside the logos: the name is then for screen readers only (PageHeader.module.css).
   return (
-    <nav aria-label="School pages" className={`${theme.inverse} ${styles.nav}`}>
-      <Container>
-        <ul className={styles.links}>
-          {SCHOOL_PAGES.map((page) => (
-            <li key={page.to}>
-              <Link className={styles.link} to={page.to}>
-                {page.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <div className={styles.masthead}>
+      <Container
+        className={SCHOOL_PAGES.length > 6 ? `${styles.bar} ${styles.crowded}` : styles.bar}
+      >
+        <Link className={styles.brand} to="/">
+          <picture>
+            <source srcSet={markWhite} media="(prefers-color-scheme: dark)" />
+            <img className={styles.mark} src={markInk} width={500} height={500} alt="" />
+          </picture>
+          <span className={styles.name}>{SCHOOL_NAME}</span>
+        </Link>
+        <nav aria-label="School pages" className={styles.nav}>
+          <ul className={styles.links}>
+            {SCHOOL_PAGES.map((page) => (
+              <li key={page.to}>
+                <Link className={styles.link} to={page.to}>
+                  {page.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div className={styles.partners}>
+          <PartnerMarks
+            partners={shown}
+            label={
+              firstPartners
+                ? `Supporters and partners, ${FIRST_EDITION_LABEL.toLowerCase()}`
+                : 'Supporters and partners'
+            }
+          />
+        </div>
       </Container>
-    </nav>
+    </div>
   );
 }
 
@@ -57,7 +94,7 @@ export interface PageHeaderProps {
 
 /**
  * The head of an inner page, the first thing in its `<main>`: the school's name and the edition
- * in the label size, the page's name, and a lead, on petrol under the `SchoolNav`.
+ * in the label size, the page's name in capitals, and a lead, on blue under the `SchoolNav`.
  */
 export function PageHeader({ title, lead, edition = currentEdition, children }: PageHeaderProps) {
   return (

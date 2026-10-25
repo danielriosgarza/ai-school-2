@@ -47,8 +47,8 @@
 }
 .name {
   max-width: 18ch;
-  font: 500 var(--school-size-body) / 1.2 var(--school-font-display);
-  letter-spacing: -0.01em;
+  font: 600 var(--school-size-body) / 1.25 var(--school-font-text);
+  letter-spacing: var(--school-tracking-title);
 }
 .small .name {
   font-size: var(--school-size-label);
@@ -64,4 +64,22 @@
   .list {
     gap: var(--school-space-16) var(--school-space-32);
   }
+}
+
+/* The header's row of logos (PartnerMarks): logos only, 26 px high, on the strip's light
+   ground, which is the page's own white in the light scheme and a light chip in the dark one. */
+.marks {
+  --logo-height: 26px;
+  display: flex;
+  align-items: center;
+  gap: var(--school-space-16);
+  margin: 0;
+  padding: 0 var(--school-space-4);
+  border-radius: 4px;
+  list-style: none;
+  background: var(--school-strip);
+  --school-focus: var(--school-strip-focus);
+}
+.marks .link {
+  min-height: 44px;
 }
