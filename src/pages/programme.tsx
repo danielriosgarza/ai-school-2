@@ -30,7 +30,8 @@ function Days({ data, people }: { data: ProgrammeData; people: readonly Speaker[
 // The programme (docs/plan.md, sections 4 and 5): one timetable per day of the second edition,
 // with each session linked to its topic once the topic's id is in src/content/topics.ts, then the
 // notes on laptops and setup. Until the second edition's programme is fixed the page says so and
-// shows the first edition's programme for reference. It prints on A4 (programme.module.css).
+// shows the notes, then the first edition's programme for reference. It prints on A4, the notes
+// after the days (programme.module.css).
 export default function ProgrammePage({ catalogue }: PageProps) {
   const announced = programme.days.length > 0;
   const nextCourse = courseAddress(catalogue, edition.course);
@@ -42,7 +43,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
   return (
     <div className={`${theme.site} ${styles.page}`}>
       <SchoolNav />
-      <main id="main">
+      <main id="main" className={styles.main}>
         <PageHeader
           title="Programme"
           lead={
@@ -56,7 +57,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
               </>
             ) : (
               <>
-                The second edition's programme is not announced yet. Below are the notes on laptops
+                The second edition's programme is not announced yet. Here are the notes on laptops
                 and setup, and the first edition's programme for reference.
               </>
             )
