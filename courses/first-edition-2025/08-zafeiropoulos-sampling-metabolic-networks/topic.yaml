@@ -1,0 +1,17 @@
+id: 7bec34ff-fcba-4871-872a-b8b6cdb57140
+position: 8
+title: Sampling the solution space of metabolic networks (Haris Zafeiropoulos)
+objective: >-
+  Haris Zafeiropoulos (KU Leuven) contrasts optimisation with enumeration in genome-scale metabolic
+  models: flux balance analysis finds one optimal state, flux sampling describes all the states a
+  network allows. The hands-on part follows his notebook on flux sampling.
+estimatedMinutes: 120
+resources:
+  - id: 26e75a40-9c98-4e5c-906f-28eb6066e77f
+    file: slides/zafeiropoulos-2025.pdf
+    title: "Slides: sampling from the solution space and metabolic environments of genome-scale metabolic models"
+    visibility: visible
+  - id: e5fb4b2f-bc3c-45e5-9971-5985991478ba
+    file: reading/zafeiropoulos-session.md
+    title: About this session and links
+    visibility: visible

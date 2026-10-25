@@ -25,7 +25,7 @@ A build writes its content host into every link to a material file. `npm run pre
 package.json              parallax-site 0.2.0 (exact) and the npm scripts
 parallax.config.ts        mode 'instructor', level 0, the school's name, the two origins (placeholders)
 instructor.yaml           the school as instructor: its name and its address
-courses/                  the course folders, one per edition; empty until the first course lands
+courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived
 src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /,
                           programme, speakers, venue, organisation and register the inner pages
 src/styles/               theme.module.css: the school's palette, faces, type and spacing scales
