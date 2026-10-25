@@ -1,0 +1,61 @@
+# Publishes the site to two Cloudflare Pages projects: dist/site to one, dist/content to the other.
+# Manual only: it runs when started from the Actions tab (Run workflow), never on a push, a pull
+# request or a schedule. Nothing in the repository names an account; docs/publishing.md,
+# Cloudflare Pages, which also says why Pages does not yet meet the content host's requirement.
+#
+# Repository secrets (Settings > Secrets and variables > Actions):
+#   CLOUDFLARE_API_TOKEN               an API token with the permission
+#                                      Account > Cloudflare Pages > Edit
+#   CLOUDFLARE_ACCOUNT_ID              the Cloudflare account ID
+#   CLOUDFLARE_PAGES_PROJECT_SITE      the name of the Pages project that serves dist/site
+#   CLOUDFLARE_PAGES_PROJECT_CONTENT   the name of the Pages project that serves dist/content
+name: Publish to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time, whichever host it goes to.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      # parallax check and build; stops on the placeholder origins of parallax.config.ts.
+      - run: node scripts/publish-build.mjs
+      # A Pages asset is at most 25 MiB. Parallax keeps each course file under that, but a
+      # notebook's data zip holds several files and can be larger.
+      - name: Refuse files over 25 MiB
+        run: |
+          large=$(find dist -type f -size +25M)
+          if [ -n "$large" ]; then
+            echo "These files are over 25 MiB, the limit of a Cloudflare Pages asset:"
+            echo "$large"
+            exit 1
+          fi
+      - name: Add the host files
+        run: cp hosting/cloudflare-pages/content/_headers dist/content/_headers
+      # Each Pages deploy to the production branch replaces the site. Content first, so that no
+      # new page names an object that is not yet published.
+      - name: Deploy dist/content, then dist/site
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PROJECT_SITE: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_SITE }}
+          PROJECT_CONTENT: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_CONTENT }}
+        run: |
+          wrangler() { npx --yes --package wrangler@4.148.0 -- wrangler "$@"; }
+          wrangler pages deploy dist/content --project-name "$PROJECT_CONTENT" --branch main
+          wrangler pages deploy dist/site --project-name "$PROJECT_SITE" --branch main
