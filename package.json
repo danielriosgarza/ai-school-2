@@ -4,7 +4,9 @@
   "scripts": {
     "check": "parallax check",
     "build": "parallax build",
-    "preview": "node scripts/preview.mjs --build"
+    "preview": "node scripts/preview.mjs --build",
+    "check:links": "node scripts/check-links.mjs",
+    "test": "node --experimental-strip-types --import ./scripts/resolve-ts.mjs --test scripts/*.test.mjs && node scripts/contrast.mjs"
   },
   "dependencies": {
     "parallax-site": "0.2.0"
