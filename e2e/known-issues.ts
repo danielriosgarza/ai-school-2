@@ -15,17 +15,11 @@ export interface KnownOverflow {
   readonly owner: string;
 }
 
-export const KNOWN_OVERFLOW_360: Readonly<Record<string, KnownOverflow>> = {
-  '/courses/first-edition-2025/53e9ed4d-59c0-4144-b53c-14cd367c16d6/notebooks': {
-    element:
-      "the notebook picker of Parallax's topic toolbar (`label > select`), as wide as its longest " +
-      'title, "Controlling butyrate production with a trained controller" (405 px)',
-    measured: 421,
-    owner:
-      'Parallax: the picker should shrink to the column (a PlatosCave issue); meanwhile W10 can ' +
-      "shorten the notebooks' titles in topic.yaml",
-  },
-};
+/**
+ * None: the notebook pickers that made three topics' tabs wider than 360 px hold shorter titles
+ * since W10 (docs/decisions.md, W10).
+ */
+export const KNOWN_OVERFLOW_360: Readonly<Record<string, KnownOverflow>> = {};
 
 /** An axe violation on a page in a colour scheme: its rule and the selector of its element. */
 export interface KnownViolation {

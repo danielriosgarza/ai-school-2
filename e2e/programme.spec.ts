@@ -53,26 +53,34 @@ test('PT2 the course link "First edition, 2025" reaches the syllabus with nine t
   seen.expectNone();
 });
 
-test('PR1 the programme prints on three A4 pages, one for each day', async ({ page }) => {
+test('PR1 the programme prints on three A4 pages, one for each day, at 1 cm and 15 mm margins', async ({
+  page,
+}) => {
   await open(page, '/programme');
-  // Chromium's own default margins, 1 cm, which a visitor printing from the browser gets.
-  const margin = '10mm';
-  const margins = { top: margin, bottom: margin, left: margin, right: margin };
-  const pdf = await page.pdf({ format: 'A4', margin: margins });
-  const document = await getDocument({ data: new Uint8Array(pdf) }).promise;
-  const texts: string[] = [];
-  for (let n = 1; n <= document.numPages; n++) {
-    const content = await (await document.getPage(n)).getTextContent();
-    texts.push(
-      content.items
-        .map((item) => ('str' in item ? item.str : ''))
-        .join(' ')
-        .replace(/\s+/g, ' '),
-    );
+  // Chromium's own default margins, 1 cm, which a visitor printing from the browser gets, and the
+  // wider 15 mm of W6's first print, which spilled to a fourth sheet before W10.
+  for (const margin of ['10mm', '15mm']) {
+    const margins = { top: margin, bottom: margin, left: margin, right: margin };
+    const pdf = await page.pdf({ format: 'A4', margin: margins });
+    const document = await getDocument({ data: new Uint8Array(pdf) }).promise;
+    const texts: string[] = [];
+    for (let n = 1; n <= document.numPages; n++) {
+      const content = await (await document.getPage(n)).getTextContent();
+      texts.push(
+        content.items
+          .map((item) => ('str' in item ? item.str : ''))
+          .join(' ')
+          .replace(/\s+/g, ' '),
+      );
+    }
+    expect(texts, `pages of the print at ${margin} margins`).toHaveLength(3);
+    const days = [
+      'Day 1 Wednesday 1 October',
+      'Day 2 Thursday 2 October',
+      'Day 3 Friday 3 October',
+    ];
+    days.forEach((day, i) => expect(texts[i], `page ${i + 1} at ${margin}`).toContain(day));
   }
-  expect(texts, 'pages of the print').toHaveLength(3);
-  const days = ['Day 1 Wednesday 1 October', 'Day 2 Thursday 2 October', 'Day 3 Friday 3 October'];
-  days.forEach((day, i) => expect(texts[i], `page ${i + 1}`).toContain(day));
 });
 
 test('KB1 Tab reaches the school links on the programme page, with a visible focus outline', async ({

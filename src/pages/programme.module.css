@@ -18,10 +18,12 @@
 }
 
 /* Print, for A4: black on white at print sizes, no school links (PageHeader.module.css), no
-   sticky day headings, each day of a programme on a sheet of its own, and no session row split
-   across sheets. The roles are set with !important on every element so that the blue register of
-   the header (.inverse) and the slate of the footer (.slate) print black on white too. Paper size and margins are
-   left to the browser: an @page rule would stay in the document after the visitor leaves this
+   sticky day headings, each day of a programme on a sheet of its own, no session row split across
+   sheets, and the notes on laptops and setup after the days, so that the first sheet holds the
+   page's heading and the first day with room to spare at any usual margin (about 190 px at 15 mm).
+   The roles are set with !important on every element so that the blue register of the header
+   (.inverse) and the slate of the footer (.slate) print black on white too. Paper size and margins
+   are left to the browser: an @page rule would stay in the document after the visitor leaves this
    page and apply to Parallax's screens. Parallax's bar prints above the page; a site stylesheet
    cannot reach it. */
 @media print {
@@ -45,6 +47,13 @@
     --school-space-48: 12pt !important;
     --school-inset: 0px !important;
     min-height: 0 !important;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+  .main > [id='laptops'] {
+    order: 1;
   }
   .days {
     max-width: none;

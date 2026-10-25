@@ -5,6 +5,7 @@ import markWhite from '../assets/logo/mark-white.png';
 import { type Edition, edition as currentEdition, SCHOOL_NAME } from '../content/edition';
 import { FIRST_EDITION_LABEL } from '../content/front';
 import { partners, partners2025 } from '../content/partners';
+import { schoolPages, type SchoolPage } from '../content/pages';
 import { participants } from '../content/participants';
 import theme from '../styles/theme.module.css';
 import styles from './PageHeader.module.css';
@@ -14,17 +15,9 @@ import { Container } from './Section';
 /**
  * The school's own pages, in the order of the plan's site structure (docs/plan.md, section 4).
  * Participants is listed only once src/content/participants.ts has an entry, so that no link leads
- * to that page before the selection (docs/decisions.md, W12).
+ * to that page before the selection (`schoolPages`, docs/decisions.md, W12).
  */
-export const SCHOOL_PAGES: readonly { readonly to: string; readonly label: string }[] = [
-  { to: '/', label: 'Home' },
-  { to: '/programme', label: 'Programme' },
-  { to: '/speakers', label: 'Speakers' },
-  { to: '/venue', label: 'Venue' },
-  { to: '/organisation', label: 'Organisation' },
-  { to: '/register', label: 'Registration' },
-  ...(participants.length > 0 ? [{ to: '/participants', label: 'Participants' }] : []),
-];
+export const SCHOOL_PAGES: readonly SchoolPage[] = schoolPages(participants.length);
 
 /**
  * The school's masthead, the first edition's navbar sharpened, above a page's `<main>` so that the

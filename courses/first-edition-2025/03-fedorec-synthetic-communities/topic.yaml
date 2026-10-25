@@ -18,7 +18,7 @@ resources:
     visibility: visible
   - id: 133e3f40-e8d5-48b7-9748-3637470b3a21
     file: reading/abc-doc.pdf
-    title: Model selection with ABC (notes by Alex Fedorec)
+    title: Model selection with ABC (notes)
     visibility: visible
   - id: eb5da99a-18d0-4901-afd3-fae6e22c63d6
     file: notebooks/part1_community_models.ipynb
@@ -26,7 +26,7 @@ resources:
     visibility: visible
   - id: f493bfe4-a2bc-40e5-a050-d29ed0c5933c
     file: notebooks/part2_glv_abc_rejection.ipynb
-    title: "Part 2: designing a community with ABC rejection"
+    title: "Part 2: design by ABC rejection"
     visibility: visible
   - id: 955346b8-e89a-4919-9901-bec484a86d7e
     file: notebooks/part3_glv_abc_smc.ipynb
@@ -34,5 +34,5 @@ resources:
     visibility: visible
   - id: 5029e27f-6ed9-4787-9abb-eef214d54e98
     file: notebooks/part4_glv_model_selection_abc_smc.ipynb
-    title: "Part 4: comparing community designs by model selection"
+    title: "Part 4: model selection between designs"
     visibility: visible

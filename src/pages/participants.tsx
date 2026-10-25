@@ -2,13 +2,13 @@ import { Link, type PageProps } from 'parallax-site/pages';
 import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
 import { Section } from '../components/Section';
-import { edition, SCHOOL_NAME } from '../content/edition';
-import { type Participant, type ParticipantLink, participants } from '../content/participants';
+import { edition, pageTitle } from '../content/edition';
+import { type Participant, participants, shownLinks } from '../content/participants';
 import { isPlaceholder, valueOf } from '../content/placeholder';
 import theme from '../styles/theme.module.css';
 import styles from './participants.module.css';
 
-export const title = `Participants · ${SCHOOL_NAME}`;
+export const title = pageTitle('Participants');
 
 /** The side of a participant's picture file in pixels (docs/participants.md). */
 const PICTURE_SIZE = 480;
@@ -19,30 +19,13 @@ function initials(name: string): string {
   return `${parts[0]?.[0] ?? ''}${parts.length > 1 ? (parts.at(-1)?.[0] ?? '') : ''}`;
 }
 
-/** Whether an address is a web page's (http or https), the only kind a card links. */
-function isWebAddress(href: string): boolean {
-  try {
-    const { protocol } = new URL(href);
-    return protocol === 'https:' || protocol === 'http:';
-  } catch {
-    return false;
-  }
-}
-
-/** The name a link is shown by: the network's, or an `Other` link's label, else its host. */
-function linkName(link: ParticipantLink): string {
-  if (link.kind !== 'Other') return link.kind;
-  if (link.label) return link.label;
-  return new URL(link.href).hostname.replace(/^www\./, '');
-}
-
 /**
  * A participant: the picture they chose (or their initials), the name in the display face,
  * affiliation and country in the label size, the few lines they wrote, and their links by the
  * network's name. The card has the frame of SpeakerCard, with a smaller picture beside the name.
  */
 function ParticipantCard({ participant }: { participant: Participant }) {
-  const links = participant.links.filter((link) => isWebAddress(link.href));
+  const links = shownLinks(participant);
   return (
     <article className={styles.card}>
       <div className={styles.head}>
@@ -77,7 +60,7 @@ function ParticipantCard({ participant }: { participant: Participant }) {
             {links.map((link) => (
               <li key={link.href}>
                 <a className={styles.link} href={link.href}>
-                  {linkName(link)}
+                  {link.name}
                 </a>
               </li>
             ))}

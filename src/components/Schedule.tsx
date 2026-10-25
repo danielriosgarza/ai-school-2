@@ -1,4 +1,5 @@
 import { Link } from 'parallax-site/pages';
+import type { ReactNode } from 'react';
 import { type Clock, formatDay, type IsoDay } from '../content/dates';
 import type { Day, Session } from '../content/programme';
 import { type Speaker, speakerBySlug } from '../content/speakers';
@@ -66,9 +67,10 @@ function Row({
 /**
  * One day of a programme as a timetable (docs/plan.md, section 5): a narrow column of start and
  * end times in tabular figures, the session's title in the title face with its speaker and kind
- * beneath, thin rules between sessions and tinted rows for breaks. The day's heading stays in view
- * while the day scrolls. A session whose topic is known links to it, with the blue square that
- * says material is available.
+ * beneath, thin rules between sessions and tinted rows for breaks. The day's heading, its number
+ * on a line of its own above the date, stays in view while the day scrolls. A session whose topic
+ * is known links to it, with the blue square that says material is available. Put consecutive
+ * days in `ScheduleDays`, which holds the space between them.
  */
 export function Schedule({ day, number, speakers = [], level = 3, year = false }: ScheduleProps) {
   const id = `day-${day.date}`;
@@ -85,6 +87,10 @@ export function Schedule({ day, number, speakers = [], level = 3, year = false }
         <time dateTime={day.date}>{formatDay(day.date, { year })}</time>
       </Heading>
       <table className={styles.table} aria-labelledby={id}>
+        <colgroup>
+          <col className={styles.timeColumn} />
+          <col />
+        </colgroup>
         <thead className={theme.visuallyHidden}>
           <tr>
             <th scope="col">Time</th>
@@ -104,4 +110,25 @@ export function Schedule({ day, number, speakers = [], level = 3, year = false }
       </table>
     </section>
   );
+}
+
+/**
+ * The days of a programme, one `Schedule` each, with the space between them. Stacked by default;
+ * with `columns`, side by side on wide screens (above 1120 px, where a 28 px date fits a third of
+ * the column), each day in a column of the same width, the headings in one row and the tables
+ * starting on one line whatever the height of a heading; stacked below.
+ */
+export function ScheduleDays({
+  columns = false,
+  className,
+  children,
+}: {
+  columns?: boolean;
+  className?: string;
+  children: ReactNode;
+}) {
+  const classes = [styles.days, columns ? styles.columns : '', className ?? '']
+    .filter(Boolean)
+    .join(' ');
+  return <div className={classes}>{children}</div>;
 }

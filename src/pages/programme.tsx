@@ -1,12 +1,12 @@
 import { Link, type PageProps } from 'parallax-site/pages';
 import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
-import { Schedule } from '../components/Schedule';
+import { Schedule, ScheduleDays } from '../components/Schedule';
 import { Section } from '../components/Section';
 import { Shown } from '../components/Shown';
 import { courseAddress } from '../content/catalogue';
 import { formatDayRange } from '../content/dates';
-import { edition, firstEdition, SCHOOL_NAME } from '../content/edition';
+import { edition, firstEdition, pageTitle } from '../content/edition';
 import { valueOf } from '../content/placeholder';
 import { type Programme as ProgrammeData, programme, programme2025 } from '../content/programme';
 import { type Speaker, speakers, speakers2025 } from '../content/speakers';
@@ -14,23 +14,24 @@ import { editionTopics, topicAddress } from '../content/topics';
 import theme from '../styles/theme.module.css';
 import styles from './programme.module.css';
 
-export const title = `Programme · ${SCHOOL_NAME}`;
+export const title = pageTitle('Programme');
 
 /** One timetable per day of a programme, each day numbered, under a heading of the page. */
 function Days({ data, people }: { data: ProgrammeData; people: readonly Speaker[] }) {
   return (
-    <div className={styles.days}>
+    <ScheduleDays className={styles.days}>
       {data.days.map((day, index) => (
         <Schedule key={day.date} day={day} number={index + 1} speakers={people} />
       ))}
-    </div>
+    </ScheduleDays>
   );
 }
 
 // The programme (docs/plan.md, sections 4 and 5): one timetable per day of the second edition,
 // with each session linked to its topic once the topic's id is in src/content/topics.ts, then the
 // notes on laptops and setup. Until the second edition's programme is fixed the page says so and
-// shows the first edition's programme for reference. It prints on A4 (programme.module.css).
+// shows the notes, then the first edition's programme for reference. It prints on A4, the notes
+// after the days (programme.module.css).
 export default function ProgrammePage({ catalogue }: PageProps) {
   const announced = programme.days.length > 0;
   const nextCourse = courseAddress(catalogue, edition.course);
@@ -42,7 +43,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
   return (
     <div className={`${theme.site} ${styles.page}`}>
       <SchoolNav />
-      <main id="main">
+      <main id="main" className={styles.main}>
         <PageHeader
           title="Programme"
           lead={
@@ -56,7 +57,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
               </>
             ) : (
               <>
-                The second edition's programme is not announced yet. Below are the notes on laptops
+                The second edition's programme is not announced yet. Here are the notes on laptops
                 and setup, and the first edition's programme for reference.
               </>
             )
@@ -76,7 +77,7 @@ export default function ProgrammePage({ catalogue }: PageProps) {
               each notebook's page on this site.
             </p>
             <p>
-              The setup instructions come with{' '}
+              The setup instructions {nextCourse ? 'are in' : 'will be in'}{' '}
               {setup ? <Link to={setup}>Before the school</Link> : <>Before the school</>}, the
               first topic of{' '}
               {nextCourse ? (

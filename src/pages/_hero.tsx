@@ -1,8 +1,9 @@
 import { Link } from 'parallax-site/pages';
 import { Container } from '../components/Section';
-import { formatDay, formatDayRange } from '../content/dates';
-import type { Edition, Registration } from '../content/edition';
-import { type Fact, isPlaceholder, shownOf } from '../content/placeholder';
+import { Shown } from '../components/Shown';
+import { formatDay, formatDayRange, today } from '../content/dates';
+import { type Edition, type Registration, registrationState } from '../content/edition';
+import { isPlaceholder } from '../content/placeholder';
 import markWhite from '../assets/logo/mark-white.png';
 import theme from '../styles/theme.module.css';
 import styles from './_hero.module.css';
@@ -11,11 +12,6 @@ import styles from './_hero.module.css';
 // band, sharpened. The school's mark in white at the left (above the text on narrow screens), then
 // the name in capitals at the hero size, the edition line with the dates and the venue, the two
 // actions and the state of registration. A helper, not a page.
-
-/** A fact as the page shows it: its value, formatted, or the placeholder's text, marked. */
-function Shown<T>({ fact, format }: { fact: Fact<T>; format: (value: T) => string }) {
-  return <span data-placeholder={isPlaceholder(fact) || undefined}>{shownOf(fact, format)}</span>;
-}
 
 /** The registration's dates: "1 March – 15 June 2027", or what is known and the placeholders. */
 function RegistrationDates({ registration }: { registration: Registration }) {
@@ -35,6 +31,10 @@ function RegistrationDates({ registration }: { registration: Registration }) {
 }
 
 export function Hero({ edition }: { edition: Edition }) {
+  // The first action says what it does today: "Register" while registration is open, else the
+  // name of the page that says when it opens or that it has closed. Pages render in the visitor's
+  // browser, so the label follows the day in Paris without a new build (registrationState).
+  const open = registrationState(edition.registration, today()).kind === 'open';
   return (
     <section className={`${theme.inverse} ${styles.hero}`} aria-labelledby="hero-title">
       <Container className={styles.layout}>
@@ -45,22 +45,24 @@ export function Hero({ edition }: { edition: Edition }) {
             {edition.name}
           </h1>
           <p className={styles.edition}>
-            <span className={styles.label}>{edition.label}</span>
-            <span className={styles.item}>
-              <span className={theme.visuallyHidden}>, </span>
-              <Shown
-                fact={edition.dates}
-                format={(range) => formatDayRange(range.start, range.end)}
-              />
-            </span>
-            <span className={styles.item}>
-              <span className={theme.visuallyHidden}>, </span>
-              <Shown fact={edition.venue} format={(venue) => venue.name} />
+            <span className={styles.facts}>
+              <span className={`${styles.item} ${styles.label}`}>{edition.label}</span>
+              <span className={styles.item}>
+                <span className={theme.visuallyHidden}>, </span>
+                <Shown
+                  fact={edition.dates}
+                  format={(range) => formatDayRange(range.start, range.end)}
+                />
+              </span>
+              <span className={styles.item}>
+                <span className={theme.visuallyHidden}>, </span>
+                <Shown fact={edition.venue} format={(venue) => venue.name} />
+              </span>
             </span>
           </p>
           <div className={styles.actions}>
             <Link to="/register" className={theme.action}>
-              Register
+              {open ? 'Register' : 'Registration'}
             </Link>
             <Link to="/programme" className={theme.actionOutline}>
               Programme

@@ -4,13 +4,13 @@ import { Footer } from '../components/Footer';
 import { PageHeader, SchoolNav } from '../components/PageHeader';
 import { Section } from '../components/Section';
 import { formatDayRange } from '../content/dates';
-import { edition, firstEdition, SCHOOL_NAME, type Venue } from '../content/edition';
+import { edition, firstEdition, pageTitle, type Venue } from '../content/edition';
 import { isPlaceholder, valueOf } from '../content/placeholder';
 import { type VenueGuide, venueGuide, venueGuide2025 } from '../content/venue';
 import theme from '../styles/theme.module.css';
 import styles from './venue.module.css';
 
-export const title = `Venue · ${SCHOOL_NAME}`;
+export const title = pageTitle('Venue');
 
 /** "Antony, Massy and Palaiseau"; "Lozère or Massy-Palaiseau" with `or`. */
 function listOf(items: readonly string[], last = 'and'): string {

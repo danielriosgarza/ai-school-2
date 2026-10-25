@@ -13,9 +13,9 @@ Microbes are nearly everywhere, which makes them a powerful tool for engineering
 ## Notebooks
 
 - **Part 1: models of microbial communities** (`part1_community_models.ipynb`): growth and loss, logistic growth, competition and the generalized Lotka–Volterra model, the size of the design space, and a first ABC algorithm written by hand.
-- **Part 2: designing a community with ABC rejection** (`part2_glv_abc_rejection.ipynb`): fits the parameters of a generalized Lotka–Volterra community to a wanted behaviour, stable coexistence at chosen population levels, with the ABC rejection algorithm.
+- **Part 2: design by ABC rejection** (`part2_glv_abc_rejection.ipynb`): fits the parameters of a generalized Lotka–Volterra community to a wanted behaviour, stable coexistence at chosen population levels, with the ABC rejection algorithm.
 - **Part 3: ABC-SMC with pyABC** (`part3_glv_abc_smc.ipynb`): the same problem with sequential Monte Carlo ABC, which lowers the acceptance threshold step by step and needs far fewer simulations.
-- **Part 4: comparing community designs by model selection** (`part4_glv_model_selection_abc_smc.ipynb`): removes interactions from the model to make competing designs, and compares them by their posterior probabilities and Bayes factors.
+- **Part 4: model selection between designs** (`part4_glv_model_selection_abc_smc.ipynb`): removes interactions from the model to make competing designs, and compares them by their posterior probabilities and Bayes factors.
 
 The notes *Model selection with ABC*, by Alex Fedorec, give the mathematics behind parts 2 to 4.
 

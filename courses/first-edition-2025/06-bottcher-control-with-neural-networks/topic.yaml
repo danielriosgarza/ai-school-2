@@ -14,11 +14,11 @@ resources:
     visibility: visible
   - id: 5b05922d-5358-4fef-bb6f-f141b1998bf0
     file: reading/bottcher-session.md
-    title: About this session, reading list, setup and links
+    title: About this session and reading list
     visibility: visible
   - id: 3718bc5d-a467-4660-a52a-5491da3b6136
     file: reading/ann-control.pdf
-    title: Control of dynamical systems with neural networks (Lucas Böttcher, October 2025)
+    title: Control with neural networks (notes)
     visibility: visible
   - id: d189e675-b1db-4bce-b071-956a7f1b8b0a
     file: reading/microbial-control.pdf
@@ -26,13 +26,13 @@ resources:
     visibility: visible
   - id: 6b52d2b9-5e3b-47d2-bd82-ef5534e1041d
     file: notebooks/microbial_control.ipynb
-    title: "Lecture notebook: control of microbial dynamics with neural ODEs"
+    title: "Lecture: control with neural ODEs"
     visibility: visible
   - id: e479a8d3-c782-4374-ba08-971bb35046c7
     file: notebooks/microbial_control_exercises.ipynb
-    title: "Exercises: control of microbial dynamics with neural ODEs"
+    title: "Exercises: control with neural ODEs"
     visibility: visible
   - id: 0a639eba-1947-45f6-ad72-c8930c0cc941
     file: notebooks/microbial_control_solutions.ipynb
-    title: "Solutions: control of microbial dynamics with neural ODEs"
+    title: "Solutions: control with neural ODEs"
     visibility: visible

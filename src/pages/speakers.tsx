@@ -5,7 +5,7 @@ import { Section } from '../components/Section';
 import { SpeakerGrid } from '../components/SpeakerCard';
 import { courseAddress } from '../content/catalogue';
 import { formatDayRange } from '../content/dates';
-import { firstEdition, SCHOOL_NAME } from '../content/edition';
+import { firstEdition, pageTitle } from '../content/edition';
 import { valueOf } from '../content/placeholder';
 import { speakers, speakers2025 } from '../content/speakers';
 import theme from '../styles/theme.module.css';
@@ -29,7 +29,7 @@ function inWords(count: number): string {
   return words[count] ?? String(count);
 }
 
-export const title = `Speakers · ${SCHOOL_NAME}`;
+export const title = pageTitle('Speakers');
 
 // The speakers (docs/plan.md, sections 4 and 5): a grid of cards, each with the portrait, the
 // name, affiliation and country, the talk, linked to its topic once the topic's id is in

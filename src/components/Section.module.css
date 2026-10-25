@@ -38,6 +38,7 @@
   max-width: var(--school-measure);
   margin: var(--school-space-16) 0 0;
   font: var(--school-text-lead);
+  text-wrap: pretty;
 }
 .body {
   margin-top: var(--school-space-32);

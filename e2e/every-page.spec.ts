@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { KNOWN_OVERFLOW_360 } from './known-issues';
-import { CONTENT, named, open, PAGES, scrollWidth, SITE, watch } from './site';
+import { CONTENT, named, open, PAGES, PICKER_PAGES, scrollWidth, SITE, watch } from './site';
 
 /**
  * The placeholders each page of the school shows today (`[data-placeholder]`, docs/decisions.md
@@ -19,7 +19,7 @@ const PLACEHOLDERS: Record<string, number> = {
 
 test.describe('at 360 px', () => {
   test.use({ viewport: { width: 360, height: 800 } });
-  for (const path of PAGES) {
+  for (const path of [...PAGES, ...PICKER_PAGES]) {
     test(`WD1 ${named(path)} does not scroll sideways at 360 px and logs no console error`, async ({
       page,
     }) => {
