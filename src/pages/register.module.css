@@ -1,0 +1,24 @@
+/* The registration page: the facts as a definition list (DetailList); the primary action on the
+   petrol header, filled in amber. */
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--school-space-8) var(--school-space-24);
+  border-radius: 2px;
+  background: var(--school-accent);
+  color: var(--school-on-accent);
+  font: 600 var(--school-size-body) / 1.3 var(--school-font-text);
+  text-decoration: none;
+}
+.action:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.reference {
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.year {
+  font-weight: 600;
+}

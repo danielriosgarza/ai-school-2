@@ -1,0 +1,69 @@
+/* The top of an inner page (SchoolNav, PageHeader), in the petrol register of the theme's
+   .inverse: the school's pages as a row of links, then the page's name and its lead. */
+.nav {
+  padding-block: var(--school-space-4);
+  border-bottom: var(--school-rule-width) solid var(--school-rule);
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--school-space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font: 600 var(--school-size-label) / 1.45 var(--school-font-text);
+  color: var(--school-ink);
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+/* The page being shown: an amber bar under its name. */
+.link[aria-current='page'] {
+  box-shadow: inset 0 -3px 0 var(--school-accent-ink);
+}
+.header {
+  padding-block: var(--school-space-48) var(--school-space-64);
+}
+.school {
+  max-width: var(--school-measure);
+  margin: 0;
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.title {
+  margin: var(--school-space-8) 0 0;
+  font: var(--school-text-h1);
+  letter-spacing: var(--school-tracking-display);
+}
+.lead {
+  max-width: var(--school-measure);
+  margin: var(--school-space-16) 0 0;
+  font: var(--school-text-lead);
+  text-wrap: pretty;
+}
+.more {
+  margin-top: var(--school-space-24);
+}
+@media (max-width: 540px) {
+  .links {
+    gap: 0 var(--school-space-16);
+  }
+  .header {
+    padding-block: var(--school-space-32) var(--school-space-40);
+  }
+}
+@media print {
+  .nav {
+    display: none;
+  }
+  .header {
+    padding-block: 0 var(--school-space-16);
+  }
+}

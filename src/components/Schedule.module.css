@@ -122,4 +122,9 @@
     width: 4.25rem;
     font-size: var(--school-size-body);
   }
+  /* A break's start and end wrap, so that they do not widen the narrow column: the column then
+     has the same width on every day, with a break or without. */
+  .pause .time {
+    white-space: normal;
+  }
 }

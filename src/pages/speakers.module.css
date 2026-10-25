@@ -1,0 +1,5 @@
+/* The speakers page: the grid and the cards come from SpeakerCard. */
+.archive {
+  max-width: var(--school-measure);
+  margin: var(--school-space-32) 0 0;
+}
