@@ -1,6 +1,7 @@
 // Dates and times as the pages write them: "Wednesday 1 October 2025", "1–3 October 2025",
 // "09:30–10:15". A date is an ISO day (`2025-10-01`) and a time a 24-hour `HH:MM` in the school's
-// own time zone; nothing here depends on the visitor's locale or time zone.
+// own time zone; nothing here depends on the visitor's locale or time zone, and `today` gives the
+// day in the school's time zone wherever the visitor is.
 
 const MONTHS = [
   'January',
@@ -63,4 +64,20 @@ export function formatDayRange(start: IsoDay, end: IsoDay): string {
 /** "09:30–10:15". */
 export function formatTimeRange(start: Clock, end: Clock): string {
   return `${start}–${end}`;
+}
+
+/** The school's time zone, Paris-Saclay's: the times of a programme and the days of a deadline. */
+export const TIME_ZONE = 'Europe/Paris';
+
+/** The day it is in the school's time zone, as an ISO day: a deadline's day ends there at midnight. */
+export function today(now: Date = new Date()): IsoDay {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: TIME_ZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(now);
+  const part = (type: 'year' | 'month' | 'day') =>
+    parts.find((each) => each.type === type)?.value ?? '';
+  return `${part('year')}-${part('month')}-${part('day')}` as IsoDay;
 }

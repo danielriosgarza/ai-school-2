@@ -1,4 +1,5 @@
 import { Link, type PageProps } from 'parallax-site/pages';
+import { hasCourse } from '../content/catalogue';
 import { formatDayRange } from '../content/dates';
 import { type Edition, edition as currentEdition, firstEdition } from '../content/edition';
 import type { Partner } from '../content/partners';
@@ -15,13 +16,6 @@ export interface FooterProps {
   edition?: Edition;
   /** The supporters and partners to show as a row of logos. */
   partners?: readonly Partner[];
-}
-
-/** Whether the catalogue holds a course of this folder name. */
-function hasCourse(catalogue: PageProps['catalogue'] | undefined, course: string): boolean {
-  return (catalogue?.instructors ?? []).some((instructor) =>
-    instructor.courses.some((each) => each.slug === course),
-  );
 }
 
 /** The host and path of an address, as the footer shows it. */
