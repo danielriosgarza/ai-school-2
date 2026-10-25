@@ -1,0 +1,38 @@
+id: 55361372-1c29-4abd-8523-e4b46e29a800
+position: 3
+title: Computational design of synthetic microbial communities (Alex Fedorec)
+objective: >-
+  Alex Fedorec (University College London) shows how engineered interactions between strains can
+  build new communities, and how approximate Bayesian computation (ABC) finds the designs that give
+  a wanted behaviour. The four notebooks model communities with generalized Lotka–Volterra
+  equations, fit them with ABC rejection and ABC-SMC, and compare designs by model selection.
+estimatedMinutes: 120
+resources:
+  - id: e6e670b9-7308-41b7-8481-ec039a2b757a
+    file: slides/fedorec-2025.pdf
+    title: Slides of the talk
+    visibility: visible
+  - id: e8ed8156-2db0-48dc-88e7-451b74fc452d
+    file: reading/fedorec-session.md
+    title: About this session, setup and links
+    visibility: visible
+  - id: 133e3f40-e8d5-48b7-9748-3637470b3a21
+    file: reading/abc-doc.pdf
+    title: Model selection with ABC (notes by Alex Fedorec)
+    visibility: visible
+  - id: eb5da99a-18d0-4901-afd3-fae6e22c63d6
+    file: notebooks/part1_community_models.ipynb
+    title: "Part 1: models of microbial communities"
+    visibility: visible
+  - id: f493bfe4-a2bc-40e5-a050-d29ed0c5933c
+    file: notebooks/part2_glv_abc_rejection.ipynb
+    title: "Part 2: designing a community with ABC rejection"
+    visibility: visible
+  - id: 955346b8-e89a-4919-9901-bec484a86d7e
+    file: notebooks/part3_glv_abc_smc.ipynb
+    title: "Part 3: ABC-SMC with pyABC"
+    visibility: visible
+  - id: 5029e27f-6ed9-4787-9abb-eef214d54e98
+    file: notebooks/part4_glv_model_selection_abc_smc.ipynb
+    title: "Part 4: comparing community designs by model selection"
+    visibility: visible

@@ -1,0 +1,26 @@
+id: 3090763c-3d02-44e6-9e0a-b808fd29e13c
+position: 2
+title: Statistical mapping of structure-function landscapes in microbiomes (Djordje Bajić)
+objective: >-
+  Djordje Bajić (TU Delft) presents structure-function landscapes of microbial communities and
+  global epistasis, a regularity that lets a few measured consortia predict the function of the
+  rest. In the R tutorial you predict the function of unmeasured consortia and check how close the
+  predicted best consortium comes to the true one.
+estimatedMinutes: 120
+resources:
+  - id: c3699ae6-1d77-4540-ab8b-799d48ceb41d
+    file: slides/bajic-2025.pdf
+    title: Slides of the talk
+    visibility: visible
+  - id: 1bedaef5-0601-4fdf-800d-2aac37471abe
+    file: reading/bajic-session.md
+    title: About this session, setup and links
+    visibility: visible
+  - id: 716a31e0-9db7-43fb-a426-c297dc1246af
+    file: reading/predicting-and-optimizing.html
+    title: "R tutorial: statistically predicting and optimizing the functions of microbial consortia"
+    visibility: visible
+  - id: 5fdd8b58-1560-43f3-8e9c-5545416d2d14
+    file: reading/exercise-prediction-and-optimization.pdf
+    title: "Exercise slides: prediction and optimization of community function"
+    visibility: visible
