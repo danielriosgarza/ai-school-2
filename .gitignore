@@ -7,3 +7,5 @@ dist/
 backups/
 # Answer keys stay out of git: the private overlay is never committed.
 private/
+playwright-report/
+test-results/
