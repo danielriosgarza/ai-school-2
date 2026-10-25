@@ -10,6 +10,7 @@ import { edition, firstEdition, SCHOOL_NAME } from '../content/edition';
 import { valueOf } from '../content/placeholder';
 import { type Programme as ProgrammeData, programme, programme2025 } from '../content/programme';
 import { type Speaker, speakers, speakers2025 } from '../content/speakers';
+import { editionTopics, topicAddress } from '../content/topics';
 import theme from '../styles/theme.module.css';
 import styles from './programme.module.css';
 
@@ -33,6 +34,8 @@ function Days({ data, people }: { data: ProgrammeData; people: readonly Speaker[
 export default function ProgrammePage({ catalogue }: PageProps) {
   const announced = programme.days.length > 0;
   const nextCourse = courseAddress(catalogue, edition.course);
+  // The setup reading of Before the school, once the catalogue holds the second edition's course.
+  const setup = nextCourse ? topicAddress(editionTopics.beforeTheSchool, 'reading') : undefined;
   const archive = courseAddress(catalogue, firstEdition.course);
   const firstDates = valueOf(firstEdition.dates);
   const firstVenue = valueOf(firstEdition.venue);
@@ -73,7 +76,9 @@ export default function ProgrammePage({ catalogue }: PageProps) {
               each notebook's page on this site.
             </p>
             <p>
-              The setup instructions come with Before the school, the first topic of{' '}
+              The setup instructions come with{' '}
+              {setup ? <Link to={setup}>Before the school</Link> : <>Before the school</>}, the
+              first topic of{' '}
               {nextCourse ? (
                 <Link to={nextCourse}>the second edition's course</Link>
               ) : (

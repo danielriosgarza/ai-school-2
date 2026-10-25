@@ -2,8 +2,8 @@
 // `/courses/<course>/<id>/<tab>`, where `id` is the UUID that `npx parallax check --write-ids`
 // writes into the topic's `topic.yaml`, not its folder's name. A page cannot read `topic.yaml`
 // (Parallax's build refuses a page that imports a file of a course folder), so the id is copied
-// here once the topic exists (the archive course's are below); until then it is a placeholder and
-// the page shows no link.
+// here once the topic exists (the archive course's and Before the school's are below); until then
+// it is a placeholder and the page shows no link.
 import { type Fact, isPlaceholder } from './placeholder';
 
 /** A topic of a course, by its course folder, its folder's name and its id. */
@@ -57,4 +57,22 @@ export const archiveTopics = {
     '7bec34ff-fcba-4871-872a-b8b6cdb57140',
   ),
   dutilh: archived('09-dutilh-mapping-the-microverse', '45ffc284-fa3b-480e-9b18-b94b94a9fa34'),
+} as const satisfies Record<string, TopicRef>;
+
+/** The second edition's course (W7), the folder that `edition.course` names in edition.ts. */
+export const EDITION_COURSE = 'second-edition';
+
+const editionTopic = (folder: string, id: Fact<string>): TopicRef => ({
+  course: EDITION_COURSE,
+  folder,
+  id,
+});
+
+/**
+ * The topics of `courses/second-edition` (W7): topic 0, Before the school, with the setup reading
+ * and the setup notebook, then one topic per session as the speakers' material arrives, each with
+ * its folder and the id from its `topic.yaml`.
+ */
+export const editionTopics = {
+  beforeTheSchool: editionTopic('00-before-the-school', '33ac5d89-2a9e-44ed-9d8f-1e233abfd1c2'),
 } as const satisfies Record<string, TopicRef>;
