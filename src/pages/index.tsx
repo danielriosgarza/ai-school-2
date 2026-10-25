@@ -5,7 +5,7 @@ import { SchoolNav } from '../components/PageHeader';
 import { PartnerLogos } from '../components/PartnerLogos';
 import { Schedule, ScheduleDays } from '../components/Schedule';
 import { Section } from '../components/Section';
-import { SpeakerCard } from '../components/SpeakerCard';
+import { SpeakerGrid } from '../components/SpeakerCard';
 import { hasCourse } from '../content/catalogue';
 import { edition, firstEdition, SCHOOL_NAME } from '../content/edition';
 import {
@@ -125,18 +125,11 @@ export default function Front({ catalogue }: PageProps) {
           lead={firstSpeakers ? <FirstEditionLead section={speakersSection} /> : undefined}
           tone="tint"
         >
-          <ul
-            className={styles.strip}
-            aria-label={
-              firstSpeakers ? `Speakers, ${FIRST_EDITION_LABEL.toLowerCase()}` : 'Speakers'
-            }
-          >
-            {speakerList.map((speaker) => (
-              <li key={speaker.slug} className={styles.speaker}>
-                <SpeakerCard speaker={speaker} level={3} />
-              </li>
-            ))}
-          </ul>
+          <SpeakerGrid
+            speakers={speakerList}
+            layout="strip"
+            label={firstSpeakers ? `Speakers, ${FIRST_EDITION_LABEL.toLowerCase()}` : 'Speakers'}
+          />
           <More>
             <Link to={speakersSection.link.to}>{speakersSection.link.text}</Link>
           </More>

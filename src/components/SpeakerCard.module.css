@@ -1,4 +1,5 @@
-/* A speaker's card (docs/plan.md, section 5): on paper with a hairline rule. */
+/* A speaker's card (docs/plan.md, section 5): on paper with a hairline rule; the cards in a grid
+   or in a strip (SpeakerGrid). */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -7,9 +8,28 @@
   padding: 0;
   list-style: none;
 }
+/* The strip: one row of cards, 15 rem wide (14 rem on a phone), that scrolls sideways inside the
+   column with scroll snapping, a thin scrollbar in the blue ink. */
+.strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 15rem;
+  gap: var(--school-space-24);
+  margin: 0;
+  padding: 0 0 var(--school-space-16);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-color: var(--school-primary-ink) transparent;
+  scrollbar-width: thin;
+}
 .cell {
   display: flex;
   min-width: 0;
+}
+.strip > .cell {
+  scroll-snap-align: start;
 }
 .card {
   display: flex;
@@ -91,5 +111,11 @@
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .strip {
+    grid-auto-columns: 14rem;
+    gap: var(--school-space-16);
   }
 }

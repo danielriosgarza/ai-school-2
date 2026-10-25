@@ -1,7 +1,7 @@
 /* The front page (docs/plan.md, sections 4 and 5), below the hero (_hero.module.css): the
-   overview's two titled paragraphs and the scene beside them, the speakers' strip, the label of a
-   section that shows the first edition, and the link that closes a section. The programme's day
-   columns are the Schedule component's (ScheduleDays). */
+   overview's two titled paragraphs and the scene beside them, the label of a section that shows
+   the first edition, and the link that closes a section. The programme's day columns and the
+   speakers' strip are the components' own (ScheduleDays, SpeakerGrid). */
 
 /* "First edition, 2025": a label at the start of a section's lead. */
 .label {
@@ -47,28 +47,6 @@
   margin: var(--school-space-8) 0 0;
 }
 
-/* The speakers' strip: one row of cards that scrolls sideways inside the column, with the next
-   card showing at the edge. */
-.strip {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 15rem;
-  gap: var(--school-space-24);
-  margin: 0;
-  padding: 0 0 var(--school-space-16);
-  list-style: none;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  scrollbar-color: var(--school-primary-ink) transparent;
-  scrollbar-width: thin;
-}
-.speaker {
-  display: flex;
-  min-width: 0;
-  scroll-snap-align: start;
-}
-
 /* The link that closes a section, to its inner page. */
 .more {
   display: flex;
@@ -85,10 +63,6 @@
   }
 }
 @media (max-width: 540px) {
-  .strip {
-    grid-auto-columns: 14rem;
-    gap: var(--school-space-16);
-  }
   .more {
     margin-top: var(--school-space-24);
   }

@@ -68,16 +68,26 @@ export function SpeakerCard({ speaker, level = 3 }: SpeakerCardProps) {
   );
 }
 
-/** Speaker cards in a grid of three columns, then two, then one. */
+/**
+ * Speaker cards in a grid of three columns, then two, then one (the speakers page); or, as a
+ * `strip`, in one row that scrolls sideways inside the column, the next card showing at its edge
+ * (the front page). Each card's links are reached with Tab, and the strip scrolls the focused link
+ * into view, so the list needs no `tabindex`.
+ */
 export function SpeakerGrid({
   speakers,
   level = 3,
+  layout = 'grid',
+  label,
 }: {
   speakers: readonly Speaker[];
   level?: 2 | 3 | 4;
+  layout?: 'grid' | 'strip';
+  /** The list's name for assistive technology, where the page's heading does not give it. */
+  label?: string;
 }) {
   return (
-    <ul className={styles.grid}>
+    <ul className={layout === 'strip' ? styles.strip : styles.grid} aria-label={label}>
       {speakers.map((speaker) => (
         <li key={speaker.slug} className={styles.cell}>
           <SpeakerCard speaker={speaker} level={level} />
