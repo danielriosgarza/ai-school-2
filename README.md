@@ -6,7 +6,7 @@ The site is a [Parallax](https://github.com/danielriosgarza/PlatosCave) open sit
 
 ## Commands
 
-You need Node.js 22.12 or newer with npm. The site's one dependency is `parallax-site`, named at an exact version in `package.json`, the one file that names it. There is no lock file: `.npmrc` sets `package-lock=false`.
+You need Node.js 22.12 or newer with npm. The site's one dependency is `parallax-site`, named at an exact version in `package.json`, the one file that names it. The tests add development dependencies, also at exact versions: Playwright 1.56.1 (the version Parallax pins), axe and pdf.js. There is no lock file: `.npmrc` sets `package-lock=false`.
 
 | Task | Command |
 | --- | --- |
@@ -16,8 +16,15 @@ You need Node.js 22.12 or newer with npm. The site's one dependency is `parallax
 | Preview on this computer | `npm run preview`: builds for two local hosts, then serves `dist/site` at http://127.0.0.1:4175 and `dist/content` at http://localhost:4176 |
 | Serve `dist/` as it was built | `node scripts/preview.mjs` |
 | Move to a new version of Parallax | `npx parallax update`, then check and build |
+| Unit tests and the palette's contrast | `npm test`: the Node tests in `scripts/*.test.mjs`, then `node scripts/contrast.mjs` |
+| Link check | `node scripts/check-links.mjs` (or `npm run check:links`) after a build: every page, route file, asset and material file the build names must be in `dist/` |
+| Browser tests | `npm run test:e2e`: builds for the two preview hosts, then runs `e2e/` in Chromium. Once per computer first: `npx playwright install chromium` |
+| One browser test | after `npm run build:preview`: `npx playwright test e2e/programme.spec.ts`, or by its id, `npx playwright test -g PR1` |
+| Run on this computer, tested | `CONNECTOR_BIN=<connector> CONNECTOR_PYTHON=<python> npx playwright test run-on-this-computer`, with the released connector and a Python that has `jupyter-server`, `ipykernel` and the notebook's requirements |
 
-A build writes its content host into every link to a material file. `npm run preview` therefore builds for the two local hosts, and that build is for this computer only: `npx parallax build` makes the build to publish. The workflow `.github/workflows/check.yml` runs `npm install`, `npx parallax check` and `npx parallax build` on every push and pull request, and keeps `dist/` as the artifact `dist` of the run. Nothing is deployed yet.
+A build writes its content host into every link to a material file. `npm run preview` therefore builds for the two local hosts, and that build is for this computer only: `npx parallax build` makes the build to publish. The browser tests need the preview build (`npm run build:preview` writes it without serving) and refuse any other; `CHROMIUM_PATH` points them at a Chromium other than Playwright's own. Known failures of the pages are listed in `e2e/known-issues.ts`, each with the issue that owns it.
+
+The workflow `.github/workflows/check.yml` runs on every push and pull request, in three jobs side by side: `check` runs `npx parallax check`, the unit tests and the contrast check, `npx parallax build` and the link check, and keeps `dist/` as the artifact `dist` of the run; `browser` builds for the preview hosts and runs the browser tests; `run-on-this-computer` runs a notebook of the archive through the released connector and Jupyter on the runner. A failing browser job keeps Playwright's report and traces as an artifact. Nothing is deployed yet.
 
 ## Folder layout
 
@@ -35,7 +42,11 @@ src/content/              edition, programme, speakers, partners, participants, 
                           typed modules, with topics, dates, placeholder and catalogue helpers
 src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
                           and campus photo
-scripts/preview.mjs       serves the build on two local hosts
+scripts/                  preview.mjs serves the build on two local hosts; contrast.mjs checks the palette;
+                          check-links.mjs checks the links of a build; *.test.mjs are the unit tests, which
+                          resolve-ts.mjs lets import src/content
+e2e/                      the browser tests, one file per area, with known-issues.ts; playwright.config.ts
+                          at the root
 docs/                     plan.md (the approved plan), decisions.md (the decisions log)
 docs/review/              screenshots for the review of a pull request, one folder per issue
 .github/workflows/        check.yml
