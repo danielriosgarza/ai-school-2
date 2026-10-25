@@ -1,0 +1,18 @@
+id: 33ac5d89-2a9e-44ed-9d8f-1e233abfd1c2
+position: 0
+title: Before the school
+objective: >-
+  Prepare your laptop before the school, so that every session's notebooks run on your own
+  computer from their pages on this site. You install Python, a virtual environment with Jupyter
+  and the Parallax connector, then run the setup notebook with Run on this computer and see it
+  print "Setup complete".
+estimatedMinutes: 60
+resources:
+  - id: f081e911-2571-42d7-955a-80e061036365
+    file: reading/setup.md
+    title: Setting up your computer
+    visibility: visible
+  - id: 43e5fadd-4f32-455a-9f18-48bb8f98081f
+    file: notebooks/setup_check.ipynb
+    title: Setup check
+    visibility: visible
