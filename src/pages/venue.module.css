@@ -1,0 +1,30 @@
+/* The venue page: the facts as a definition list, the photo beside them on a wide window and
+   below them on a narrow one. */
+.layout {
+  display: grid;
+  gap: var(--school-space-40);
+  align-items: start;
+}
+.withPhoto {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+}
+.photo {
+  margin: 0;
+}
+.image {
+  display: block;
+  width: 100%;
+  max-width: 408px;
+  height: auto;
+  border: var(--school-rule-width) solid var(--school-rule);
+}
+.caption {
+  margin-top: var(--school-space-8);
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+@media (max-width: 900px) {
+  .withPhoto {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

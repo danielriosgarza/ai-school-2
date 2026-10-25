@@ -1,0 +1,21 @@
+/* The organisation page: the people as a definition list (DetailList), the supporters on the
+   logo strip (PartnerLogos). */
+.contact {
+  max-width: var(--school-measure);
+  margin: 0;
+  font: var(--school-text-lead);
+  overflow-wrap: anywhere;
+}
+.group {
+  margin-top: var(--school-space-48);
+}
+.subhead {
+  margin: 0 0 var(--school-space-16);
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
+}
+@media (max-width: 540px) {
+  .group {
+    margin-top: var(--school-space-40);
+  }
+}
