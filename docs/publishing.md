@@ -13,7 +13,7 @@ Each statement about a host says where it comes from: the host's documentation (
 | `dist/site` | the site host, `origins.app` | `index.html` at `/` and a copy of it at every address of the site (`programme/index.html`, `courses/index.html`, `courses/<course>/<topic>/<tab>/index.html`), the compiled shell under `assets/`, and the JSON data files the shell reads |
 | `dist/content` | the content host, `origins.content` | `o/<sha256>.<ext>`: every PDF, image, SVG, notebook file, HTML output of a notebook and notebook data zip, each named by the digest of its bytes, and nothing else |
 
-Until the first course lands (W2), `dist/content` is empty.
+Without a course folder, `dist/content` is empty; with the archive course (W2) it holds the 2025 decks, readings, notebooks and their images.
 
 **Why a build belongs to one pair of host names.** The build writes the content origin into every link to a material file: a deck in a JSON data file is `https://content.school.example.org/o/<digest>.pdf`, so a tree built for one content host loads its material from that host wherever it is served. The site origin is written into no file: the build checks that the two host names differ and names both in its last line (`parallax build: dist/site is for https://school.example.org, and dist/content for https://content.school.example.org.`). Build again whenever either host name changes: a build is cheap, and its last line then states the pair the files were made for.
 
