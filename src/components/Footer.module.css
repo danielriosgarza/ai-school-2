@@ -1,0 +1,51 @@
+/* The footer, in the petrol register of the theme's .inverse. */
+.footer {
+  margin-top: auto;
+  padding-block: var(--school-space-48);
+  border-top: var(--school-rule-width) solid var(--school-rule);
+}
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--school-space-32) var(--school-space-48);
+  align-items: start;
+}
+.name {
+  max-width: 24ch;
+  margin: 0;
+  font: var(--school-text-card);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.edition {
+  margin: var(--school-space-8) 0 0;
+  font: var(--school-text-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--school-ink-muted);
+}
+.facts {
+  display: grid;
+  gap: var(--school-space-16);
+  margin: 0;
+}
+.fact {
+  display: grid;
+  gap: var(--school-space-4);
+}
+.term {
+  font: var(--school-text-label);
+  color: var(--school-ink-muted);
+}
+.value {
+  margin: 0;
+  font: var(--school-text-body);
+  overflow-wrap: anywhere;
+}
+.partners {
+  margin-top: var(--school-space-32);
+}
+@media (max-width: 800px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

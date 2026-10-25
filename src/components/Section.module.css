@@ -1,0 +1,50 @@
+/* A titled band of a page (docs/plan.md, section 5): the heading in the display face, a lead in
+   22 px, the content below, all in the 1200 px column between the theme's insets. */
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--school-width) + 2 * var(--school-inset));
+  margin-inline: auto;
+  padding-inline: var(--school-inset);
+}
+.section {
+  padding-block: var(--school-space-64);
+}
+.paper {
+  background: var(--school-paper);
+}
+.tint {
+  background: var(--school-tint);
+}
+/* The petrol ground and its colours come from the theme's .inverse. */
+.primary {
+  background: var(--school-paper);
+}
+.title {
+  max-width: 30ch;
+  margin: 0;
+  font: var(--school-text-h2);
+  letter-spacing: var(--school-tracking-display);
+}
+.subtitle {
+  max-width: 36ch;
+  margin: 0;
+  font: var(--school-text-h3);
+  letter-spacing: var(--school-tracking-display);
+}
+.lead {
+  max-width: var(--school-measure);
+  margin: var(--school-space-16) 0 0;
+  font: var(--school-text-lead);
+}
+.body {
+  margin-top: var(--school-space-32);
+}
+@media (max-width: 540px) {
+  .section {
+    padding-block: var(--school-space-48);
+  }
+  .body {
+    margin-top: var(--school-space-24);
+  }
+}
