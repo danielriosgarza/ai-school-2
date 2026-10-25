@@ -104,7 +104,7 @@
      `accent` the amber. `scripts/contrast.mjs` lists which pairs are checked. */
   --school-paper: #f7f4ec; /* page ground: warm off-white */
   --school-ink: #0f1c2b; /* text: near-black blue */
-  --school-ink-muted: #4e5966; /* metadata: dates, affiliations, kinds of session */
+  --school-ink-muted: #8a929b; /* metadata: dates, affiliations, kinds of session */
   --school-rule: #d3ccbd; /* grey 1: hairlines between rows, card borders */
   --school-tint: #e9e3d6; /* grey 2: break rows, tinted bands */
   --school-primary: #0b4654; /* petrol: hero and band grounds */
