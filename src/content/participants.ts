@@ -21,7 +21,7 @@ export interface Participant {
   readonly name: string;
   readonly affiliation: string;
   readonly country: string;
-  /** A few lines the participant wrote. */
+  /** A few lines the participant wrote, at most 400 characters; empty when they gave none. */
   readonly text: string;
   /**
    * The picture of the participant that they chose: a square WebP of 480 × 480 pixels under

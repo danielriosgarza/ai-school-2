@@ -71,7 +71,7 @@ function ParticipantCard({ participant }: { participant: Participant }) {
       </div>
       <div className={styles.band} />
       <div className={styles.body}>
-        <p className={styles.text}>{participant.text}</p>
+        {participant.text ? <p className={styles.text}>{participant.text}</p> : null}
         {links.length > 0 ? (
           <ul className={styles.links} aria-label={`Links of ${participant.name}`}>
             {links.map((link) => (
