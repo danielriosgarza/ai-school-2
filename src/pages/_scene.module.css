@@ -1,6 +1,7 @@
 /* The scene: a canvas that fills its box, and the button that pauses and plays it in the box's
    upper right corner, above the bands. The component sets the --scene-* colours on the box from
-   its palette, in the current scheme; the values here are the light defaults until it has. A page
+   its palette, in the current scheme (the focus outline is `--scene-focus`); the values here are
+   the light defaults until it has. A page
    sizes the box with a class of its own (the `className` prop); without one it is as wide as its
    container and 16:9. */
 .scene {
@@ -12,7 +13,7 @@
   min-height: 180px;
   overflow: hidden;
   border-radius: 6px;
-  background: var(--scene-paper, #f7f4ee);
+  background: var(--scene-paper, #ffffff);
 }
 .canvas {
   position: absolute;
@@ -28,20 +29,20 @@
   min-width: 64px;
   height: 32px;
   padding: 0 12px;
-  border: 1px solid var(--scene-rule, #7a808d);
+  border: 1px solid var(--scene-rule, #868a91);
   border-radius: 4px;
-  background: var(--scene-paper, #f7f4ee);
-  color: var(--scene-ink, #14213d);
+  background: var(--scene-paper, #ffffff);
+  color: var(--scene-ink, #1c1e21);
   font: inherit;
   font-size: 0.875rem;
   line-height: 1;
   cursor: pointer;
 }
 .toggle:hover {
-  border-color: var(--scene-ink, #14213d);
+  border-color: var(--scene-ink, #1c1e21);
 }
 .toggle:focus-visible {
-  outline: 2px solid var(--scene-accent, #e0a100);
+  outline: 2px solid var(--scene-focus, #1f51ff);
   outline-offset: 2px;
 }
 @media (pointer: coarse) {

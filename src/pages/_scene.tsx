@@ -10,23 +10,25 @@ import {
   type Community,
 } from './_scene-model';
 
-// The scene of the front page's hero (docs/plan.md, section 5): a microbial community under
-// control. Six species evolve under a generalized Lotka–Volterra model (`_scene-model.ts`), drawn
-// as stacked bands whose heights are their abundances, advancing from right to left like a chart
-// recorder; a PI controller keeps the lowest species near the amber target line, which moves now
-// and then, while a disturbance now and then knocks a species up or down. A name that starts with
+// The scene of the front page (docs/plan.md, section 5; beside the overview since W13): a
+// microbial community under control. Six species evolve under a generalized Lotka–Volterra model
+// (`_scene-model.ts`), drawn as stacked bands whose heights are their abundances, advancing from
+// right to left like a chart recorder; a PI controller keeps the lowest species near the target
+// line, which moves now and then, while a disturbance now and then knocks a species up or down. A name that starts with
 // `_` makes this file a helper, not a page. It loads no image and adds no dependency; it pauses
 // off screen, starts paused under reduced motion and redraws when the colour scheme changes.
 
 /** The scene's colours. Any CSS colour works, `var(--name)` included: it is resolved on the
  * scene's own element, so a theme's custom properties reach the canvas. `tints` colour the
  * species above the controlled one, lowest first; when it is left out, four lighter steps of
- * `primary` towards `paper` are used, and a grey from `ink` and `paper` fills any band left. */
+ * `primary` towards `paper` are used, and a grey from `ink` and `paper` fills any band left.
+ * `accent` is the target line, `focus` the Pause button's outline under keyboard focus. */
 export interface ScenePalette {
   paper: string;
   ink: string;
   primary: string;
   accent: string;
+  focus?: string;
   tints?: string[];
 }
 
@@ -42,19 +44,23 @@ export interface SceneProps extends Partial<ScenePalette> {
   className?: string;
 }
 
-/** The light colours: the school's paper, ink, petrol blue and amber (docs/plan.md, section 5). */
+/** The light colours: the school's white paper and ink, the electric blue for the bands and the
+ * focus outline, and the target line in the ink (docs/decisions.md, W13). */
 export const LIGHT: ScenePalette = {
-  paper: '#f7f4ee',
-  ink: '#14213d',
-  primary: '#1f4e5f',
-  accent: '#e0a100',
+  paper: '#ffffff',
+  ink: '#1c1e21',
+  primary: '#1f51ff',
+  accent: '#1c1e21',
+  focus: '#1f51ff',
 };
-/** The dark colours: the same roles on a dark ground, with a lighter petrol for the bands. */
+/** The dark colours: the same roles on the near-black paper, with the light blue for the bands and
+ * the target line in the light ink. */
 export const DARK: ScenePalette = {
-  paper: '#101a22',
-  ink: '#e9edf1',
-  primary: '#7fb6c4',
-  accent: '#f0b429',
+  paper: '#121417',
+  ink: '#e8eaee',
+  primary: '#7d98ff',
+  accent: '#e8eaee',
+  focus: '#7d98ff',
 };
 
 /** Model time per second of real time, model steps per recorded column, and the column's width
@@ -83,7 +89,7 @@ const BORDER_STEP = 0.45;
 /** The densest the canvas is drawn, in device pixels per CSS pixel. */
 const DENSEST = 2;
 const LABEL =
-  'A microbial community of six species: their abundances, drawn as stacked bands in shades of blue and grey, rise and fall over time as the bands advance from right to left, while a controller holds the lowest band close to an amber target line that moves now and then.';
+  'A microbial community of six species: their abundances, drawn as stacked bands in shades of blue and grey, rise and fall over time as the bands advance from right to left, while a controller holds the lowest band close to a target line that moves now and then.';
 
 type Rgb = [number, number, number];
 
@@ -266,6 +272,7 @@ export default function Scene({
   ink,
   primary,
   accent,
+  focus,
   tints,
   dark,
   scheme = 'auto',
@@ -286,21 +293,24 @@ export default function Scene({
     ink,
     primary,
     accent,
+    focus,
     tints?.join(','),
     dark?.paper,
     dark?.ink,
     dark?.primary,
     dark?.accent,
+    dark?.focus,
     dark?.tints?.join(','),
   ].join('|');
   const palettes = useMemo(
     () => ({
-      light: { paper, ink, primary, accent, tints },
+      light: { paper, ink, primary, accent, focus, tints },
       dark: {
         paper: dark?.paper ?? paper,
         ink: dark?.ink ?? ink,
         primary: dark?.primary ?? primary,
         accent: dark?.accent ?? accent,
+        focus: dark?.focus ?? focus,
         tints: dark?.tints ?? tints,
       },
     }),
@@ -347,7 +357,8 @@ export default function Scene({
       const ground = resolve(given.paper, base.paper);
       const pen = resolve(given.ink, base.ink);
       const blue = resolve(given.primary, base.primary);
-      const amber = resolve(given.accent, base.accent);
+      const line = resolve(given.accent, base.accent);
+      const outline = resolve(given.focus, base.focus ?? base.primary);
       const steps = given.tints?.length
         ? given.tints.map((tint) => resolve(tint, base.primary))
         : TINT_STEPS.map((t) => mix(blue, ground, t));
@@ -356,13 +367,14 @@ export default function Scene({
       colours = {
         paper: rgb(ground),
         rule: rgb(pen, isDark ? 0.12 : 0.08),
-        accent: rgb(amber),
+        accent: rgb(line),
         bands: bands.slice(0, SPECIES).map((band) => rgb(band)),
       };
       // The button's colours, from the same palette; its border grey keeps 3:1 on the paper.
       root.style.setProperty('--scene-paper', rgb(ground));
       root.style.setProperty('--scene-ink', rgb(pen));
-      root.style.setProperty('--scene-accent', rgb(amber));
+      root.style.setProperty('--scene-accent', rgb(line));
+      root.style.setProperty('--scene-focus', rgb(outline));
       root.style.setProperty('--scene-rule', rgb(mix(pen, ground, BORDER_STEP)));
       draw();
     };

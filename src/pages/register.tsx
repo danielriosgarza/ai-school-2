@@ -89,7 +89,7 @@ export default function RegisterPage({ catalogue }: PageProps) {
       <main id="main">
         <PageHeader title="Registration" lead={stateText(state)}>
           {state.kind === 'open' && formKnown ? (
-            <a className={styles.action} href={form}>
+            <a className={theme.action} href={form}>
               Open the registration form
             </a>
           ) : null}

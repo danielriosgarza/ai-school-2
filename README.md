@@ -30,22 +30,25 @@ The workflow `.github/workflows/check.yml` runs on every push and pull request, 
 
 ```text
 package.json              parallax-site 0.2.0 (exact) and the npm scripts
-parallax.config.ts        mode 'instructor', level 0, the school's name, the two origins (placeholders)
+parallax.config.ts        mode 'instructor', level 0, the school's name and logo, the two origins (placeholders)
 instructor.yaml           the school as instructor: its name and its address
 courses/                  the course folders, one per edition: first-edition-2025, the 2025 school archived;
                           second-edition, with topic 0, Before the school (the participants' setup)
 src/pages/                the school's own pages, JSX with a CSS module beside each; index.tsx is /,
                           programme, speakers, venue, organisation, register and participants the
                           inner pages
-src/styles/               theme.module.css: the school's palette, faces, type and spacing scales
-src/components/           Section, Schedule, SpeakerCard, PartnerLogos, Footer, PageHeader (with the school's
-                          links), DetailList and Shown, each with its CSS module where it has styles
+src/styles/               theme.module.css: the school's palette (white, the first edition's electric blue,
+                          its slate for the footer), faces (Inter Tight, Inter), type and spacing scales
+src/components/           Section, Schedule, SpeakerCard, PartnerLogos, Footer, PageHeader (the masthead with
+                          the mark, the school's links and the partners' logos, and the page head),
+                          DetailList and Shown, each with its CSS module where it has styles
 src/content/              edition, programme, speakers, partners, participants, venue and organisation as
                           typed modules, with topics, dates, placeholder and catalogue helpers;
                           participants.sample.ts, fictional entries for reviewing the participants page
-src/assets/               the two faces with their licences, the 2025 speakers' portraits, partners' logos
-                          and campus photo; participants/ for the participants' pictures, with the
-                          sample's drawings in participants/sample/
+src/assets/               the two faces, Inter Tight and Inter, with their licences; logo/, the school's
+                          mark from the first edition in black and in white; the 2025 speakers' portraits,
+                          partners' logos and campus photo; participants/ for the participants' pictures,
+                          with the sample's drawings in participants/sample/
 scripts/                  preview.mjs serves the build on two local hosts; publish-build.mjs checks and builds
                           for publishing, refusing the placeholder and local origins; contrast.mjs checks
                           the palette; check-links.mjs checks the links of a build; *.test.mjs are the unit

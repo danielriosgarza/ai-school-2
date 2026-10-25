@@ -25,10 +25,10 @@ function initials(name: string): string {
 }
 
 /**
- * A speaker (docs/plan.md, section 5): the square portrait in colour, the name in the display
- * face, affiliation and country in the label size, the talk title, which links to the session's
- * topic when it is known, and one plain link to the speaker's own page. A petrol band appears
- * under the portrait on hover and focus.
+ * A speaker (docs/plan.md, section 5): the square portrait in colour, the name in the title face,
+ * affiliation and country in the label size, the talk title, which links to the session's topic
+ * when it is known, and one plain link to the speaker's own page. A blue band appears under the
+ * portrait on hover and focus.
  */
 export function SpeakerCard({ speaker, level = 3 }: SpeakerCardProps) {
   const Name = level === 2 ? 'h2' : level === 3 ? 'h3' : 'h4';

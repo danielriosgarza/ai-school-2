@@ -19,7 +19,8 @@
   border-bottom: 2px solid var(--school-ink);
   background: var(--school-paper);
   font: var(--school-text-h3);
-  letter-spacing: var(--school-tracking-display);
+  letter-spacing: var(--school-tracking-title);
+  text-transform: none;
 }
 .number {
   font: 600 var(--school-size-label) / 1.45 var(--school-font-text);
@@ -43,7 +44,7 @@
 }
 .time {
   width: 6.5rem;
-  font: 500 var(--school-size-lead) / 1.25 var(--school-font-display);
+  font: 600 var(--school-size-lead) / 1.3 var(--school-font-text);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -88,14 +89,14 @@
   letter-spacing: 0;
   color: var(--school-ink-muted);
 }
-/* The amber square after a title: the session's topic has material. */
+/* The blue square after a title: the session's topic has material. */
 .material {
   display: inline-block;
   width: 0.5rem;
   height: 0.5rem;
   margin-left: var(--school-space-8);
   vertical-align: 0.15em;
-  background: var(--school-accent-ink);
+  background: var(--school-primary-ink);
 }
 .meta {
   display: flex;

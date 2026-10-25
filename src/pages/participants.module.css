@@ -1,5 +1,5 @@
 /* The participants page: a card per participant in the frame of SpeakerCard (a hairline rule on
-   paper, the name in the display face, affiliation and country in the label size, a petrol band on
+   paper, the name in the display face, affiliation and country in the label size, a blue band on
    hover and focus), with a smaller picture beside the name, since a school has more participants
    than speakers. Three columns, then two, then one. */
 .more {
@@ -63,7 +63,7 @@
 .country {
   display: block;
 }
-/* The band under the head: petrol on hover and while a link of the card has focus. */
+/* The band under the head: blue on hover and while a link of the card has focus. */
 .band {
   height: 4px;
   background: transparent;

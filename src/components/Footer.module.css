@@ -1,8 +1,7 @@
-/* The footer, in the petrol register of the theme's .inverse. */
+/* The footer, in the slate register of the theme's .slate: light text, light links underlined. */
 .footer {
   margin-top: auto;
   padding-block: var(--school-space-48);
-  border-top: var(--school-rule-width) solid var(--school-rule);
 }
 .columns {
   display: grid;
@@ -14,7 +13,7 @@
   max-width: 24ch;
   margin: 0;
   font: var(--school-text-card);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--school-tracking-title);
   text-wrap: balance;
 }
 .edition {

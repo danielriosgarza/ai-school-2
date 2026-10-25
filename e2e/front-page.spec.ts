@@ -63,18 +63,13 @@ test('FP1 the front page loads cleanly with its heading, scene, school links and
   await page.waitForTimeout(700);
   expect(await frame(canvas), 'a paused scene stays still').toBe(paused);
 
-  // The school's two faces, in the four weights the theme uses (W3).
+  // The school's two faces, in the three weights the theme uses (W13).
   const faces = await page.evaluate(() =>
     [...document.fonts]
       .filter((face) => face.status === 'loaded')
       .map((face) => `${face.family.replace(/["']/g, '')} ${face.weight}`),
   );
-  for (const face of [
-    'Space Grotesk 500',
-    'Space Grotesk 700',
-    'Source Sans 3 400',
-    'Source Sans 3 600',
-  ]) {
+  for (const face of ['Inter Tight 700', 'Inter 400', 'Inter 600']) {
     expect(faces, 'faces loaded').toContain(face);
   }
   seen.expectNone();
