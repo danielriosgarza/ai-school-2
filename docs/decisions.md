@@ -27,3 +27,47 @@ The choices each issue made, newest last. Each entry is dated and names its issu
 **2026-10-25. CI.** `.github/workflows/check.yml` runs on push and pull request on `ubuntu-latest` with Node 22: `npm install`, `npx parallax check`, `npx parallax build`, then uploads `dist/` as the artifact `dist` and fails when there is nothing to upload. Permissions are `contents: read`, the checkout keeps no credentials, and actions are pinned to major versions. There is no npm cache, since `actions/setup-node` caches by a lock file. A pull request from a branch of this repository runs the workflow twice, once for the push and once for the pull request. The first run passed, with a notice that these v4 actions target Node.js 20, which the runners now run on Node.js 24; the issue named v4, and moving to a later major is a one-line change for each action.
 
 **2026-10-25. Upstream advisories.** `npm install` reports 7 advisories (4 low, 1 high, 2 critical) in the dependencies that `parallax-site` 0.2.0 pins: `dompurify`, `katex` (through `remark-math` and `rehype-katex`) and `zod`. The site names no dependency but `parallax-site`, so nothing was overridden here; a fix comes with a Parallax version and `npx parallax update`.
+
+## W2: First edition archive course
+
+Not started.
+
+## W3: Identity, content modules and shared components
+
+Not started.
+
+## W4: Front page
+
+Not started.
+
+## W5: Hero scene
+
+Not started.
+
+## W6: Inner pages
+
+Not started.
+
+## W7: Second edition course skeleton and speaker kit
+
+Not started.
+
+## W8: Smoke tests and quality gates
+
+Not started.
+
+## W9: Publishing readiness
+
+Not started.
+
+## W10: Polish and review pass
+
+Not started.
+
+## W11: Level 1 readiness: SSH compute
+
+Not started.
+
+## W12: Participants and mail
+
+Not started.
