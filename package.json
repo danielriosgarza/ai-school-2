@@ -4,9 +4,20 @@
   "scripts": {
     "check": "parallax check",
     "build": "parallax build",
-    "preview": "node scripts/preview.mjs --build"
+    "preview": "node scripts/preview.mjs --build",
+    "build:preview": "node scripts/preview.mjs --build --no-serve",
+    "check:links": "node scripts/check-links.mjs",
+    "test": "node --experimental-strip-types --import ./scripts/resolve-ts.mjs --test scripts/*.test.mjs && node scripts/contrast.mjs",
+    "test:e2e": "npm run build:preview && playwright test"
   },
   "dependencies": {
     "parallax-site": "0.2.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.56.1",
+    "axe-core": "4.13.0",
+    "pdfjs-dist": "6.3.289",
+    "playwright-core": "1.56.1"
   }
 }

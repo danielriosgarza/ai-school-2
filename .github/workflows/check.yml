@@ -1,5 +1,13 @@
-# Checks and builds the site on every push and pull request, and keeps the build as an artifact.
-# No deploy: the publishing decision is open (docs/plan.md, section 8).
+# Checks, tests and builds the site on every push and pull request, and keeps the build as an
+# artifact. Three jobs run side by side (docs/decisions.md, W8):
+#
+# - check: the configuration and course folders, the unit tests and the palette's contrast, the
+#   build to publish (the artifact `dist`) and the link check over it;
+# - browser: a build for the two preview hosts, then the browser tests (e2e/) in Chromium;
+# - run-on-this-computer: a notebook of the archive and the setup check of Before the school run
+#   on the runner through the released connector and Jupyter, as Parallax's own level 0 suite does.
+#
+# No deploy: the publishing decision is open (docs/plan.md, section 8). No secret is used.
 name: Check
 
 on:
@@ -9,9 +17,42 @@ on:
 permissions:
   contents: read
 
+env:
+  # The released connector of Run on this computer, and its SHA-256 (the release's SHA256SUMS).
+  CONNECTOR_VERSION: 0.2.0
+  CONNECTOR_SHA256: a41a5efdadcd0723486e12d09047f945fdbae8c32e8f98adb56145f2f0d30e39
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      # The site keeps no lock file (.npmrc: package-lock=false); package.json names exact
+      # versions, so it is the key of npm's download cache.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package.json
+      - run: npm install
+      - run: npx parallax check
+      - name: Unit tests and the palette's contrast
+        run: npm test
+      - run: npx parallax build
+      - name: Link check
+        run: node scripts/check-links.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,13 +60,85 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # The site keeps no lock file (.npmrc: package-lock=false); package.json names the exact
-      # version of parallax-site.
+          cache: npm
+          cache-dependency-path: package.json
       - run: npm install
-      - run: npx parallax check
-      - run: npx parallax build
-      - uses: actions/upload-artifact@v4
+      - name: Build for the preview hosts
+        run: npm run build:preview
+      - uses: actions/cache@v4
         with:
-          name: dist
-          path: dist/
-          if-no-files-found: error
+          path: ~/.cache/ms-playwright
+          key: playwright-1.56.1-${{ runner.os }}
+      # Chromium alone: the runner's image already has every library it needs, and --with-deps
+      # spent ten minutes in one run fetching fonts from a slow apt mirror.
+      - run: npx playwright install chromium
+      - name: Browser tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-report
+          path: |
+            playwright-report/
+            test-results/
+
+  run-on-this-computer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Alex Fedorec's part 1 (plain requirements, 12 code cells, about 20 s of running) and the
+      # setup check, whose requirements are a subset of part 1's.
+      NOTEBOOK: courses/first-edition-2025/03-fedorec-synthetic-communities/notebooks/part1_community_models
+      SETUP: courses/second-edition/00-before-the-school/notebooks/setup_check
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            ${{ env.NOTEBOOK }}/requirements.txt
+            ${{ env.SETUP }}/requirements.txt
+      - run: npm install
+      - name: Jupyter and the notebooks' requirements, as a participant installs them
+        run: |
+          python -m pip install jupyter-server==2.21.1 ipykernel==7.4.0 \
+            -r "$NOTEBOOK/requirements.txt" -r "$SETUP/requirements.txt"
+          echo "CONNECTOR_PYTHON=$(command -v python)" >> "$GITHUB_ENV"
+      - name: The released connector, checked against its SHA-256
+        run: |
+          name="parallax-connector_${CONNECTOR_VERSION}_linux_amd64"
+          release="https://github.com/danielriosgarza/PlatosCave/releases/download/connector-v${CONNECTOR_VERSION}"
+          dir="$RUNNER_TEMP/connector"
+          mkdir -p "$dir"
+          curl -fsSL --retry 3 -o "$dir/$name" "$release/$name"
+          curl -fsSL --retry 3 -o "$dir/SHA256SUMS" "$release/SHA256SUMS"
+          echo "$CONNECTOR_SHA256  $dir/$name" | sha256sum -c -
+          grep -qx "$CONNECTOR_SHA256  $name" "$dir/SHA256SUMS"
+          chmod +x "$dir/$name"
+          echo "CONNECTOR_BIN=$dir/$name" >> "$GITHUB_ENV"
+      - name: Build for the preview hosts
+        run: npm run build:preview
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-1.56.1-${{ runner.os }}
+      # Chromium alone: the runner's image already has every library it needs, and --with-deps
+      # spent ten minutes in one run fetching fonts from a slow apt mirror.
+      - run: npx playwright install chromium
+      - name: Run on this computer
+        run: npx playwright test run-on-this-computer
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: run-on-this-computer-report
+          path: |
+            playwright-report/
+            test-results/
