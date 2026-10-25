@@ -7,11 +7,16 @@ declare const process: { env: Record<string, string | undefined> };
 const preview = process.env.SITE_PREVIEW === '1';
 
 // The school's open site (level 0): no server, database or sign-in. `npx parallax build` writes
-// dist/site for the app origin and dist/content for the content origin. No logo yet: it is an
-// open input of the plan (docs/plan.md, section 9).
+// dist/site for the app origin and dist/content for the content origin.
 export default defineConfig({
   mode: 'instructor',
   name: 'School of Artificial Intelligence Applied to Microbiomes',
+  // The first edition's mark (docs/decisions.md, W13). Parallax 0.2.0 hands it to the pages as
+  // `site.logo` and shows it nowhere itself, neither in the bar nor as the favicon.
+  logo: {
+    file: 'src/assets/logo/mark-ink.png',
+    alt: "The school's mark: a chip whose gear holds microbes, its pins ending in circuit traces",
+  },
   level: 0,
   // Placeholders: the real host names come with the publishing decision (docs/plan.md, section 8).
   // A preview build names the two local hosts that scripts/preview.mjs serves instead; it is for
