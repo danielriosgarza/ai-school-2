@@ -2,7 +2,7 @@
 
 The website of the second edition of the school: programme, speakers, venue, registration, and the course material (slides, readings and notebooks) that participants study and run.
 
-The site is a [Parallax](https://github.com/danielriosgarza/PlatosCave) open site. Course material lives in plain folders under `courses/` and is served as static files; the school's own pages are under `src/pages/`. Notebooks run from the site on each participant's own computer through the Parallax connector; running them on an SSH server is the intended next step.
+The site is a [Parallax](https://github.com/danielriosgarza/PlatosCave) open site. Course material lives in plain folders under `courses/` and is served as static files; the school's own pages are under `src/pages/`. Notebooks run from the site on each participant's own computer through the Parallax connector; running them on an SSH server is the intended next step. [docs/level-1.md](docs/level-1.md) prepares that step: Parallax's level 1, where participants sign in, join a class and run the notebooks on an SSH server under an account of their own.
 
 ## Commands
 
@@ -40,7 +40,8 @@ scripts/preview.mjs       serves the build on two local hosts
 scripts/publish-build.mjs checks and builds for publishing, refusing the placeholder and local origins
 docs/                     plan.md (the approved plan), decisions.md (the decisions log), publishing.md
                           (how to publish the build to each candidate host), speaker-guide.md (what a
-                          session delivers and how to send it)
+                          session delivers and how to send it), level-1.md (the move to sign-in,
+                          classes and notebooks on an SSH server)
 docs/review/              screenshots for the review of a pull request, one folder per issue
 .github/workflows/        check.yml; publish-*.yml, one per candidate host, started by hand only
 .github/ISSUE_TEMPLATE/   add-my-session.yml, the form for speakers who do not use git, and config.yml
