@@ -5,14 +5,17 @@
 //
 //   node scripts/publish-build.mjs
 //
-// It runs `parallax check` and `parallax build` without SITE_PREVIEW, reads the two origins from
-// the build's last line ("parallax build: dist/site is for <app>, and dist/content for
-// <content>."), and exits 1 when either is on a reserved example domain or names a loopback host.
-// In GitHub Actions it writes site_origin, content_origin, site_host and content_host to
-// $GITHUB_OUTPUT for the steps that follow.
+// First it refuses a source that imports the fictional participants of
+// src/content/participants.sample.ts, such as the one-line change of participants.ts that renders
+// them for a review (docs/decisions.md, W12), so that no published build shows them. Then it runs
+// `parallax check` and `parallax build` without SITE_PREVIEW, reads the two origins from the
+// build's last line ("parallax build: dist/site is for <app>, and dist/content for <content>."),
+// and exits 1 when either is on a reserved example domain or names a loopback host. In GitHub
+// Actions it writes site_origin, content_origin, site_host and content_host to $GITHUB_OUTPUT for
+// the steps that follow.
 import { spawnSync } from 'node:child_process';
-import { appendFileSync, existsSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { appendFileSync, existsSync, readdirSync, readFileSync } from 'node:fs';
+import { join, relative, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -38,6 +41,28 @@ export function originProblem(origin) {
   return undefined;
 }
 
+/** The fictional participants, which no published source may import. */
+const SAMPLE = join('src', 'content', 'participants.sample.ts');
+/** A module specifier that names the sample, in `from '…'`, `import '…'` or `import('…')`. */
+const SAMPLE_SPECIFIER =
+  /(?:\bfrom\s*|\bimport\s*\(?\s*)['"][^'"]*participants\.sample(?:\.[cm]?[jt]sx?)?['"]/;
+
+/** The files under `<root>/src`, other than the sample itself, that import or export the sample. */
+export function sampleImports(root) {
+  const found = [];
+  const walk = (folder) => {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      const path = join(folder, entry.name);
+      if (entry.isDirectory()) walk(path);
+      else if (/\.[cm]?[jt]sx?$/.test(entry.name) && relative(root, path) !== SAMPLE) {
+        if (SAMPLE_SPECIFIER.test(readFileSync(path, 'utf8'))) found.push(relative(root, path));
+      }
+    }
+  };
+  if (existsSync(join(root, 'src'))) walk(join(root, 'src'));
+  return found.map((path) => path.split(sep).join('/')).sort();
+}
+
 /** Runs one command of the tool; the build's messages are on stderr, so stderr is kept. */
 function parallax(command, env) {
   const run = spawnSync(process.execPath, [BIN, command], {
@@ -56,6 +81,14 @@ function main() {
     console.error('publish-build: parallax-site is not installed. Run npm install first.');
     return 1;
   }
+  const sample = sampleImports(ROOT);
+  for (const file of sample) {
+    console.error(
+      `publish-build: ${file} imports the fictional participants of participants.sample.ts; ` +
+        `restore it (git checkout -- ${file}) and publish again.`,
+    );
+  }
+  if (sample.length > 0) return 1;
   const env = { ...process.env };
   delete env.SITE_PREVIEW;
   const checked = parallax('check', env);

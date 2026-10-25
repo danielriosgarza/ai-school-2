@@ -34,3 +34,32 @@ export interface Participant {
 }
 
 export const participants: readonly Participant[] = [];
+
+/** Whether an address is a web page's (http or https), the only kind a card links. */
+export function isWebAddress(href: string): boolean {
+  try {
+    const { protocol } = new URL(href);
+    return protocol === 'https:' || protocol === 'http:';
+  } catch {
+    return false;
+  }
+}
+
+/** The name a link is shown by: the network's, or an `Other` link's label, else its host. */
+export function linkName(link: ParticipantLink): string {
+  if (link.kind !== 'Other') return link.kind;
+  if (link.label) return link.label;
+  return new URL(link.href).hostname.replace(/^www\./, '');
+}
+
+/**
+ * The links a participant's card shows, each with its name: the web addresses only, so that an
+ * address of another kind (`mailto:`, `javascript:`, a path without a scheme) is left out.
+ */
+export function shownLinks(
+  participant: Participant,
+): readonly { readonly href: string; readonly name: string }[] {
+  return participant.links
+    .filter((link) => isWebAddress(link.href))
+    .map((link) => ({ href: link.href, name: linkName(link) }));
+}
