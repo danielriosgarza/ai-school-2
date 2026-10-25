@@ -1,0 +1,296 @@
+/* The school's identity (docs/plan.md, section 5): palette, faces, type scale, spacing and layout
+   as custom properties on one root class, `.site`, which each of the school's pages puts around
+   its content (`<div className={theme.site}><main id="main">…</main><Footer /></div>`). The
+   properties are named `--school-*`: Parallax's `--pc-*` tokens are neither declared nor read
+   here, and every selector carries a class, so the course screens under /courses and the bar keep
+   Parallax's look. `node scripts/contrast.mjs` reads the colours of this file and checks every text
+   and ground pair at WCAG AA in both schemes.
+
+   Two more classes belong to the theme: `.inverse` turns a region into the petrol register (the
+   hero, a band, the footer) by giving the roles their values on petrol, and `.visuallyHidden`
+   keeps text for screen readers only. */
+
+/* Space Grotesk (display) and Source Sans 3 (text), two weights each, self-hosted, under the SIL
+   Open Font License (OFL.txt beside each face). Each weight is a Latin file and a Latin Extended
+   file; the browser fetches the second only for a page with a character in its range (the ć of
+   Bajić). */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/space-grotesk/space-grotesk-latin-500-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/space-grotesk/space-grotesk-latin-ext-500-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/space-grotesk/space-grotesk-latin-700-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/space-grotesk/space-grotesk-latin-ext-700-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/source-sans-3/source-sans-3-latin-400-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/source-sans-3/source-sans-3-latin-ext-400-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/source-sans-3/source-sans-3-latin-600-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/source-sans-3/source-sans-3-latin-ext-600-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+    U+A720-A7FF;
+}
+
+.site {
+  /* Colour roles, light scheme. A role names a use, not a hue: `primary` is the petrol blue,
+     `accent` the amber. `scripts/contrast.mjs` lists which pairs are checked. */
+  --school-paper: #f7f4ec; /* page ground: warm off-white */
+  --school-ink: #0f1c2b; /* text: near-black blue */
+  --school-ink-muted: #4e5966; /* metadata: dates, affiliations, kinds of session */
+  --school-rule: #d3ccbd; /* grey 1: hairlines between rows, card borders */
+  --school-tint: #e9e3d6; /* grey 2: break rows, tinted bands */
+  --school-primary: #0b4654; /* petrol: hero and band grounds */
+  --school-primary-ink: #0b4654; /* petrol as text, links, outlines and bands on paper */
+  --school-on-primary: #f7f4ec; /* text on petrol */
+  --school-on-primary-muted: #b4cdd2; /* metadata on petrol */
+  --school-primary-tint: #0e5363; /* tinted rows on petrol */
+  --school-primary-rule: #2f6a78; /* hairlines on petrol */
+  --school-accent: #e9a23b; /* amber fill: the primary action, marks on petrol, the scene's target */
+  --school-on-accent: #0f1c2b; /* text on amber */
+  --school-accent-ink: #a75b00; /* amber on paper: focus outline, the material square */
+  --school-strip: #ffffff; /* the partners' strip, light in both schemes */
+  --school-strip-ink: #0f1c2b; /* names on the strip */
+  --school-strip-focus: #a75b00; /* focus outline on the strip */
+  --school-focus: var(--school-accent-ink);
+
+  /* Faces */
+  --school-font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --school-font-text: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
+
+  /* Type scale from an 18 px body; the hero above it by clamp */
+  --school-size-label: 0.875rem; /* 14 px: labels and metadata */
+  --school-size-body: 1.125rem; /* 18 px */
+  --school-size-lead: 1.375rem; /* 22 px: lead paragraphs and card titles */
+  --school-size-h3: 1.75rem; /* 28 px */
+  --school-size-h2: 2.25rem; /* 36 px */
+  --school-size-h1: 3rem; /* 48 px */
+  --school-size-hero: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --school-tracking-display: -0.02em;
+  --school-text-label: 400 var(--school-size-label) / 1.45 var(--school-font-text);
+  --school-text-body: 400 var(--school-size-body) / 1.6 var(--school-font-text);
+  --school-text-lead: 400 var(--school-size-lead) / 1.5 var(--school-font-text);
+  --school-text-card: 500 var(--school-size-lead) / 1.25 var(--school-font-display);
+  --school-text-h3: 500 var(--school-size-h3) / 1.2 var(--school-font-display);
+  --school-text-h2: 500 var(--school-size-h2) / 1.15 var(--school-font-display);
+  --school-text-h1: 700 var(--school-size-h1) / 1.1 var(--school-font-display);
+  --school-text-hero: 700 var(--school-size-hero) / 1.02 var(--school-font-display);
+
+  /* Spacing: an 8 px scale, with 4 px for the tightest gaps */
+  --school-space-4: 4px;
+  --school-space-8: 8px;
+  --school-space-16: 16px;
+  --school-space-24: 24px;
+  --school-space-32: 32px;
+  --school-space-40: 40px;
+  --school-space-48: 48px;
+  --school-space-64: 64px;
+  --school-space-80: 80px;
+  --school-space-96: 96px;
+
+  /* Layout: 1200 px of content inside the insets; a reading measure for running text */
+  --school-width: 1200px;
+  --school-inset: 40px;
+  --school-measure: 68ch;
+  --school-rule-width: 1px;
+  --school-focus-width: 2px;
+  /* The height of Parallax's bar above every page, so that a short page still fills the window. */
+  --school-bar-height: 56px;
+
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--school-bar-height));
+  background: var(--school-paper);
+  color: var(--school-ink);
+  font: var(--school-text-body);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  .site {
+    /* The same roles on a deep blue-black ground; the strip stays light for the logos. */
+    --school-paper: #0d1620;
+    --school-ink: #ece7dc;
+    --school-ink-muted: #a2adb8;
+    --school-rule: #2c3846;
+    --school-tint: #17222e;
+    --school-primary: #114e5d;
+    --school-primary-ink: #7fc6d4;
+    --school-on-primary: #f2eee5;
+    --school-on-primary-muted: #b3cdd3;
+    --school-primary-tint: #155a6a;
+    --school-primary-rule: #3a7685;
+    --school-accent: #f0ae4c;
+    --school-on-accent: #0d1620;
+    --school-accent-ink: #f0ae4c;
+    --school-strip: #e9e5dc;
+    --school-strip-ink: #0f1c2b;
+    --school-strip-focus: #a75b00;
+    color-scheme: dark;
+  }
+}
+
+/* The insets fall with the window; below 540 px the three headings step down one size each. */
+@media (max-width: 1200px) {
+  .site {
+    --school-inset: 32px;
+  }
+}
+@media (max-width: 800px) {
+  .site {
+    --school-inset: 24px;
+  }
+}
+@media (max-width: 540px) {
+  .site {
+    --school-inset: 16px;
+    --school-size-h3: 1.375rem;
+    --school-size-h2: 1.75rem;
+    --school-size-h1: 2.25rem;
+  }
+}
+
+/* Base styles inside a page, at the lowest specificity that still overrides Parallax's element
+   rules (one element), so that any class of a page or component overrides them. */
+:where(.site) > main {
+  flex: 1 0 auto;
+}
+:where(.site) h1,
+:where(.site) h2,
+:where(.site) h3,
+:where(.site) h4 {
+  margin: 0;
+  color: inherit;
+  letter-spacing: var(--school-tracking-display);
+  text-wrap: balance;
+}
+:where(.site) h1 {
+  font: var(--school-text-h1);
+}
+:where(.site) h2 {
+  font: var(--school-text-h2);
+}
+:where(.site) h3 {
+  font: var(--school-text-h3);
+}
+:where(.site) h4 {
+  font: var(--school-text-card);
+}
+:where(.site) a {
+  color: var(--school-primary-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+:where(.site) a:hover {
+  text-decoration-thickness: 2px;
+}
+:where(.site) :focus-visible {
+  outline: var(--school-focus-width) solid var(--school-focus);
+  outline-offset: 2px;
+}
+:where(.site) ::selection {
+  background: var(--school-accent);
+  color: var(--school-on-accent);
+}
+:where(.site) img {
+  max-width: 100%;
+}
+/* A placeholder of src/content shown on a page (data-placeholder): underlined in dots. */
+:where(.site) [data-placeholder] {
+  text-decoration: underline dotted var(--school-accent-ink) 2px;
+  text-underline-offset: 0.22em;
+}
+
+/* The petrol register: the roles take their values on petrol, so text, links, metadata, rules,
+   tinted rows and focus inside follow without a rule of their own. */
+.inverse {
+  --school-paper: var(--school-primary);
+  --school-ink: var(--school-on-primary);
+  --school-ink-muted: var(--school-on-primary-muted);
+  --school-primary-ink: var(--school-on-primary);
+  --school-rule: var(--school-primary-rule);
+  --school-tint: var(--school-primary-tint);
+  --school-accent-ink: var(--school-accent);
+  --school-focus: var(--school-accent);
+  background: var(--school-paper);
+  color: var(--school-ink);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
