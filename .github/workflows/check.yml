@@ -69,7 +69,9 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-1.56.1-${{ runner.os }}
-      - run: npx playwright install --with-deps chromium
+      # Chromium alone: the runner's image already has every library it needs, and --with-deps
+      # spent ten minutes in one run fetching fonts from a slow apt mirror.
+      - run: npx playwright install chromium
       - name: Browser tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
@@ -128,7 +130,9 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-1.56.1-${{ runner.os }}
-      - run: npx playwright install --with-deps chromium
+      # Chromium alone: the runner's image already has every library it needs, and --with-deps
+      # spent ten minutes in one run fetching fonts from a slow apt mirror.
+      - run: npx playwright install chromium
       - name: Run on this computer
         run: npx playwright test run-on-this-computer
       - uses: actions/upload-artifact@v4
