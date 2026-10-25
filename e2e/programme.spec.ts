@@ -55,12 +55,10 @@ test('PT2 the course link "First edition, 2025" reaches the syllabus with nine t
 
 test('PR1 the programme prints on three A4 pages, one for each day', async ({ page }) => {
   await open(page, '/programme');
-  // The margins of the review print (docs/review/w6/programme-print-a4.pdf).
-  const margin = '15mm';
-  const pdf = await page.pdf({
-    format: 'A4',
-    margin: { top: margin, bottom: margin, left: margin, right: margin },
-  });
+  // Chromium's own default margins, 1 cm, which a visitor printing from the browser gets.
+  const margin = '10mm';
+  const margins = { top: margin, bottom: margin, left: margin, right: margin };
+  const pdf = await page.pdf({ format: 'A4', margin: margins });
   const document = await getDocument({ data: new Uint8Array(pdf) }).promise;
   const texts: string[] = [];
   for (let n = 1; n <= document.numPages; n++) {
