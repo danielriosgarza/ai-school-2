@@ -31,14 +31,20 @@
   text-wrap: balance;
 }
 /* "Second edition · dates · venue": the edition's name in white 600, the facts in white, the
-   separators in the muted white. */
+   separators in the muted white. Each item starts with its separator in a box of its own, and the
+   row is shifted left by that box inside a paragraph that clips it, so that a line never starts
+   with a separator, on the first line or on a line the row wraps to. */
 .edition {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--school-space-4) var(--school-space-8);
   margin: var(--school-space-24) 0 0;
+  overflow: hidden;
   font: var(--school-text-lead);
   font-variant-numeric: tabular-nums;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--school-space-4);
+  margin-left: -1.25em;
 }
 .label {
   font-weight: 600;
@@ -46,8 +52,11 @@
 .item::before {
   content: '·';
   content: '·' / '';
-  margin-right: var(--school-space-8);
+  display: inline-block;
+  width: 1.25em;
   color: var(--school-ink-muted);
+  font-weight: 400;
+  text-align: center;
 }
 .actions {
   display: flex;
@@ -90,11 +99,14 @@
   }
   /* One fact a line, without the separators. */
   .edition {
-    flex-direction: column;
-    gap: 0;
     margin-top: var(--school-space-16);
     font: var(--school-text-body);
     font-variant-numeric: tabular-nums;
+  }
+  .facts {
+    flex-direction: column;
+    row-gap: 0;
+    margin-left: 0;
   }
   .item::before {
     content: none;
