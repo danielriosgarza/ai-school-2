@@ -113,7 +113,7 @@ export default function Front({ catalogue }: PageProps) {
             ))}
           </ul>
           <More>
-            <Link to="/speaker">{speakersSection.link.text}</Link>
+            <Link to={speakersSection.link.to}>{speakersSection.link.text}</Link>
           </More>
         </Section>
 
