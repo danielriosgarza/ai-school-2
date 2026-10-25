@@ -1,0 +1,16 @@
+/* The temporary review page of the scene (issue W5): one box of the hero's size. */
+.review {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+}
+.hero {
+  aspect-ratio: auto;
+  height: clamp(240px, 34vw, 420px);
+}
+@media (max-width: 540px) {
+  .review {
+    padding: 16px;
+  }
+}
